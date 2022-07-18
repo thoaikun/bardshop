@@ -12,7 +12,8 @@ const User = new Schema({
     address:        { type: String, default: ''},
     district:       { type: String, default: ''},
     city:           { type: String, default: ''},
-    role:           { type: Number, default: 0}
+    role:           { type: Number, default: 0},
+    refreshToken:   { type: String, default: null}
 })
 
 User.plugin(mongooseDelete, {

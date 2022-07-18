@@ -26,7 +26,7 @@ class UserController {
 
     //[GET] /user/:id
     index(req, res) {
-        let _id = req.params.id
+        let _id = req.id
         if (_id) {
             User.findOne({_id}).select({
                 '_id': 1,
@@ -47,8 +47,8 @@ class UserController {
 
     //[PATCH] /user/edit
     edit(req, res) {
-        if (req.body.id) {
-            let _id = req.body.id
+        if (req.id) {
+            let _id = req.id
             User.updateOne({_id}, req.editedUser)
                 .then(() => userView.edit(res))
                 .catch(() => userView.error(res, 3))

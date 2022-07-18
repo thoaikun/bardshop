@@ -1,7 +1,6 @@
 const express = require('express')
 const path = require('path')
 const morgan = require('morgan')
-const methodOverdie = require('method-override')
 const {engine} = require('express-handlebars')
 const route = require('./routes/index.route')
 const db = require('./config/db')
@@ -12,7 +11,6 @@ const app = express()
 // setting up the server
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: false }));
-app.use(methodOverdie('_method')) 
 app.use(morgan('combined'))
 app.use(express.static(path.join(__dirname, 'public')))
 

@@ -1,8 +1,30 @@
 class AuthView {
-    login(res) {
-        res.status(200).json({
-            message: 'success'
-        })
+    login(res, accessToken, refreshToken) {
+        res
+            .status(200)
+            .json({
+                accessToken,
+                refreshToken
+            })
+    }
+
+    renewAccessToken(res, accessToken) {
+        res
+            .status(200)
+            .json({
+                result: 'success',
+                message: 'Access token has been renew',
+                accessToken
+            })
+    }
+
+    logout(res) {
+        res
+            .status(200)
+            .json({
+                result: 'success',
+                message: 'Logout'
+            })
     }
 
     error(res, errCode) {
@@ -10,6 +32,8 @@ class AuthView {
         ** errCode: 1 -> missing username or password
         **          2 -> username doesn't exist
         **          3 -> password is incorrect
+        **          4 -> access or refresh token is broken
+        **          5 -> delete refresh token unsuccess
         */
 
         switch(errCode) {
@@ -35,6 +59,15 @@ class AuthView {
                     .json({
                         result: 'failed',
                         message: 'Password is incorrect'
+                    })
+                break
+            case 4:
+            case 5:
+                res
+                    .status(500)
+                    .json({
+                        result: 'failed',
+                        message: 'Something were wrong'
                     })
                 break
         }
