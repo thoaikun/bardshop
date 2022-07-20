@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt')
-const User = require('../models/UserModel')
+const User = require('../models/user/UserModel')
 const userView = require('../views/UserView')
 
 class UserController {
