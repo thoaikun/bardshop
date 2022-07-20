@@ -7,7 +7,7 @@ const verifyRole = require('../app/middleware/verifyRole')
 const reviewController = require('../app/controllers/ReviewController')
 
 router.get('/:productId', reviewController.getByProductId)
-router.use(verifyJWT)
+// router.use(verifyJWT)
 router.post(
     '/create',
     validateReview, 
@@ -19,9 +19,14 @@ router.patch(
     reviewController.edit
 )
 router.delete(
-    'delete/:id',
-    verifyRole(['admin']),
+    '/delete/:id',
+    verifyRole(['customer', 'admin', 'editor']),
     reviewController.delete
+)
+router.delete(
+    '/force/:id',
+    verifyRole(['admin']),
+    reviewController.destroy
 )
 router.get(
     '/',

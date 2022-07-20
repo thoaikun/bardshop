@@ -185,7 +185,7 @@ const validateProduct = (req, res, next) => {
 
 const validateReview = (req, res, next) => {
     if (req.body) {
-        if (req.body.rating === '')
+        if (req.body.rating && req.body.rating === '')
             res
                 .status(400)
                 .json({

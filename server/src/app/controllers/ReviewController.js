@@ -1,6 +1,4 @@
 const Review = require('../models/user/ReviewModel')
-const User = require('../models/user/UserModel')
-const Product = require('../models/product/ProductModel')
 
 const reviewView = require('../views/ReviewView')
 
@@ -8,6 +6,8 @@ class ReviewController {
     //[GET] /review
     index(req, res) {
         Review.find({})
+              .populate('productId', 'name')
+              .populate('userId', 'username')
             .then(reviews => reviewView.index(res, reviews))
             .catch(() => reviewView.error(res, 1))
     }
@@ -15,7 +15,7 @@ class ReviewController {
     //[GET] /review/:productId
     getByProductId(req, res) {
         let productId = req.params.productId
-        Review.find({productId})
+        Review.find({productId}).populate('userId', 'username')
             .then(reviews => reviewView.getByProductId(res, reviews))
             .catch(() => reviewView.error(res, 2))
     }
@@ -43,7 +43,22 @@ class ReviewController {
 
     //[DELETE] /review/delete/:id
     delete(req, res) {
+        let _id = req.params.id
+        if (_id) {
+            Review.delete({_id})
+                .then(() => reviewView.delete(res))
+                .catch(() => reviewView.error(res, 5))
+        }
+    }
 
+    //[DELETE] /review/force/:id
+    destroy(req, res) {
+        let _id = req.params.id
+        if (_id) {
+            Review.deleteOne({_id})
+                .then(() => reviewView.destroy(res))
+                .catch(() => reviewView.error(res, 6))
+        }
     }
 }
 
