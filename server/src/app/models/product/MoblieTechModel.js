@@ -1,18 +1,7 @@
 const mongoose = require('mongoose')
-const mongooseDelete = require('mongoose-delete')
 const Schema = mongoose.Schema
 
-const Product = new Schema({
-    name:           { type: String, default: null, index: true, unique: true, required: true},
-    price:          { type: Number, default: 0, required: true},
-    star:           { type: Number, default: 0},
-    type:           { type: String, default: 'Smartphone'},
-    brand:          { type: String, default: null},
-    hf1:            { type: String, default: null},
-    hf2:            { type: String, default: null},
-    hf3:            { type: String, default: null},
-    hf4:            { type: String, default: null},
-    description:    { type: String, default: null},
+const MoblieTech = new Schema({
     screenSize:     { type: Number, default: null},
     screenTech:     { type: String, default: null},
     resolution:     { type: String, default: null},
@@ -40,13 +29,7 @@ const Product = new Schema({
     weight:         { type: String, default: null},
     material:       { type: String, default: null},
     border:         { type: String, default: null},
-    createdAt:      { type: Date, default: Date.now},
-    modifiedAt:      { type: Date, default: Date.now},
 })
 
-Product.plugin(mongooseDelete, {
-    deletedAt : true,
-    overrideMethods: 'all' 
-})
+module.exports = mongoose.model('MoblieTech', MoblieTech)
 
-module.exports = mongoose.model('Product', Product)

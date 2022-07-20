@@ -115,18 +115,32 @@ const validateProduct = (req, res, next) => {
                     result: 'failed',
                     message: 'Require a price for product'
                 })
+        else if (req.body.type === '')
+            res
+                .status(400)
+                .json({
+                    result: 'failed',
+                    message: 'Require a type of product'
+                })
+        else if (req.body.brand === '')
+            res
+                .status(400)
+                .json({
+                    result: 'failed',
+                    message: 'Require a brand of product'
+                }) 
         else {
-            req.newProduct = {
+            req.product = {
                 name:           req.body.name,
                 price:          req.body.price,
                 star:           req.body?.star          ? req.body.star          : null,
-                type:           req.body?.type          ? req.body.type          : null,
-                brand:          req.body?.brand         ? req.body.brand         : null,
                 hf1:            req.body?.hf1           ? req.body.hf1           : null,
                 hf2:            req.body?.hf2           ? req.body.hf2           : null,
                 hf3:            req.body?.hf3           ? req.body.hf3           : null,
                 hf4:            req.body?.hf4           ? req.body.hf4           : null,
-                description:    req.body?.description   ? req.body.description   : null,
+                description:    req.body?.description   ? req.body.description   : null
+            }
+            req.tech = {
                 screenSize:     req.body?.screenSize    ? req.body.screenSize    : null,
                 screenTech:     req.body?.screenTech    ? req.body.screenTech    : null,
                 resolution:     req.body?.resolution    ? req.body.resolution    : null,
@@ -155,6 +169,8 @@ const validateProduct = (req, res, next) => {
                 material:       req.body.material       ? req.body.material      : null,
                 border:         req.body.border         ? req.body.material      : null
             }
+            req.type = req.body?.type ? req.body.type : null
+            req.brand = req.body?.brand ? req.body.brand : null
             return next()
         }
     }
@@ -167,4 +183,39 @@ const validateProduct = (req, res, next) => {
             })
 }
 
-module.exports = { validateSignUp, validateProduct, validateEditUser }
+const validateReview = (req, res, next) => {
+    if (req.body) {
+        if (req.body.rating && req.body.rating === '')
+            res
+                .status(400)
+                .json({
+                    result: 'failed',
+                    message: 'Require rating point for review'
+                })
+        else if (req.body.rating < 0 || req.body.rating > 5) 
+            res
+                .status(400)
+                .json({
+                    result: 'failed',
+                    message: 'Rating point must between 0 and 5'
+                }) 
+        else {
+            req.review = {
+                productId: req.body.productId,
+                userId: req.body.userId,
+                rating: req.body.rating,
+                body: req.body.body
+            }
+            return next()
+        }
+    }
+    else 
+        res
+            .status(400)
+            .json({
+                result: 'failed',
+                message: 'No input found'
+            })
+}
+
+module.exports = { validateSignUp, validateProduct, validateEditUser, validateReview }

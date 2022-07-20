@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
-const User = require('../models/UserModel')
+const User = require('../models/user/UserModel')
 const authView = require('../views/AuthView')
 
 class AuthController {
