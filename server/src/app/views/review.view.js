@@ -39,7 +39,7 @@ class ReviewView {
 
     delete(res) {
         res
-            .status(200)
+            .status(202)
             .json({
                 result: 'success',
                 message: 'Review has been deleted'
@@ -48,7 +48,7 @@ class ReviewView {
 
     destroy(res) {
         res
-            .status(200)
+            .status(202)
             .json({
                 result: 'success',
                 message: 'Review has been detroyed'

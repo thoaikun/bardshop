@@ -4,7 +4,7 @@ const router = express.Router()
 const { validateProduct } = require('../app/middleware/validation')
 const verifyJWT = require('../app/middleware/verifyJWT')
 const verifyRole = require('../app/middleware/verifyRole')
-const productController = require('../app/controllers/ProductController')
+const productController = require('../app/controllers/product.controller')
 
 router.get('/:id', productController.detail)
 router.post(
@@ -13,6 +13,12 @@ router.post(
     verifyRole(['admin', 'editor']), 
     validateProduct, 
     productController.create
+)
+router.post(
+    '/upload/:id',
+    verifyJWT, 
+    verifyRole(['admin', 'editor']), 
+    productController.upload
 )
 router.put(
     '/edit',

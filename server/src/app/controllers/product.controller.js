@@ -1,9 +1,13 @@
-const Product = require('../models/product/ProductModel')
-const Type = require('../models/product/TypeModel')
-const Brand = require('../models/product/BrandModel')
-const MoblieTech = require('../models/product/MoblieTechModel')
-const LaptopTech = require('../models/product/LaptopTechModel')
-const productView = require('../views/ProductView')
+const formidable = require('formidable')
+const { dirname } = require('path');
+const appDir = dirname(require.main.filename);
+
+const Product = require('../models/product/product.model')
+const Type = require('../models/product/type.model')
+const Brand = require('../models/product/brand.model')
+const MoblieTech = require('../models/product/moblie.model')
+const LaptopTech = require('../models/product/laptop.model')
+const productView = require('../views/product.view')
 
 class ProductController {
     //[GET] /product
@@ -55,8 +59,8 @@ class ProductController {
                     }
                     return new Product(req.product).save()
                 })
-                .then(() => {
-                    productView.create(res)
+                .then((product) => {
+                    productView.create(res, product)
                 })
                 .catch(err => {
                     if (req.type === 'smartphone' || req.type === 'tablet')
@@ -69,6 +73,32 @@ class ProductController {
                             .catch(() => {})
                 })
         }
+    }
+
+    //[POST] /product/upload/:id
+    upload(req, res) {
+        console.log(appDir)
+        const _id = req.params.id
+        const form = formidable({
+            multiples: true,
+            uploadDir: appDir + '/public/imgs/product',
+            keepExtensions: true
+        })
+    
+        form.parse(req, (err, fields, files) => {
+            if (err)
+                productView.error(res, 9)
+            else {
+                let imgNames = []
+                files?.imgs?.forEach(file => {
+                    imgNames.push(file.newFilename)
+                })
+
+                Product.findOneAndUpdate({_id}, {imgs: imgNames})
+                    .then(() => productView.upload(res))
+                    .catch(() => productView.error(res, 9))
+            }
+        })
     }
 
     //[PUT] /product/edit

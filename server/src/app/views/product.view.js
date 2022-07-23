@@ -18,12 +18,22 @@ class ProductView {
             })
     }
 
-    create(res) {
+    create(res, product) {
         res
             .status(201)
             .json({
                 result: 'success',
-                message: 'Product has been created'
+                message: 'Product has been created',
+                id: product._id
+            })
+    }
+
+    upload(res) {
+        res
+            .status(201)
+            .json({
+                result: 'success',
+                message: 'Upload images success'
             })
     }
 
@@ -38,7 +48,7 @@ class ProductView {
 
     delete(res) {
         res
-            .status(200)
+            .status(202)
             .json({
                 result: 'success',
                 message: 'Product has been deleted'
@@ -47,7 +57,7 @@ class ProductView {
 
     destroy(res) {
         res
-            .status(200)
+            .status(202)
             .json({
                 result: 'success',
                 message: 'Product has been detroyed'
@@ -80,6 +90,7 @@ class ProductView {
         **          6 -> destroy error message
         **          7 -> restore error message
         **          8 -> deletedList error message
+        **          9 -> upload img error message
         */
 
         switch(errCode) {
@@ -145,6 +156,14 @@ class ProductView {
                     .json({
                         result: 'failed',
                         message: 'Somthing were wrong'
+                    })
+                break
+            case 9:
+                res
+                    .status(400)
+                    .json({
+                        result: 'failed',
+                        message: 'Upload image failed'
                     })
                 break
         }

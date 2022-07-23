@@ -15,6 +15,7 @@ const Product = new Schema({
     description:    { type: String, default: null},
     tech:           { type: mongoose.Schema.Types.ObjectId, required: true, refPath: 'techModel'},
     techModel:      { type: String, required: true, enum: ['MoblieTech', 'LaptopTech'] },
+    imgs:           { type: [String], default: null},
     createdAt:      { type: Date, default: Date.now},
     modifiedAt:     { type: Date, default: Date.now},
 })
