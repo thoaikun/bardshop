@@ -2,12 +2,12 @@ const formidable = require('formidable')
 const { dirname } = require('path');
 const appDir = dirname(require.main.filename);
 
-const Product = require('../models/product/ProductModel')
-const Type = require('../models/product/TypeModel')
-const Brand = require('../models/product/BrandModel')
-const MoblieTech = require('../models/product/MoblieTechModel')
-const LaptopTech = require('../models/product/LaptopTechModel')
-const productView = require('../views/ProductView')
+const Product = require('../models/product/product.model')
+const Type = require('../models/product/type.model')
+const Brand = require('../models/product/brand.model')
+const MoblieTech = require('../models/product/moblie.model')
+const LaptopTech = require('../models/product/laptop.model')
+const productView = require('../views/product.view')
 
 class ProductController {
     //[GET] /product

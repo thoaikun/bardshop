@@ -4,7 +4,7 @@ const router = express.Router()
 const { validateReview } = require('../app/middleware/validation')
 const verifyJWT = require('../app/middleware/verifyJWT')
 const verifyRole = require('../app/middleware/verifyRole')
-const reviewController = require('../app/controllers/ReviewController')
+const reviewController = require('../app/controllers/review.controller')
 
 router.get('/:productId', reviewController.getByProductId)
 // router.use(verifyJWT)

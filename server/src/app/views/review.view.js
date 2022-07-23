@@ -1,39 +1,30 @@
-class ProductView {
-    index(res, products) {
+class ReviewView {
+    index(res, reviews) {
         res
             .status(200)
             .json({
                 result: 'success',
-                size:  products.length,
-                products
+                size: reviews.length,
+                reviews
             })
     }
 
-    detail(res, product) {
+    getByProductId(res, reviews) {
         res
             .status(200)
             .json({
                 result: 'success',
-                product
+                size: reviews.length,
+                reviews
             })
     }
 
-    create(res, product) {
+    create(res) {
         res
             .status(201)
             .json({
                 result: 'success',
-                message: 'Product has been created',
-                id: product._id
-            })
-    }
-
-    upload(res) {
-        res
-            .status(201)
-            .json({
-                result: 'success',
-                message: 'Upload images success'
+                message: 'Review has been created'
             })
     }
 
@@ -42,56 +33,36 @@ class ProductView {
             .status(201)
             .json({
                 result: 'success',
-                message: 'Product has been update'
+                message: 'Review has been updated'
             })
     }
 
     delete(res) {
         res
-            .status(200)
+            .status(202)
             .json({
                 result: 'success',
-                message: 'Product has been deleted'
+                message: 'Review has been deleted'
             })
     }
 
     destroy(res) {
         res
-            .status(200)
+            .status(202)
             .json({
                 result: 'success',
-                message: 'Product has been detroyed'
-            })
-    }
-
-    restore(res) {
-        res.status(201).json({
-            result: 'success',
-            message: 'Product has been restore'
-        })
-    }
-
-    deletedList(res, products) {
-        res
-            .status(200)
-            .json({
-                result: 'success',
-                size: products.length,
-                products
+                message: 'Review has been detroyed'
             })
     }
 
     error(res, errCode) {
         /* errCode: 1 -> index error message
-        **          2 -> detail error message  
+        **          2 -> getByProductId error message
         **          3 -> create error message
         **          4 -> edit error message
         **          5 -> delete error message
         **          6 -> destroy error message
-        **          7 -> restore error message
-        **          8 -> deletedList error message
-        **          9 -> upload img error message
-        */
+        */      
 
         switch(errCode) {
             case 1:
@@ -104,7 +75,7 @@ class ProductView {
                 break
             case 2:
                 res
-                    .status(400)
+                    .status(404)
                     .json({
                         result: 'failed',
                         message: 'Product not found'
@@ -115,15 +86,15 @@ class ProductView {
                     .status(400)
                     .json({
                         result: 'failed',
-                        message: 'Create product unsuccess'
+                        message: 'Create review unsuccess'
                     })
                 break
             case 4:
                 res
-                    .status(404)
+                    .status(400)
                     .json({
                         result: 'failed',
-                        message: 'Product not found'
+                        message: 'Edit review unsuccess'
                     })
                 break
             case 5:
@@ -142,32 +113,8 @@ class ProductView {
                         message: 'Cannot destroy product'
                     })
                 break
-            case 7:
-                res
-                    .status(400)
-                    .json({
-                        result: 'failed',
-                        message: 'Cannot restore product'
-                    })
-                break
-            case 8:
-                res
-                    .status(400)
-                    .json({
-                        result: 'failed',
-                        message: 'Somthing were wrong'
-                    })
-                break
-            case 9:
-                res
-                    .status(400)
-                    .json({
-                        result: 'failed',
-                        message: 'Upload image failed'
-                    })
-                break
         }
     }
 }
 
-module.exports = new ProductView
+module.exports = new ReviewView

@@ -1,6 +1,6 @@
-const Review = require('../models/user/ReviewModel')
+const Review = require('../models/user/review.model')
 
-const reviewView = require('../views/ReviewView')
+const reviewView = require('../views/review.view')
 
 class ReviewController {
     //[GET] /review
