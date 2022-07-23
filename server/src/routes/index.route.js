@@ -3,6 +3,7 @@ const authRouter = require('./auth.route')
 const productRouter = require('./product.route')
 const reviewRouter = require('./review.route')
 const orderRouter = require('./order.route')
+const postRouter = require('./post.route')
 
 
 function route(app) {
@@ -11,6 +12,7 @@ function route(app) {
     app.use('/product', productRouter)
     app.use('/review', reviewRouter)
     app.use('/order', orderRouter)
+    app.use('/post', postRouter)
 }
 
 module.exports = route

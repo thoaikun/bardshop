@@ -77,7 +77,6 @@ class ProductController {
 
     //[POST] /product/upload/:id
     upload(req, res) {
-        console.log(appDir)
         const _id = req.params.id
         const form = formidable({
             multiples: true,
