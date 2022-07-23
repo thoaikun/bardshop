@@ -14,6 +14,12 @@ router.post(
     validateProduct, 
     productController.create
 )
+router.post(
+    '/upload/:id',
+    // verifyJWT, 
+    // verifyRole(['admin', 'editor']), 
+    productController.upload
+)
 router.put(
     '/edit',
     verifyJWT, 
