@@ -4,6 +4,7 @@ const productRouter = require('./product.route')
 const reviewRouter = require('./review.route')
 const orderRouter = require('./order.route')
 const postRouter = require('./post.route')
+const advertiseRouter = require('./advertise.route')
 
 
 function route(app) {
@@ -13,6 +14,7 @@ function route(app) {
     app.use('/review', reviewRouter)
     app.use('/order', orderRouter)
     app.use('/post', postRouter)
+    app.use('/advertise', advertiseRouter)
 }
 
 module.exports = route

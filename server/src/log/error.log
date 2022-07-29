@@ -1,1 +1,1 @@
-[Fri Jul 29 2022 09:37:33 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "22332423" (type string) at path "_id" for model "Product"
+[Fri Jul 29 2022 11:17:48 GMT+0700 (Indochina Time)] Advertise.controller productView is not defined
