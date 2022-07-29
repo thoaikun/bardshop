@@ -1,3 +1,4 @@
+const writeLog = require('../../util/writeLog')
 const formidable = require('formidable')
 const { dirname } = require('path');
 const appDir = dirname(require.main.filename);
@@ -15,7 +16,10 @@ class ProductController {
         Product .find()
                 .populate('type brand tech')
             .then(products => productView.index(res, products))
-            .catch((err) => console.log(err))
+            .catch((err) => {
+                writeLog(err.message, 'Product')
+                productView.error(res, 1)
+            })
     }
 
     //[GET] /product/:id
@@ -23,7 +27,10 @@ class ProductController {
         let _id = req.params.id
         Product.find({_id}).populate('type brand tech')
             .then(product => productView.detail(res, product))
-            .catch(() => productView.error(res, 2))
+            .catch((err) => {
+                writeLog(err.message, 'Product')
+                productView.error(res, 2)
+            })
     }
 
     //[POST] /product/create
@@ -35,7 +42,10 @@ class ProductController {
                         let newBrand = new Brand({name: req.brand})
                         newBrand.save()
                             .then(item => req.product.brand = item._id)
-                            .catch(() => productView.error(res, 3))
+                            .catch((err) => {
+                                writeLog(err.message, 'Product')
+                                productView.error(res, 3)
+                            })
                     }
                     else 
                         req.product.brand = brand._id
@@ -63,6 +73,7 @@ class ProductController {
                     productView.create(res, product)
                 })
                 .catch(err => {
+                    writeLog(err.message, 'Product')
                     if (req.type === 'smartphone' || req.type === 'tablet')
                         MoblieTech.deleteOne({_id: req.product.tech})
                             .then(() => productView.error(res, 3))
@@ -85,8 +96,10 @@ class ProductController {
         })
     
         form.parse(req, (err, fields, files) => {
-            if (err)
+            if (err) {
+                writeLog(err.message, 'Product')
                 productView.error(res, 9)
+            }
             else {
                 let imgNames = []
                 files?.imgs?.forEach(file => {
@@ -110,7 +123,10 @@ class ProductController {
                         let newBrand = new Brand({name: req.brand})
                         newBrand.save()
                             .then(item => req.product.brand = item._id)
-                            .catch(() => productView.error(res, 3))
+                            .catch((err) => {
+                                writeLog(err.message, 'Product')
+                                productView.error(res, 3)
+                            })
                     }
                     else 
                         req.product.brand = brand._id
@@ -135,7 +151,10 @@ class ProductController {
                 })
                 .then(() => Product.updateOne({_id}, req.product))
                 .then(() => productView.edit(res))
-                .catch(() => productView.error(res, 4))
+                .catch((err) => {
+                    writeLog(err.message, 'Product')
+                    productView.error(res, 4)
+                })
         }
     }
 
@@ -144,7 +163,10 @@ class ProductController {
         let _id = req.params.id
         Product.delete({_id})
             .then(() => productView.delete(res))
-            .catch(() => productView.error(res, 5))
+            .catch((err) => {
+                writeLog(err.message, 'Product')
+                productView.error(res, 5)
+            })
     }
 
     //[DELETE] /product/force/:id
@@ -159,7 +181,10 @@ class ProductController {
             })
             .then(() => Product.deleteOne({_id}))
             .then(() => productView.destroy(res))
-            .catch(() => productView.error(res, 6))
+            .catch((err) => {
+                writeLog(err, 'Review')
+                productView.error(res, 6)
+            })
     }
 
     //[PATCH] /product/restore/:id
@@ -167,14 +192,20 @@ class ProductController {
         let _id = req.params.id
         Product.restore({_id})
             .then(() => productView.restore(res))
-            .catch(() => productView.error(res, 7))
+            .catch((err) => {
+                writeLog(err, 'Review')
+                productView.error(res, 7)
+            })
     }
 
     //[GET] /product/deletedlist
     deletedList(req, res) {
         Product.findDeleted({})
             .then(products => productView.deletedList(res, products))
-            .catch(() => productView.error(res, 8))
+            .catch((err) => {
+                writeLog(err, 'Review')
+                productView.error(res, 8)
+            })
     }
 }
 

@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const connect = async () => {
     try {
-        await mongoose.connect('mongodb://127.0.0.1:27017/bardshop');
+        await mongoose.connect('mongodb+srv://bardshop:12345@cluster0.tvenq.mongodb.net/bardshop?retryWrites=true&w=majority');
         console.log('Connect successfully !!')
     }
     catch (err) {

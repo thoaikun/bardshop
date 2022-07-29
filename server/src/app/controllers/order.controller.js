@@ -1,3 +1,4 @@
+const writeLog = require('../../util/writeLog')
 const Order = require('../models/user/order.model')
 const orderView = require('../views/order.view')
 
@@ -7,7 +8,10 @@ class OrderController {
         Order.find({})
             .populate('userId', 'username contactNumber address district city')
             .then(orders => orderView.index(res, orders))
-            .catch(() => orderView.error(res, 1))
+            .catch((err) => {
+                writeLog(err.message, 'Order')
+                orderView.error(res, 1)
+            })
     }
 
     //[GET] /order/:userId
@@ -23,7 +27,7 @@ class OrderController {
             })
             .then(orders => orderView.getByUserId(res, orders))
             .catch((err) => {
-                console.log(err)
+                writeLog(err.message, 'Order')
                 orderView.error(res, 2)
             }) 
     }
@@ -35,7 +39,10 @@ class OrderController {
             const order = new Order(orderForm)
             order.save()
                 .then(() => orderView.create(res))
-                .catch(() => orderView.error(res, 3))
+                .catch((err) => {
+                    writeLog(err.message, 'Order')
+                    orderView.error(res, 3)
+                })
         }
     }
 
@@ -44,7 +51,10 @@ class OrderController {
         const _id = req.params.id
         Order.delete({_id})
             .then(() => orderView.delete(res))
-            .catch(() => orderView.error(res, 4))
+            .catch((err) => {
+                writeLog(err.message, 'Order')
+                orderView.error(res, 4)
+            })
     }
 
     //[DELETE] /order/force/:id
@@ -52,7 +62,10 @@ class OrderController {
         const _id = req.params.id
         Order.deleteOne({_id})
             .then(() => orderView.destroy(res))
-            .catch(() => orderView.error(res, 5))
+            .catch((err) => {
+                writeLog(err.message, 'Order')
+                orderView.error(res, 5)
+            })
     }
 }
 

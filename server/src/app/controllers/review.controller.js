@@ -1,3 +1,4 @@
+const writeLog = require('../../util/writeLog')
 const Review = require('../models/user/review.model')
 
 const reviewView = require('../views/review.view')
@@ -9,7 +10,10 @@ class ReviewController {
               .populate('productId', 'name')
               .populate('userId', 'username')
             .then(reviews => reviewView.index(res, reviews))
-            .catch(() => reviewView.error(res, 1))
+            .catch((err) => {
+                writeLog(err.message, 'Review')
+                reviewView.error(res, 1)
+            })
     }
 
     //[GET] /review/:productId
@@ -17,7 +21,10 @@ class ReviewController {
         let productId = req.params.productId
         Review.find({productId}).populate('userId', 'username')
             .then(reviews => reviewView.getByProductId(res, reviews))
-            .catch(() => reviewView.error(res, 2))
+            .catch((err) => {
+                writeLog(err.message, 'Review')
+                reviewView.error(res, 2)
+            })
     }
 
     //[POST] /review/create
@@ -26,7 +33,10 @@ class ReviewController {
             let newReview = new Review(req.review)
             newReview.save()
                 .then(() => reviewView.create(res))
-                .catch(() => reviewView.error(res, 3))
+                .catch((err) => {
+                    writeLog(err.message, 'Review')
+                    reviewView.error(res, 3)
+                })
         }
     }
 
@@ -37,7 +47,10 @@ class ReviewController {
             req.review.modifiedAt = Date.now()
             Review.findOneAndUpdate({_id}, req.review)
                 .then(() => reviewView.edit(res))
-                .catch(() => reviewView.err(res, 4))
+                .catch((err) => {
+                    writeLog(err.message, 'Review')
+                    reviewView.err(res, 4)
+                })
         }
     }
 
@@ -47,7 +60,10 @@ class ReviewController {
         if (_id) {
             Review.delete({_id})
                 .then(() => reviewView.delete(res))
-                .catch(() => reviewView.error(res, 5))
+                .catch((err) => {
+                    writeLog(err.message, 'Review')
+                    reviewView.error(res, 5)
+                })
         }
     }
 
@@ -57,7 +73,10 @@ class ReviewController {
         if (_id) {
             Review.deleteOne({_id})
                 .then(() => reviewView.destroy(res))
-                .catch(() => reviewView.error(res, 6))
+                .catch((err) => {
+                    writeLog(err.message, 'Review')
+                    reviewView.error(res, 6)
+                })
         }
     }
 }

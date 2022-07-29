@@ -1,3 +1,4 @@
+const writeLog = require('../../util/writeLog')
 const bcrypt = require('bcrypt')
 const User = require('../models/user/user.model')
 const userView = require('../views/user.view')
@@ -19,7 +20,10 @@ class UserController {
                 newUser
                     .save()
                     .then(() => userView.create(res))
-                    .catch((err) => userView.error(res, 1, err))
+                    .catch((err) => {
+                        writeLog(err.message, 'User')
+                        userView.error(res, 1, err)
+                    })
             }
         })
     }
@@ -41,7 +45,10 @@ class UserController {
                 'role': 1
             })
                 .then(user => userView.index(res, user))
-                .catch(() => userView.error(res, 2, null))
+                .catch((err) => {
+                    writeLog(err.message, 'User')
+                    userView.error(res, 2)
+                })
         }
     }
 
@@ -51,7 +58,10 @@ class UserController {
             let _id = req.id
             User.updateOne({_id}, req.editedUser)
                 .then(() => userView.edit(res))
-                .catch(() => userView.error(res, 3))
+                .catch((err) => {
+                    writeLog(err.message, 'User')
+                    userView.error(res, 3)
+                })
         }
     }
 }

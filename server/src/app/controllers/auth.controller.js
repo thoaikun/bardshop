@@ -1,3 +1,4 @@
+const writeLog = require('../../util/writeLog')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
@@ -39,7 +40,10 @@ class AuthController {
                             // save refreshToken to BD
                             User.findByIdAndUpdate({_id: user._id}, {refreshToken})
                                 .then(() => authView.login(res, accessToken, refreshToken))
-                                .catch(() => authView.error(res, 4))
+                                .catch((err) => {
+                                    writeLog(err.message, 'Auth')
+                                    authView.error(res, 4)
+                                })
                         }       
                     })
                 })
@@ -75,7 +79,9 @@ class AuthController {
                         }
                     )
                 })
-                .catch((err) => console.log(err.message))
+                .catch((err) => {
+                    writeLog(err.message, 'Auth')
+                })
         }
         else 
             res.sendStatus(401)
@@ -86,7 +92,10 @@ class AuthController {
         if (refreshToken) {
             User.updateOne({refreshToken}, {refreshToken: null})
                 .then(() => authView.logout(res))
-                .catch(() => authView.error(res, 5))
+                .catch((err) => {
+                    writeLog(err.message, 'Auth')
+                    authView.error(res, 5)
+                })
         }
         else
             res.sendStatus(204)

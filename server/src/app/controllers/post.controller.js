@@ -1,6 +1,7 @@
+const writeLog = require('../../util/writeLog')
 const formidable = require('formidable')
 const { dirname } = require('path');
-const appDir = dirname(require.main.filename);
+const appDir = dirname(require.main.filename)
 
 const Post = require('../models/user/post.model')
 const postView = require('../views/post.view')
@@ -11,7 +12,10 @@ class PostController {
         Post.find({})
             .populate('userId', 'username')
             .then(posts => postView.index(res, posts))
-            .catch(() => postView.error(res ,1))
+            .catch((err) => {
+                writeLog(err.message, 'Post')
+                postView.error(res ,1)
+            })
     }
 
     //[GET] /post/:id
@@ -21,7 +25,10 @@ class PostController {
             Post.findOne({_id})
                 .populate('userId', 'username')
                 .then(post => postView.detail(res, post))
-                .catch(() => postView.error(res, 2))
+                .catch((err) => {
+                    writeLog(err.message, 'Post')
+                    postView.error(res, 2)
+                })
         }
     }
 
@@ -48,7 +55,10 @@ class PostController {
         const post = new Post(formPost)
         post.save()
             .then(() => postView.create(res))
-            .catch(() => postView.error(res, 1))
+            .catch((err) => {
+                writeLog(err.message, 'Post')
+                postView.error(res, 1)
+            })
     }
 
     //[POST] /post/upload
@@ -60,8 +70,10 @@ class PostController {
         })
     
         form.parse(req, (err, fields, files) => {
-            if (err)
+            if (err) {
+                writeLog(err.message, 'Post')
                 postView.error(res, 7)
+            }
             else
                 postView.upload(res, files)
         })
@@ -92,7 +104,10 @@ class PostController {
     
             Post.findOneAndReplace({_id}, formPost)
                 .then(() => postView.edit(res))
-                .catch(() => postView.error(res, 4))
+                .catch((err) => {
+                    writeLog(err.message, 'Post')
+                    postView.error(res, 4)
+                })
         }
     }
 
@@ -102,7 +117,10 @@ class PostController {
         if (_id) {
             Post.deleteOne({_id})
                 .then(() => postView.destroy(res))
-                .catch(() => postView.error(res, 5))
+                .catch((err) => {
+                    writeLog(err.message, 'Post')
+                    postView.error(res, 5)
+                })
         }
     }
 }
