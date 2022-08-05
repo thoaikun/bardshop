@@ -1,6 +1,6 @@
 import React from 'react'
 import clsx from 'clsx'
-import useFetchData from '../../Hooks/useFetchData'
+import useFetchData from '../../hooks/useFetchData'
 import { Link } from 'react-router-dom'
 
 const SearchElement = ({id, name, brand, images, setDisappear}) => {

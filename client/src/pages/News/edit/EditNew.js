@@ -1,6 +1,5 @@
 import React from 'react'
 import axios from 'axios'
-import UserContext from '../../../Contexts/UserContext'
 import { useNavigate, useParams } from 'react-router'
 import swal from 'sweetalert'
 import EditorJS from '@editorjs/editorjs'
@@ -8,7 +7,8 @@ import List from '@editorjs/list'
 import Embed from '@editorjs/embed'
 import SimpleImage from '@editorjs/simple-image'
 import Header from '@editorjs/header'
-import useFetchData from '../../../Hooks/useFetchData'
+import UserContext from '../../../contexts/UserContext'
+import useFetchData from '../../../hooks/useFetchData'
 import './EditNew.css'
 
 const EditNew = () => {

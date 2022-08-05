@@ -6,6 +6,7 @@
     "@editorjs/editorjs": "^2.24.1",
     "@editorjs/embed": "^2.5.1",
     "@editorjs/header": "^2.6.2",
+    "@editorjs/list": "^1.7.0",
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/react-fontawesome": "^0.1.18",

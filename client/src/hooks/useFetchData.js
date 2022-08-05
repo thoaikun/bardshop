@@ -1,7 +1,7 @@
 import React from "react"
 import axios from "axios"
 
-const useFetchData = (baseUrl, header) => {
+const useFetchData = (baseUrl, accessToken) => {
     const [data, setData] = React.useState([])
     const [fetchErr, setFetchErr] = React.useState('')
 
@@ -12,7 +12,7 @@ const useFetchData = (baseUrl, header) => {
             try {
                 const respone = await axios(url, {
                     cancelToken: source.token,
-                    headers: header ? {'Authorization': `Bearer ${header}`} : {}
+                    headers: accessToken ? {'Authorization': `Bearer ${accessToken}`} : {}
                 })
                 setData(respone.data)
                 setFetchErr('')

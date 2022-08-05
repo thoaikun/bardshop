@@ -57,19 +57,19 @@ p{
     display: flex;
 }
 .about-us__col1 .team-member {
-    background-image: url(../../../../public/imgs/member/Thoai.jpg);
+    background-image: url(../../../public/imgs/member/Thoai.jpg);
 }
 .about-us__col2 .team-member {
-    background-image: url(../../../../public/imgs/member/TA.jpg);
+    background-image: url(../../../public/imgs/member/TA.jpg);
 }
 .about-us__col3 .team-member:first-child {
-    background-image: url(../../../../public/imgs/member/Tri.jpg);
+    background-image: url(../../../public/imgs/member/Tri.jpg);
 }
 .about-us__col3 .team-member{
-    background-image: url(../../../../public/imgs/member/Tri.jpg);
+    background-image: url(../../../public/imgs/member/Tri.jpg);
 }
 .about-us__col4 .team-member{
-    background-image: url(../../../../public/imgs/member/thai.jpg);
+    background-image: url(../../../public/imgs/member/thai.jpg);
 }
 
 .solgan {

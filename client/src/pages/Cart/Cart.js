@@ -1,7 +1,7 @@
 import React from 'react'
 import Bill from './Bill'
 import CartList from './CartList'
-import UserContext from '../../../Contexts/UserContext'
+import UserContext from '../../contexts/UserContext'
 
 import './Cart.css'
 

@@ -1,9 +1,10 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
-import swal from 'sweetalert';
-import UserContext from '../../Contexts/UserContext'
+import { Link } from 'react-router-dom'
+import swal from 'sweetalert'
+import clsx from 'clsx'
+import UserContext from '../../contexts/UserContext'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import './Sign.css' 
+import './SignUp.css' 
 
 const SignUp = () => {
     const initailError = {
@@ -23,27 +24,21 @@ const SignUp = () => {
         document.title = 'Sign Up'
     }, [])
 
-    React.useEffect(() => {
-        if (formErrors.username === '' && formErrors.email === '' && formErrors.password === '' && !submit) {
-        handleCreate(email,password,username)
-        }
-    }, [formErrors, submit])
 
     React.useEffect(() => {
-        if (signupErr && signupErr === 'success') {
+        if (!signupErr && submit)
             swal({
                 title: "congratulations",
                 text: "Your account is created",
                 icon: "success",
             })
-        }
-        else if (signupErr && signupErr !== 'success')
+        else if (signupErr && submit)
             swal({
                 title: "error",
                 text: signupErr,
                 icon: "error",
             })
-    }, [signupErr])
+    }, [signupErr, submit])
 
     const validate = (username, email, password, confirmPassword) => {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
@@ -64,6 +59,10 @@ const SignUp = () => {
                         setFormErrors({...initailError, password: 'Please enter your password again'})
                     else if (password !== confirmPassword)
                         setFormErrors({...initailError, password: 'Confirm password doesn\'t correct, please check again'})   
+                    else {
+                        handleCreate(email, password, username)
+                        setSubmit(true)
+                    }
                 }
             }
         }
@@ -84,7 +83,9 @@ const SignUp = () => {
                         <label className="form-label">Username</label>
                         <input
                             type="text"
-                            className="form-control"
+                            className={clsx('form-control', {
+                                'form-error': formErrors.username === 'Username is required' || signupErr === 'Username had been used'
+                            })}
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                         />
@@ -95,7 +96,9 @@ const SignUp = () => {
                         <label className="form-label">Email</label>
                         <input
                             type="text"
-                            className="form-control"
+                            className={clsx('form-control', {
+                                'form-error': formErrors.email === 'Email had been used' || signupErr === 'Email had been used'
+                            })}
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
@@ -106,7 +109,9 @@ const SignUp = () => {
                         <label className="form-label">Password</label>
                         <input
                             type="password"
-                            className="form-control"
+                            className={clsx('form-control', {
+                                'form-error': formErrors.password === 'Password is required' || formErrors.password === 'Password must have at least 5 characters'
+                            })}
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
@@ -117,7 +122,9 @@ const SignUp = () => {
                         <label className="form-label">Confirm Password</label>
                         <input
                             type="password"
-                            className="form-control"
+                            className={clsx('form-control', {
+                                'form-error': formErrors.password === 'Please enter your password again' || formErrors.password === 'Confirm password doesn\'t correct, please check again'
+                            })}
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                         />
@@ -128,7 +135,6 @@ const SignUp = () => {
                         onClick={() => {
                             setFormErrors(initailError)
                             setSignupErr(undefined)
-                            setSubmit(false)
                             validate(username, email, password, confirmPassword)
                         }}
                     >

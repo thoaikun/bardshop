@@ -1,9 +1,9 @@
 import React from 'react'
 import clsx from 'clsx'
-import UserContext from '../../../Contexts/UserContext'
+import UserContext from '../../../contexts/UserContext'
 import ToastMessage from '../../ToastMessage/ToastMessage'
 
-const ProfileTab = ({id, user, selectedTab}) => {
+const ProfileTab = ({user, selectedTab}) => {
     const [username, setUsername] = React.useState('')
     const [firstName, setFirstName] = React.useState('')
     const [lastName, setLastName] = React.useState('')
@@ -16,10 +16,10 @@ const ProfileTab = ({id, user, selectedTab}) => {
 
     React.useEffect(() => {
         setUsername(user?.username)
-        setFirstName(user?.first_name)
-        setLastName(user?.last_name)
+        setFirstName(user?.firstname)
+        setLastName(user?.lastname)
         setEmail(user?.email)
-        setContactNumber(user?.contact_number)
+        setContactNumber(user?.contactNumber)
         setAddress(user?.address)
         setDistrict(user?.district)
         setCity(user?.city)
@@ -137,7 +137,7 @@ const ProfileTab = ({id, user, selectedTab}) => {
                         type="submit" 
                         className="mt-2"
                         onClick={() => {
-                            handleUpdate(id, firstName, lastName, email, contactNumber, address, city, district)
+                            handleUpdate(firstName, lastName, email, contactNumber, address, city, district)
                         }}
                     >Save</button>
                 </div>

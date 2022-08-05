@@ -2,8 +2,8 @@ import React from 'react'
 import clsx from 'clsx'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar, faPaperPlane } from '@fortawesome/free-solid-svg-icons'
-import useFetchData from '../../../Hooks/useFetchData'
-import UserContext from '../../../Contexts/UserContext'
+import useFetchData from '../../../hooks/useFetchData'
+import UserContext from '../../../contexts/UserContext'
 import ToastMessage from '../../ToastMessage/ToastMessage'
 
 const Comment = ({ review }) => {

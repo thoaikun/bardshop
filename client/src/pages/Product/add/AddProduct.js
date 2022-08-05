@@ -1,8 +1,8 @@
 import React from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router'
-import UserContext from '../../../Contexts/UserContext'
-import ToastMessage from '../../ToastMessage/ToastMessage'
+import UserContext from '../../../contexts/UserContext'
+import ToastMessage from '../../../components/ToastMessage/ToastMessage'
 import './AddProduct.css'
 
 const AddProduct = () => {

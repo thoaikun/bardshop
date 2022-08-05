@@ -1,6 +1,6 @@
 import React from 'react'
-import useFetchData from '../../../Hooks/useFetchData'
-import Card from '../../Card/Card'
+import useFetchData from '../../../hooks/useFetchData'
+import Card from '../../../components/Card/Card'
 
 const RelatedProduct = ({ brand,id }) => {
     const { data, fetchErr } = useFetchData(`http://localhost/php/ass_backend/Product/readByBrand/${brand}`)

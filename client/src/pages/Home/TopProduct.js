@@ -1,8 +1,8 @@
 import React from 'react'
-import Card from '../../Card/Card'
-import useFetchData from '../../../Hooks/useFetchData'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleChevronLeft, faCircleChevronRight } from '@fortawesome/free-solid-svg-icons'
+import Card from '../../components/Card/Card'
+import useFetchData from '../../hooks/useFetchData'
 
 const TopProduct = () => {
     const [moveAmount, setMoveAmount] = React.useState(0)

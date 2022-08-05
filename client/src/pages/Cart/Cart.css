@@ -1,6 +1,6 @@
 .cart-title {
     height: 7rem;
-    background: url(../../../../public/imgs/product-list-bg.png) center center no-repeat;
+    background: url(../../../public/imgs/product-list-bg.png) center center no-repeat;
     background-size: contain;
 
     display: flex;

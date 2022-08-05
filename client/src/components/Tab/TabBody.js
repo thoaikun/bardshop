@@ -1,15 +1,15 @@
 import React from 'react'
-import useFetchData from '../../Hooks/useFetchData'
+import { useNavigate } from 'react-router'
 import TechTab from './tabs/TechTab'
 import ReviewTab from './tabs/ReviewTab'
 import ProfileTab from './tabs/ProfileTab'
 import OrderTab from './tabs/OrderTab'
 import ProductTab from './tabs/ProductTab'
 import BriefTab from './tabs/BriefTab'
-import UserContext from '../../Contexts/UserContext'
-import { useNavigate } from 'react-router'
 import UsersTab from './tabs/UsersTab'
 import NewsTab from './tabs/NewsTab'
+import UserContext from '../../contexts/UserContext'
+import useFetchData from '../../hooks/useFetchData'
 
 const ProductTabBody = ({id, selectedTab}) => {
     const { data } = useFetchData(`http://localhost/php/ass_backend/Product/read/${id}`)
@@ -39,10 +39,10 @@ const ProductTabBody = ({id, selectedTab}) => {
     )
 }
 
-const CustomerView = ({ id, selectedTab}) => {
-    const { token } = React.useContext(UserContext)
+const CustomerView = ({selectedTab}) => {
+    const { accessToken } = React.useContext(UserContext)
     const navigate = useNavigate()
-    const { data, fetchErr } = useFetchData(`http://localhost/php/ass_backend/User/getUser`, token)
+    const { data, fetchErr } =  useFetchData(`http://localhost:3500/user`, accessToken)
     const [user, setUser] = React.useState(null)
 
     React.useEffect(() => {
@@ -55,22 +55,20 @@ const CustomerView = ({ id, selectedTab}) => {
     return (
         <>
             <ProfileTab
-                id={id}
                 user={user}
                 selectedTab={selectedTab}
             />
             <OrderTab
-                id={id}
                 selectedTab={selectedTab}
             />
         </>
     )
 }
 
-const AdminView = ({ id, selectedTab }) => {
-    const { token } = React.useContext(UserContext)
+const AdminView = ({selectedTab }) => {
+    const { accessToken } = React.useContext(UserContext)
     const navigate = useNavigate()
-    const { data, fetchErr } = useFetchData(`http://localhost/php/ass_backend/User/getUser`, token)
+    const { data, fetchErr } = useFetchData(`http://localhost:3500/user`, accessToken)
     const [user, setUser] = React.useState(null)
 
     React.useEffect(() => {
@@ -83,7 +81,6 @@ const AdminView = ({ id, selectedTab }) => {
     return (
         <>
             <ProfileTab
-                id={id}
                 user={user}
                 selectedTab={selectedTab}
             />
@@ -101,28 +98,55 @@ const AdminView = ({ id, selectedTab }) => {
     )
 }
 
-const TabBody = ({ id, isProduct, admin, selectedTab, setSelectedTab}) => {
+const EditorView = ({selectedTab}) => {
+    const { accessToken } = React.useContext(UserContext)
+    const navigate = useNavigate()
+    const { data, fetchErr } =  useFetchData(`http://localhost:3500/user`, accessToken)
+    const [user, setUser] = React.useState(null)
+
+    React.useEffect(() => {
+        if (data.success === 0)
+            navigate('/')
+        else
+            setUser(data.user)
+    }, [data])
+
+    return (
+        <>
+            <ProfileTab
+                user={user}
+                selectedTab={selectedTab}
+            />
+            <NewsTab 
+                selectedTab={selectedTab}
+                user={user}
+            />
+        </>
+    )
+}
+
+const TabBody = ({ id, isProduct, role, selectedTab}) => {
     return (
         <div className="tab-option-detail">
             {isProduct && 
                 <ProductTabBody
                     id={id}
                     selectedTab={selectedTab}
-                    setSelectedTab={setSelectedTab}
                 />
             }
-            {!isProduct && !admin &&
+            {!isProduct && role === 'customer' &&
                 <CustomerView
-                    id={id}
                     selectedTab={selectedTab}
-                    setSelectedTab={setSelectedTab}
                 />
             }
-            {!isProduct && admin &&
+            {!isProduct && role === 'admin' &&
                 <AdminView
-                    id={id}
                     selectedTab={selectedTab}
-                    setSelectedTab={setSelectedTab}
+                />
+            }
+            {!isProduct && role === 'editor' &&
+                <EditorView
+                    selectedTab={selectedTab}
                 />
             }
         </div>

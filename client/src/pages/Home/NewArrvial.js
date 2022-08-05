@@ -1,6 +1,6 @@
 import React from 'react'
-import ProductCard from '../../Card/Card'
-import useFetchData from '../../../Hooks/useFetchData'
+import ProductCard from '../../components/Card/Card'
+import useFetchData from '../../hooks/useFetchData'
 
 const NewArrvial = () => {
     const [newArrivalProducts, setNewArrivalProducts] = React.useState([])

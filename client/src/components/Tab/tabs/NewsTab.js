@@ -1,11 +1,11 @@
 import React from 'react'
 import clsx from 'clsx'
 import axios from 'axios'
-import ToastMessage from '../../ToastMessage/ToastMessage'
-import useFetchData from '../../../Hooks/useFetchData'
+import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPen } from '@fortawesome/free-solid-svg-icons'
-import { Link } from 'react-router-dom'
+import ToastMessage from '../../ToastMessage/ToastMessage'
+import useFetchData from '../../../hooks/useFetchData'
 
 const NewsTableElement = ({item, handleDeletePost}) => {
     const [content, setContent] = React.useState(null)

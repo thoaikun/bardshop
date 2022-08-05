@@ -1,11 +1,11 @@
 import clsx from 'clsx'
 import React from 'react'
 import axios from 'axios'
-import ToastMessage from '../../ToastMessage/ToastMessage'
-import useFetchData from '../../../Hooks/useFetchData'
-import UserContext from '../../../Contexts/UserContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCrown, faUser,faTrash, faPen } from '@fortawesome/free-solid-svg-icons'
+import ToastMessage from '../../ToastMessage/ToastMessage'
+import useFetchData from '../../../hooks/useFetchData'
+import UserContext from '../../../contexts/UserContext'
 
 const UsersTabElement = ({id, username, email, role, handleDelete}) => {
     const [showEditRole, setShowEditRow] = React.useState(false)

@@ -2,10 +2,10 @@ import clsx from 'clsx'
 import React from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
-import useFetchData from '../../../Hooks/useFetchData'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons'
 import ToastMessage from '../../ToastMessage/ToastMessage'
+import useFetchData from '../../../hooks/useFetchData'
 
 const ProductTableElement = ({id, name, images, brand, createdDate, modifiedDate, handleDelete}) => {
     const [trimName, setTrimName] = React.useState('')

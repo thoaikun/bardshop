@@ -94,7 +94,6 @@ const validateEditUser = (req, res, next) => {
         if (req.body?.city)
             req.editedUser.city = req.body.city
 
-        console.log(req.editedUser)
         return next()
     }
 }

@@ -28,7 +28,7 @@ class UserController {
         })
     }
 
-    //[GET] /user/:id
+    //[GET] /user
     index(req, res) {
         let _id = req.id
         if (_id) {

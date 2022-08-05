@@ -1,11 +1,11 @@
-import React, { version } from 'react'
+import React from 'react'
 import { useParams } from 'react-router'
-import useFetchData from '../../../Hooks/useFetchData'
 import EditorJS from '@editorjs/editorjs'
 import List from '@editorjs/list'
 import Embed from '@editorjs/embed'
 import SimpleImage from '@editorjs/simple-image'
 import Header from '@editorjs/header'
+import useFetchData from '../../../hooks/useFetchData'
 import './NewDetail.css'
 
 const NewDetail = () => {

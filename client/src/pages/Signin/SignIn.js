@@ -1,16 +1,16 @@
 import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import UserContext from '../../Contexts/UserContext'
 import clsx from 'clsx'
+import { Link, useNavigate } from 'react-router-dom'
+import UserContext from '../../contexts/UserContext'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import './Sign.css'
+import './SignIn.css'
 
 const SignIn = () => {
     const [username, setUsername] = React.useState('')
     const [password, setPassword] = React.useState('')
     const [usernameErr, setUsernameErr] = React.useState('')
     const [passwordErr, setPasswordErr] = React.useState('')
-    const { token, loginErr, setLoginErr, handleLogin } = React.useContext(UserContext)
+    const { accessToken, refreshToken, loginErr, setLoginErr, handleLogin } = React.useContext(UserContext)
     const navigate = useNavigate()
 
     React.useEffect(() => {
@@ -18,16 +18,18 @@ const SignIn = () => {
     }, [])
 
     React.useEffect(() => {
-        if (token)
+        if (accessToken && refreshToken)
             navigate('/')
-    }, [token])
+    }, [accessToken, refreshToken])
 
     React.useEffect(() => {
-        if (loginErr === 'Invalid username')
+        if (loginErr === 'Please enter username')
             setUsernameErr(loginErr)
-        else if (loginErr === 'Please enter username')
+        if (loginErr === 'Please enter password')
+            setPasswordErr(loginErr)
+        else if (loginErr === 'Username doesn\'t exist')
             setUsernameErr(loginErr)
-        else 
+        else if (loginErr === 'Password is incorrect')
             setPasswordErr(loginErr)
     }, [loginErr])
 
@@ -72,7 +74,7 @@ const SignIn = () => {
                     </div>
                     <div className="mb-3 text-center">
                         <label className="form-label">
-                            Forget you password ? 
+                            {'Forget you password? '}
                             <a href="#">Click here</a> 
                         </label>
                     </div>

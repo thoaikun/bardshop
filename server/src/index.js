@@ -8,7 +8,7 @@ const credentials = require('./app/middleware/credentials')
 const route = require('./routes/index.route')
 const db = require('./config/db')
 
-const port = 3000
+const port = 3500
 const app = express()
 
 // setting up the server

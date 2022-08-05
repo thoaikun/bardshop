@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import useFetchData from '../../../Hooks/useFetchData'
+import useFetchData from '../../../hooks/useFetchData'
 
 const NewElement = ({item}) => {
     const [content, setContent] = React.useState(null)

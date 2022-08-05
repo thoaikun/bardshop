@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
-import UserContext from '../../Contexts/UserContext'
+import UserContext from '../../contexts/UserContext'
 import ToastMessage from '../ToastMessage/ToastMessage'
 import './Card.css'
 

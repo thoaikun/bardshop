@@ -6,18 +6,15 @@ import Offcanvas from 'react-bootstrap/Offcanvas'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars,faUser, faFileAlt, faTags, faCommentDots, faSearch, faShoppingCart } from '@fortawesome/free-solid-svg-icons'
 import Search from './Search'
-import UserContext from '../../Contexts/UserContext'
-import useFetchData from '../../Hooks/useFetchData'
+import UserContext from '../../contexts/UserContext'
+import useFetchData from '../../hooks/useFetchData'
 
 const SideBar = ({ login, user }) => {
     const [username, setUsername] = React.useState()
     const [userId, setUserId] = React.useState()
-    const [role, setRole] = React.useState('false')
 
     React.useEffect(() => {
         if (user) {
-            if (user?.role && user.role === "1")
-                setRole('true')
             if (user?.id)
                 setUserId(user.id)
             if (user?.username)
@@ -179,8 +176,8 @@ const User = ({ login, user, disappear, setDisappear, handleLogout }) => {
 }
 
 const Nav = ({ disappear, setDisappear }) => {
-    const {login, token, handleLogout} = React.useContext(UserContext)
-    const { data } = useFetchData(`http://localhost/php/ass_backend/User/getUser`, token)
+    const {login, accessToken, handleLogout} = React.useContext(UserContext)
+    const { data } = useFetchData(`http://localhost:3500/user`, accessToken)
     const [user, setUser] = React.useState()
 
     React.useEffect(() => {

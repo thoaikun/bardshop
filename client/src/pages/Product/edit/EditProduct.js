@@ -1,9 +1,9 @@
 import React from 'react'
-import { useNavigate, useParams } from 'react-router'
-import UserContext from '../../../Contexts/UserContext'
-import useFetchData from '../../../Hooks/useFetchData'
 import axios from 'axios'
-import ToastMessage from '../../ToastMessage/ToastMessage'
+import { useNavigate, useParams } from 'react-router'
+import UserContext from '../../../contexts/UserContext'
+import useFetchData from '../../../hooks/useFetchData'
+import ToastMessage from '../../../components/ToastMessage/ToastMessage'
 import './EditProduct.css'
 
 const EditProduct = () => {

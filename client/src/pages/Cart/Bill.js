@@ -1,8 +1,8 @@
 import clsx from 'clsx'
 import React from 'react'
-import UserContext from '../../../Contexts/UserContext'
-import useFetchData from '../../../Hooks/useFetchData'
-import ToastMessage from '../../ToastMessage/ToastMessage'
+import UserContext from '../../hooks/useFetchData'
+import useFetchData from '../../contexts/UserContext'
+import ToastMessage from '../../components/ToastMessage/ToastMessage'
 
 const Bill = () => {
     const {token, cart, setCart, handleOrder, orderMessage, setOrderMessage} = React.useContext(UserContext)

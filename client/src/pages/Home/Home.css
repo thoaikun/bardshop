@@ -31,11 +31,11 @@
 }
 .banner__col1 {
     flex-basis: 70%;
-    background-image: url(../../../../public/imgs/banner/banner.png);
+    background-image: url(../../../public/imgs/banner/banner.png);
 }
 .banner__col2 {
     flex-basis: 30%;
-    background-image: url(../../../../public/imgs/banner/banner4.jpg);
+    background-image: url(../../../public/imgs/banner/banner4.jpg);
 }
 
 .new-arrival .cardlist {

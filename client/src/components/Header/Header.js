@@ -1,8 +1,8 @@
 import React from 'react'
 import Nav from "./Nav"
+import SubNav from './SubNav'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './Header.css'
-import SubNav from './SubNav'
 
 const Header = () => {
     const [disappear, setDisappear] = React.useState(true)

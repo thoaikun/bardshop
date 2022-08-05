@@ -1,20 +1,20 @@
 import React from 'react'
 import { useNavigate, useParams } from 'react-router'
-import UserContext from '../../../Contexts/UserContext'
-import useFetchData from '../../../Hooks/useFetchData'
-import Tab from '../../Tab/Tab'
+import UserContext from '../../contexts/UserContext'
+import useFetchData from '../../hooks/useFetchData'
+import Tab from '../../components/Tab/Tab'
 import "./Account.css"
 
 const Account = () => {
-    const { id } = useParams()
-    const { login, token } = React.useContext(UserContext)
-    const [admin, setAdmin] = React.useState(false)
-    const { data } = useFetchData(`http://localhost/php/ass_backend/User/getUser`, token)
+    const { login, accessToken } = React.useContext(UserContext)
+    const [role, setRole] = React.useState(null)
+    const { data } = useFetchData(`http://localhost:3500/user`, accessToken)
     let navigate = useNavigate()
 
     React.useEffect(() => {
         if (data && data?.user) {
-            setAdmin(data.user.role === '1')
+            setRole(data.user.role === 1 ? 'admin' : 
+                     data.user.role === 2 ? 'editor' : 'customer')
         }
     }, [data])
 
@@ -30,9 +30,10 @@ const Account = () => {
     return (
         <div className='content'>
             <Tab
-                id={id}
-                tabNames={admin  ? ['Profile', 'Products', 'Post', 'Users'] : ['Profile', 'Orders']}
-                admin={admin}
+                tabNames={role === 'admin'  ? ['Profile', 'Products', 'Post', 'Users'] : 
+                          role === 'editor' ? ['Profile', 'Post'] : ['Profile', 'Order']
+                        }
+                role={role}
             />
         </div>
     )

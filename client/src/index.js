@@ -3,22 +3,16 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import App from "./App"
-import SignIn from "./Components/SignIn/SignIn"
-import SignUp from "./Components/SignIn/SignUp"
-import Home from "./Components/Content/Home/Home";
-import News from "./Components/Content/News/News"
-import NewDetail from "./Components/Content/NewDetail/NewDetail"
-import ProductDetail from './Components/Content/ProductDetail/ProductDetail'
-import ProductList from './Components/Content/ProductList/ProductList'
-import AddProduct from './Components/Content/AddProduct/AddProduct'
-import EditProduct from "./Components/Content/EditProduct/EditProduct"
-import Account from './Components/Content/Account/Account'
-import Cart from './Components/Content/Cart/Cart'
-import About from './Components/Content/About/About'
-import AddNew from './Components/Content/AddNew/AddNew'
-import NotFound from "./Components/Content/NotFound/NotFound";
-import { UserProvider } from "./Contexts/UserContext";
-import EditNew from "./Components/Content/EditNew/EditNew";
+import SignIn from "./pages/Signin/SignIn"
+import SignUp from "./pages/Signup/SignUp"
+import Home from "./pages/Home/Home";
+import { AddNew, NewDetail, EditNew, News } from './pages/News'
+import { AddProduct, ProductDetail, EditProduct, ProductList } from './pages/Product'
+import Account from './pages/Account/Account'
+import Cart from './pages/Cart/Cart'
+import About from './pages/About/About'
+import NotFound from "./pages/Notfound/NotFound"
+import { UserProvider } from "./contexts/UserContext"
 
 import './index.css'
 import 'animate.css'

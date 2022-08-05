@@ -1,10 +1,10 @@
 import clsx from 'clsx'
 import React from 'react'
-import useFetchData from '../../../Hooks/useFetchData'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
-import UserContext from '../../../Contexts/UserContext'
-import ToastMessage from '../../ToastMessage/ToastMessage'
+import useFetchData from '../../../hooks/useFetchData'
+import UserContext from '../../../contexts/UserContext'
+import ToastMessage from '../../../components/Card/Card'
 
 const ProductBrief = ({ id }) => {
     const {login, handleAddToCart, addToCartMessage, setAddToCartMessage} = React.useContext(UserContext)

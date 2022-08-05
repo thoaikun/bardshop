@@ -1,31 +1,44 @@
 import axios from 'axios'
 import React from 'react'
 import { CookiesProvider, useCookies } from 'react-cookie'
+import refreshAccessToken from '../utils/refreshAccessToken'
 
 const UserContext = React.createContext({})
 
 export const UserProvider = ({ children }) => {
     const [userCookies, setUserCookies, removeUserCookies] = useCookies(['user'])
     const [login, setLogin] = React.useState(userCookies && userCookies?.login ? userCookies.login : false)
-    const [token, setToken] = React.useState(userCookies && userCookies?.token ? userCookies.token : '')
+    const [accessToken, setAccessToken] = React.useState(userCookies && userCookies?.accessToken ? userCookies.accessToken : '')
+    const [refreshToken, setRefreshToken] = React.useState(userCookies && userCookies?.refreshToken ? userCookies.refreshToken : '')
     const [cart, setCart] = React.useState(userCookies && userCookies.cart ? userCookies.cart : [])
     const [loginErr, setLoginErr] = React.useState('')
     const [signupErr, setSignupErr] = React.useState(undefined)
     const [updateMessage, setUpdateMessage] = React.useState()
     const [addToCartMessage, setAddToCartMessage] = React.useState()
     const [orderMessage, setOrderMessage] = React.useState()
- 
+    const [autoRefreshId, setAutoRefreshId] = React.useState(null)
+
     React.useEffect(() => {
-        if (token !== '') {
+        if (accessToken !== '' && refreshToken !== '') {
             let time = 3 * 3600
-            setUserCookies('token', token, {path: '/', maxAge: time})
+            setUserCookies('accessToken', accessToken, {path: '/', maxAge: time})
+            setUserCookies('refreshToken', refreshToken, {path: '/', maxAge: time})
             setUserCookies('login', login, {path: '/', maxAge: time})
+
+            setAutoRefreshId(setInterval(() => {
+                let newAccessToken = refreshAccessToken(refreshToken)
+                newAccessToken
+                    .then(response => response.data?.accessToken ? setAccessToken(response.data.accessToken) : null)
+                    .catch((error) => console.log(error))
+                
+            }, 9*60*1000))
         }
         else {
-            removeUserCookies('token')
+            removeUserCookies('accessToken')
+            removeUserCookies('refreshToken')
             removeUserCookies('login')
         }
-    }, [token, login])
+    }, [accessToken, refreshToken, login])
 
     React.useEffect(() => {
         if (cart.length !== 0) {
@@ -36,9 +49,9 @@ export const UserProvider = ({ children }) => {
             removeUserCookies('cart')
     }, [cart])
 
-    const handleLogin = async (username, password) => {
+    const handleLogin = (username, password) => {
         if (username === '')
-            setLoginErr("Please enter username")
+            setLoginErr('Please enter username')
         else if (password === '')
             setLoginErr('Please enter password')
         else {
@@ -48,30 +61,51 @@ export const UserProvider = ({ children }) => {
             })
             const config = {
                 method: 'post',
-                url: 'http://localhost/php/ass_backend/User/login',
+                url: 'http://localhost:3500/auth/login',
                 headers: { 
                   'Content-Type': 'application/json'
                 },
                 data : data
             }
-            const respone = await axios(config)
-            if (respone.data?.token) {
-                setToken(respone.data.token)
-                setLogin(true)
-            }
-            else
-                setLoginErr(respone.data.message)
+            axios(config)
+                .then(response => {
+                    if (response.data?.accessToken && response.data?.refreshToken) {
+                        setAccessToken(response.data.accessToken)
+                        setRefreshToken(response.data.refreshToken)
+                        setLogin(true)
+                    }
+                })
+                .catch((error) => {
+                    setLoginErr(error.response.data.message)
+                })
         }
     }
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
+        const data = JSON.stringify({
+            refreshToken
+        })
+        const config = {
+            method: 'post',
+            url: 'http://localhost:3500/auth/logout',
+            headers: { 
+              'Content-Type': 'application/json'
+            },
+            data : data
+        }
+        const response = await axios(config)
         setLogin(false)
-        setToken('')
+        setAccessToken('')
+        setRefreshToken('')
         setLoginErr('')
         setCart([])
+        if (autoRefreshId) {
+            clearInterval(autoRefreshId)
+            setAutoRefreshId(null)
+        }
     }
 
-    const handleCreate = async (email, password, username) => {
+    const handleCreate = (email, password, username) => {
         const data = JSON.stringify({
             username,   
             email,
@@ -79,54 +113,47 @@ export const UserProvider = ({ children }) => {
         })
         const config = {
             method: 'post',
-            url : 'http://localhost/php/ass_backend/User/create',
+            url : 'http://localhost:3500/user/create',
             headers :{
                 'Content-Type': 'application/json'
             },
             data : data
         }
-        const respone = await axios(config)
-        console.log(respone.data)
-        setSignupErr(respone.data.message)
+        axios(config)
+            .then(response => {
+                setSignupErr(undefined)
+            })
+            .catch(error => {
+                setSignupErr(error.response.data.message)
+            })
     }
 
-    const handleUpdate = async (id, firstName, lastName, email, contactNumber, address, city, district) => {
+    const handleUpdate = async (firstName, lastName, email, contactNumber, address, city, district) => {
         const data = JSON.stringify({
-            id,
-            first_name: firstName,
-            last_name: lastName,
-            contact_number: contactNumber,
+            firstname: firstName,
+            lastname: lastName,
+            contactNumber,
             email,
             address,
             city,
             district
         })
         const config = {
-            method: 'post',
-            url: 'http://localhost/php/ass_backend/User/update',
+            method: 'patch',
+            url: 'http://localhost:3500/user/edit',
             headers: { 
-              'Content-Type': 'application/json'
-            },
-            data : data
-        };
-        const respone = await axios(config)
-        setUpdateMessage(respone.data.message)
-    }
-
-    const handleUpdateRole = async (id, role) => {
-        const data = JSON.stringify({
-            id,
-            role
-        })
-        const config = {
-            method: 'post',
-            url: 'http://localhost/php/ass_backend/User/update',
-            headers: { 
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${accessToken}`
             },
             data : data
         }
-        const respone = await axios(config)
+        axios(config)
+            .then(response => {
+                setUpdateMessage(response.data.result)
+            })
+            .catch(error => {
+                setUpdateMessage(error.response.data.result)
+            })
     }
 
     const handleAddToCart = (id, name, brand, trimName, imgs, price, quantity) => {
@@ -182,8 +209,8 @@ export const UserProvider = ({ children }) => {
             },
             data : JSON.stringify(data)
         }
-        const respone = await axios(config)
-        setOrderMessage(respone.data.message)
+        const response = await axios(config)
+        setOrderMessage(response.data.message)
     }
 
     const handleAddComment = async (productId, userId, comment, rate) => {
@@ -201,8 +228,8 @@ export const UserProvider = ({ children }) => {
             },
             data : data
         }
-        const respone = await axios(config)
-        if (respone.data.message === 'error')
+        const response = await axios(config)
+        if (response.data.message === 'error')
             return false
         return true
     }
@@ -213,8 +240,10 @@ export const UserProvider = ({ children }) => {
                 value={{
                     login,
                     setLogin,
-                    token,
-                    setToken,
+                    accessToken,
+                    refreshToken,
+                    setAccessToken,
+                    setRefreshToken,
                     loginErr,
                     setLoginErr,
                     signupErr,
@@ -231,7 +260,6 @@ export const UserProvider = ({ children }) => {
                     handleLogout,
                     handleCreate,
                     handleUpdate,
-                    handleUpdateRole,
                     handleAddToCart,
                     handleRemoveFromCart,
                     handleUpdateCardElementQuantity,

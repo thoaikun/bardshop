@@ -1,8 +1,8 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleArrowRight } from '@fortawesome/free-solid-svg-icons'
-import { Link } from 'react-router-dom'
-import useFetchData from '../../../Hooks/useFetchData'
+import useFetchData from '../../hooks/useFetchData'
 
 const PostElement = ({item}) => {
     const [newTitle, setNewTitle] = React.useState('')

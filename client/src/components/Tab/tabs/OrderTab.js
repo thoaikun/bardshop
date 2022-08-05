@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import React from 'react'
-import useFetchData from '../../../Hooks/useFetchData'
+import useFetchData from '../../../hooks/useFetchData'
 
 const OrderCardElement = ({id, quantity}) => {
     const {data} = useFetchData(`http://localhost/php/ass_backend/Product/read/${id}`)

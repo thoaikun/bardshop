@@ -1,7 +1,7 @@
 import React from 'react'
-import UserContext from '../../../Contexts/UserContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import UserContext from '../../contexts/UserContext'
 
 const CartElement = ({ product, handleRemoveFromCart }) => {
     const {handleUpdateCardElementQuantity} = React.useContext(UserContext)

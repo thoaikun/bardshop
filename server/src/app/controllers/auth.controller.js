@@ -71,7 +71,7 @@ class AuthController {
                                         role: user.role
                                     },
                                     process.env.ACCESS_TOKEN_SECRET,
-                                    { expiresIn: '5m' }
+                                    { expiresIn: '10m' }
                                 )
 
                                 authView.renewAccessToken(res, accessToken)

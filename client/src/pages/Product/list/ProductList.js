@@ -1,10 +1,10 @@
 import React from 'react'
-import ProductFilter from './ProductFilter'
-import Card from '../../Card/Card'
-import useFetchData from '../../../Hooks/useFetchData'
-import './ProductList.css'
-import { useParams } from 'react-router'
 import clsx from 'clsx'
+import { useParams } from 'react-router'
+import ProductFilter from './ProductFilter'
+import Card from '../../../components/Card/Card'
+import useFetchData from '../../../hooks/useFetchData'
+import './ProductList.css'
 
 const BrandProduct = ({brand, setCurrentPage, setAllProducts, showProducts, showFilter, setShowFilter}) => {
     const {data} = useFetchData(`http://localhost/php/ass_backend/Product/readByBrand/${brand}`)

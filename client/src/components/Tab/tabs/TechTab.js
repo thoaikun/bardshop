@@ -1,6 +1,5 @@
 import React from 'react'
 import clsx from 'clsx'
-import useFetchData from '../../../Hooks/useFetchData'
 
 const TechTab = ({ product,selectedTab }) => {
     return (
