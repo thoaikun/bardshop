@@ -160,13 +160,13 @@ const validateProduct = (req, res, next) => {
                 sim:            req.body?.sim           ? req.body.sim           : null,
                 os:             req.body?.os            ? req.body.os            : null,
                 nfc:            req.body?.nfc           ? req.body.nfc           : null,
-                support:        req.body.support        ? req.body.support       : null,
-                wifi:           req.body.wifi           ? req.body.wifi          : null,
-                bluetooth:      req.body.bluetooth      ? req.body.bluetooth     : null,
-                gps:            req.body.gps            ? req.body.gps           : null,
-                weight:         req.body.weight         ? req.body.weight        : null,
-                material:       req.body.material       ? req.body.material      : null,
-                border:         req.body.border         ? req.body.material      : null
+                support:        req.body?.support       ? req.body.support       : null,
+                wifi:           req.body?.wifi          ? req.body.wifi          : null,
+                bluetooth:      req.body?.bluetooth     ? req.body.bluetooth     : null,
+                gps:            req.body?.gps           ? req.body.gps           : null,
+                weight:         req.body?.weight        ? req.body.weight        : null,
+                material:       req.body?.material      ? req.body.material      : null,
+                border:         req.body?.border        ? req.body.material      : null
             }
             req.type = req.body?.type ? req.body.type : null
             req.brand = req.body?.brand ? req.body.brand : null
