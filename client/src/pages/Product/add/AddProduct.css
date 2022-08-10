@@ -31,12 +31,21 @@ legend {
     border-image: initial;
 }
 
-.product-form__info {
+.product-form__general,
+.product-form__laptop,
+.product-form__image,
+.product-form__mobile {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
+    row-gap: 2rem;
+    animation: fadeIn 0.5s ease;
+    transition: all 0.5s ease;
 }
-.product-form__info > fieldset {
+
+.product-form__general > fieldset,
+.product-form__laptop > fieldset,
+.product-form__mobile > fieldset {
     flex-basis: 48%;
 }
 .product-form__info button {

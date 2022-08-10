@@ -93,7 +93,7 @@ export const UserProvider = ({ children }) => {
             },
             data : data
         }
-        const response = await axios(config)
+        await axios(config)
         setLogin(false)
         setAccessToken('')
         setRefreshToken('')

@@ -1,12 +1,28 @@
 import React from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router'
+import { useForm } from 'react-hook-form'
 import UserContext from '../../../contexts/UserContext'
 import ToastMessage from '../../../components/ToastMessage/ToastMessage'
 import './AddProduct.css'
+import clsx from 'clsx'
+
+const initalGeneralInfo = {
+    name: '',
+    price: '',
+    star: '',
+    type: '',
+    brand: '',
+    hf1: '',
+    hf2: '',
+    hf3: '',
+    hf4: '',
+    description: '',
+}
 
 const AddProduct = () => {
-    const { login } = React.useContext(UserContext)
+    const { register, handleSubmit} = useForm();
+    const { login, accessToken } = React.useContext(UserContext)
     let navigate = useNavigate()
 
     React.useEffect(() => {
@@ -15,140 +31,46 @@ const AddProduct = () => {
     }, [login])
     
     const [createMessage, setCreateMessage] = React.useState('')
+    const [product, setProduct] = React.useState(initalGeneralInfo)
+    const [createStep, setCreateStep] = React.useState(1)
+    const [createdId, setCreatedId] = React.useState(null)
+    
 
-    const [name, setName] = React.useState('')
-    const [price, setPrice] = React.useState('')
-    const [type, setType] = React.useState('')
-    const [brand, setBrand] = React.useState('')
-    const [imgs, setImgs] = React.useState('')
-    const [review, setReview] = React.useState('')
-    const [description, setDescription] = React.useState('')
-    const [hf1, setHf1] = React.useState('')
-    const [hf2, setHf2] = React.useState('')
-    const [hf3, setHf3] = React.useState('')
-    const [hf4, setHf4] = React.useState('')
-    const [screenSize, setScreenSize] = React.useState('')
-    const [resolution, setResolution] = React.useState('')
-    const [refreshRate, setRefreshRate] = React.useState('')
-    const [screenTech, setScreenTech] = React.useState('')
-    const [backcameraTech, setBackcameraTech] = React.useState('')
-    const [backcameraVideo, setBackcameraVideo] = React.useState('')
-    const [backcameraFeature, setBackcameraFeature] = React.useState('')
-    const [frontcameraTech, setFrontcameraTech] = React.useState('')
-    const [frontcameraVideo, setFrontcameraVideo] = React.useState('')
-    const [chipset, setChipset] = React.useState('')
-    const [cpuTech, setCPUTech] = React.useState('')
-    const [gpu, setGpu] = React.useState('')
-    const [ram, setRam] = React.useState('')
-    const [rom, setRom] = React.useState('')
-    const [batteryCapacity, setBatteryCapacity] = React.useState('')
-    const [batteryTech, setBatteryTech] = React.useState('')
-    const [batteryPort, setBatteryPort] = React.useState('')
-    const [sim, setSim] = React.useState('')
-    const [os, setOS] = React.useState('')
-    const [nfc, setNfc] = React.useState('')
-    const [support, setSupport] = React.useState('')
-    const [wifi, setWifi] = React.useState('')
-    const [bluetooth, setBluetooth] = React.useState('')
-    const [gps, setGPS] = React.useState('')
-    const [deviceSize, setDeviceSize] = React.useState('')
-    const [weight, setWeight] = React.useState('')
-    const [material, setMaterial] = React.useState('')
-    const [sideMaterial, setSideMaterial] = React.useState('')
-
-    const handleCreateProduct = async () => {
-        const data = JSON.stringify({
-            product_name: name,
-            price,
-            type,
-            brand,
-            image: imgs,
-            star_review: review,
-            description: description,
-            hf_1: hf1,
-            hf_2: hf2,
-            hf_3: hf3,
-            hf_4: hf4,
-            screen_size: screenSize,
-            screen_phan_giai: resolution,
-            screen_lam_tuoi: refreshRate,
-            screen_tech: screenTech,
-            backcam_thong_so: backcameraTech,
-            backcam_feature: backcameraFeature,
-            backcam_quay: backcameraVideo,
-            frontcam_thong_so: frontcameraTech,
-            frontcam_video: frontcameraVideo,
-            CPU_chipset: chipset,
-            CPU_GPU: gpu,
-            CPU_thong_so: cpuTech,
-            RAM_dung_luong: ram,
-            RAM_bo_nho_trong: rom,
-            pin_dung_luong: batteryCapacity,
-            pin_cong_sac: batteryPort,
-            pin_sac: batteryTech,
-            communicate_sim: sim,
-            communicate_OS: os,
-            communicate_NFC: nfc,
-            communicate_mang: support,
-            communicate_wifi: wifi,
-            communicate_bluetooth: bluetooth,
-            communicate_GPS: gps,
-            design_size: deviceSize,
-            design_chatluong: material,
-            design_weight: weight,
-            design_khung_vien: sideMaterial
-        })
+    const handleCreateProduct = () => {
+        const data = JSON.stringify(product)
         const config = {
             method: 'post',
-            url: 'http://localhost/php/ass_backend/Product/create',
+            url: 'http://localhost:3500/product/create',
             headers: { 
-              'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
             },
             data : data
         }
-        const respone = await axios(config)
-        setCreateMessage(respone.data.message)
-        if (respone.data.message === 'success') {
-            setName('')
-            setPrice('')
-            setType('')
-            setBrand('')
-            setImgs('')
-            setReview('')
-            setDescription('')
-            setHf1('')
-            setHf2('')
-            setHf3('')
-            setHf4('')
-            setScreenSize('')
-            setResolution('')
-            setRefreshRate('')
-            setScreenTech('')
-            setBackcameraFeature('')
-            setBackcameraTech('')
-            setBackcameraVideo('')
-            setFrontcameraTech('')
-            setFrontcameraVideo('')
-            setCPUTech('')
-            setChipset('')
-            setGpu('')
-            setRam('')
-            setRom('')
-            setBatteryCapacity('')
-            setBatteryTech('')
-            setBatteryPort('')
-            setSim('')
-            setOS('')
-            setNfc('')
-            setSupport('')
-            setWifi('')
-            setBluetooth('')
-            setGPS('')
-            setDeviceSize('')
-            setMaterial('')
-            setWeight('')
-            setSideMaterial('')
+        axios(config)
+            .then(response => {
+                setCreatedId(response.data.id)
+            })
+            .catch(error => console.log(error.response.data))
+    }
+
+    const onSubmitImage = (data) => {
+        const formData = new FormData()
+        data.file?.forEach(file => {
+            formData.append('file', file)
+        })
+
+        const config = {
+            method: 'post',
+            url: `http://localhost:3500/product/upload/${createdId}`,
+            headers: {
+                ...formData.getHeaders()
+            },
+            data: formData
         }
+        axios(config)
+            .then(response => console.log(response.data))
+            .catch(error => console.log(error.response.data))
     }
 
   // handle remove toast message
@@ -168,20 +90,25 @@ const AddProduct = () => {
                     body={`Create new product ${createMessage}`}
                 />
             }
-            <form 
+            <div 
                 className="grid product-form"
-                onSubmit={(e) => e.preventDefault()}
             >
-                <div className="product-form__info">
-                    <fieldset className="product-form__general mb-4">
-                        <legend className='text-muted'>GENERAL</legend>
+                <fieldset 
+                    className={clsx('product-form__general', {
+                        'disappear': createStep !== 1
+                    })}
+                >
+                    <legend className='text-muted'>GENERAL</legend>
+                    <fieldset>
+                        <legend className='text-muted'>INFO</legend>
                         <div className="mb-3">
                             <label className="form-label">Product Name</label>
                             <input 
                                 type="text" 
                                 className="form-control" 
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
+                                value={product.name}
+                                onChange={(e) => setProduct({...product, name: e.target.value})}
+                                required
                             />
                         </div>
                         <div className="mb-3">
@@ -189,8 +116,9 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={price}
-                                onChange={(e) => setPrice(e.target.value)}
+                                value={product.price}
+                                onChange={(e) => setProduct({...product, price: e.target.value})}
+                                required
                             />
                         </div>
                         <div className="mb-3">
@@ -198,68 +126,55 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={review}
-                                onChange={(e) => setReview(e.target.value)}
+                                value={product.star}
+                                onChange={(e) => setProduct({...product, star: e.target.value})}
                             />
                         </div>
                         <div className="mb-3">
                             <label className="form-label">Description</label>
                             <textarea 
                                 className="form-control"
-                                value={description}
-                                onChange={(e) => setDescription(e.target.value)}
+                                value={product.description}
+                                onChange={(e) => setProduct({...product, description: e.target.value})}
                             />
                         </div>
                         <div className='general-info__type-brand'>
                             <div className="mb-3">
                                 <label className="form-label">Type</label>
-                                <input 
+                                <input
                                     type="text" 
                                     className="form-control"
-                                    value={type}
-                                    onChange={(e) => setType(e.target.value)}
+                                    list='typeListOption'
+                                    value={product.type}
+                                    onChange={(e) => setProduct({...product, type: e.target.value})}
+                                    required
                                 />
-                            </div>
-                            <div className="mb-3">
-                                <label className="form-label">Brand</label>
-                                <input 
-                                    className="form-control" 
-                                    list="brandListOption" 
-                                    placeholder="Type to search"
-                                    value={brand}
-                                    onChange={(e) => setBrand(e.target.value)}
-                                />
-                                <datalist id="brandListOption">
-                                    <option value="Samsung"/>
-                                    <option value="Apple"/>
-                                    <option value="Oppo"/>
-                                    <option value="Xiaomi"/>
-                                    <option value="Sony"/>
-                                    <option value="Vivo"/>
-                                    <option value="Realmi"/>
+                                <datalist id="typeListOption">
+                                    <option value="smartphone"/>
+                                    <option value="laptop"/>
                                 </datalist>
                             </div>
                             <div className="mb-3">
-                            <label className="form-label">Imgs</label>
-                            <input 
-                                type="text" 
-                                className="form-control"
-                                value={imgs}
-                                onChange={(e) => setImgs(e.target.value)}
-                            />
-                        </div>
+                                <label className="form-label">Brand</label>
+                                <input
+                                    className="form-control"
+                                    value={product.brand}
+                                    onChange={(e) => setProduct({...product, brand: e.target.value})}
+                                    required
+                                />
+                            </div>
                         </div>
                     </fieldset>
 
-                    <fieldset className='product-form__highligth mb-4'>
+                    <fieldset>
                         <legend className='text-muted'>HIGHLIGTH FEATURE</legend>
                         <div className="mb-3">
                             <label className="form-label">Highlight feature 1</label>
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={hf1}
-                                onChange={(e) => setHf1(e.target.value)}    
+                                value={product.hf1}
+                                onChange={(e) => setProduct({...product, hf1: e.target.value})}    
                             />
                         </div>
                         <div className="mb-3">
@@ -267,8 +182,8 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={hf2}
-                                onChange={(e) => setHf2(e.target.value)}
+                                value={product.hf2}
+                                onChange={(e) => setProduct({...product, hf2: e.target.value})}
                             />
                         </div>
                         <div className="mb-3">
@@ -276,8 +191,8 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={hf3}
-                                onChange={(e) => setHf3(e.target.value)}
+                                value={product.hf3}
+                                onChange={(e) => setProduct({...product, hf3: e.target.value})}
                             />
                         </div>
                         <div className="mb-3">
@@ -285,13 +200,20 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={hf4}
-                                onChange={(e) => setHf4(e.target.value)}
+                                value={product.hf4}
+                                onChange={(e) => setProduct({...product, hf4: e.target.value})}
                             />
                         </div>
                     </fieldset>
+                </fieldset>
 
-                    <fieldset className='product-form__screen mb-4'>
+                <fieldset 
+                    className={clsx('product-form__mobile', {
+                        'disappear': createStep !== 2 || (product.type !== '' && product.type !== 'smartphone')
+                    })}
+                >
+                    <legend className='text-muted'>MOBILE</legend>
+                    <fieldset>
                         <legend className='text-muted'>SCREEN</legend>
                         <div>
                             <div className="mb-3">
@@ -299,8 +221,8 @@ const AddProduct = () => {
                                 <input 
                                     type="text" 
                                     className="form-control"
-                                    value={screenSize}
-                                    onChange={(e) => setScreenSize(e.target.value)}
+                                    value={product.screenSize}
+                                    onChange={(e) => setProduct({...product, screenSize: e.target.value})}
                                 />
                             </div>
                             <div className="mb-3">
@@ -308,8 +230,8 @@ const AddProduct = () => {
                                 <input 
                                     type="text"
                                     className="form-control"
-                                    value={resolution}
-                                    onChange={(e) => setResolution(e.target.value)}
+                                    value={product.resolution}
+                                    onChange={(e) => setProduct({...product, resolution: e.target.value})}
                                 />
                             </div>
                             <div className="mb-3">
@@ -318,8 +240,8 @@ const AddProduct = () => {
                                     className="form-control" 
                                     list="refreshRateListOption" 
                                     placeholder='Type to search'
-                                    value={refreshRate}
-                                    onChange={(e) => setRefreshRate(e.target.value)}
+                                    value={product.refreshRate}
+                                    onChange={(e) => setProduct({...product, refreshRate: e.target.value})}
                                 />
                                 <datalist id="refreshRateListOption">
                                     <option value="60Hz"/>
@@ -328,24 +250,16 @@ const AddProduct = () => {
                                 </datalist>
                             </div>
                         </div>
-                        <div className="mb-3">
-                            <label className="form-label">Tech</label>
-                            <textarea 
-                                className="form-control"
-                                value={screenTech}
-                                onChange={(e) => setScreenTech(e.target.value)}
-                            />
-                        </div>
                     </fieldset>
 
-                    <fieldset className='product-form__backcamera mb-4'>
+                    <fieldset>
                         <legend className='text-muted'>BACK CAMERA</legend>
                         <div className="mb-3">
                             <label className="form-label">Tech</label>
                             <textarea 
                                 className="form-control"
-                                value={backcameraTech}
-                                onChange={(e) => setBackcameraTech(e.target.value)}
+                                value={product.backcam}
+                                onChange={(e) => setProduct({...product, backcam: e.target.value})}
                             />
                         </div>
                         <div className="mb-3">
@@ -353,29 +267,29 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={backcameraVideo}
-                                onChange={(e) => setBackcameraVideo(e.target.value)}
+                                value={product.backcamVideo}
+                                onChange={(e) => setProduct({...product, backcamVideo: e.target.value})}
                             />
                         </div>
                         <div className="mb-3">
                             <label className="form-label">Feature</label>
                             <textarea 
                                 className="form-control"
-                                value={backcameraFeature}
-                                onChange={(e) => setBackcameraFeature(e.target.value)}
+                                value={product.backcamFeature}
+                                onChange={(e) => setProduct({...product, backcamFeature: e.target.value})}
                             />
                         </div>
                     </fieldset>
 
-                    <fieldset className='product-form__frontcamera mb-4'>
+                    <fieldset>
                         <legend className='text-muted'>FRONT CAMERA</legend>
                         <div className="mb-3">
                             <label className="form-label">Tech</label>
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={frontcameraTech}
-                                onChange={(e) => setFrontcameraTech(e.target.value)}
+                                value={product.frontcam}
+                                onChange={(e) => setProduct({...product, frontcam: e.target.value})}
                             />
                         </div>
                         <div className="mb-3">
@@ -383,21 +297,21 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={frontcameraVideo}
-                                onChange={(e) => setFrontcameraVideo(e.target.value)}
+                                value={product.frontcamVideo}
+                                onChange={(e) => setProduct({...product, frontcamVideo: e.target.value})}
                             />
                         </div>
                     </fieldset>
 
-                    <fieldset className='product-form__cpu mb-4'>
+                    <fieldset>
                         <legend className='text-muted'>CPU</legend>
                         <div className="mb-3">
                             <label className="form-label">Chipset</label>
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={chipset}
-                                onChange={(e) => setChipset(e.target.value)}
+                                value={product.cpuChipset}
+                                onChange={(e) => setProduct({...product, cpuChipset: e.target.value})}
                             />
                         </div>
                         <div className="mb-3">
@@ -405,8 +319,8 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={cpuTech}
-                                onChange={(e) => setCPUTech(e.target.value)}
+                                value={product.cpuTech}
+                                onChange={(e) => setProduct({...product, cpuTech: e.target.value})}
                             />
                         </div>
                         <div className="mb-3">
@@ -414,13 +328,13 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={gpu}
-                                onChange={(e) => setGpu(e.target.value)}
+                                value={product.gpu}
+                                onChange={(e) => setProduct({...product, gpu: e.target.value})}
                             />
                         </div>
                     </fieldset>
 
-                    <fieldset className='product-form__storage mb-4'>
+                    <fieldset>
                         <legend className='text-muted'>RAM & ROM</legend>
                         <div className="mb-3">
                             <label className="form-label">Ram capacity</label>
@@ -428,8 +342,8 @@ const AddProduct = () => {
                                 className="form-control" 
                                 list="ramListOption" 
                                 placeholder="Type to search"
-                                value={ram}
-                                onChange={(e) => setRam(e.target.value)}
+                                value={product.ram}
+                                onChange={(e) => setProduct({...product, ram: e.target.value})}
                             />
                             <datalist id="ramListOption">
                                 <option value="4"/>
@@ -445,8 +359,8 @@ const AddProduct = () => {
                                 className="form-control" 
                                 list="romListOption" 
                                 placeholder='Type to search'
-                                value={rom}
-                                onChange={(e) => setRom(e.target.value)}
+                                value={product.rom}
+                                onChange={(e) => setProduct({...product, rom: e.target.value})}
                             />
                             <datalist id="romListOption">
                                 <option value="16"/>
@@ -458,7 +372,7 @@ const AddProduct = () => {
                         </div>
                     </fieldset>
 
-                    <fieldset className='product-form__battery mb-4'>
+                    <fieldset>
                         <legend className='text-muted'>BATTERY</legend>
                         <div className="mb-3">
                             <label className="form-label">Battery capacity</label>
@@ -466,8 +380,8 @@ const AddProduct = () => {
                                 className="form-control" 
                                 list="batteryListOption" 
                                 placeholder='Type to search'
-                                value={batteryCapacity}
-                                onChange={(e) => setBatteryCapacity(e.target.value)}
+                                value={product.batteryCap}
+                                onChange={(e) => setProduct({...product, batteryCap: e.target.value})}
                             />
                             <datalist id='batteryListOption'>
                                 <option value="4000"/>
@@ -481,8 +395,8 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={batteryTech}
-                                onChange={(e) => setBatteryTech(e.target.value)}
+                                value={product.batteryCharge}
+                                onChange={(e) => setProduct({...product, batteryCharge: e.target.value})}
                             />
                         </div>
                         <div className="mb-3">
@@ -490,21 +404,21 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={batteryPort}
-                                onChange={(e) => setBatteryPort(e.target.value)}
+                                value={product.batteryPort}
+                                onChange={(e) => setProduct({...product, batteryPort: e.target.value})}
                             />
                         </div>
                     </fieldset>
 
-                    <fieldset className='product-form__connection mb-4'>
+                    <fieldset>
                         <legend className='text-muted'>CONNECTION</legend>
                         <div className="mb-3">
                             <label className="form-label">Sim card</label>
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={sim}
-                                onChange={(e) => setSim(e.target.value)}
+                                value={product.sim}
+                                onChange={(e) => setProduct({...product, sim: e.target.value})}
                             />
                         </div>
                         <div className="mb-3">
@@ -512,8 +426,8 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={os}
-                                onChange={(e) => setOS(e.target.value)}
+                                value={product.os}
+                                onChange={(e) => setProduct({...product, os: e.target.value})}
                             />
                         </div>
                         <div className="mb-3">
@@ -522,8 +436,8 @@ const AddProduct = () => {
                                 className="form-control" 
                                 list="nfcListOption" 
                                 placeholder='Type to search'
-                                value={nfc}
-                                onChange={(e) => setNfc(e.target.value)}
+                                value={product.nfc}
+                                onChange={(e) => setProduct({...product, nfc: e.target.value})}
                             />
                             <datalist id='nfcListOption'>
                                 <option value="Co"/>
@@ -535,8 +449,8 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={support}
-                                onChange={(e) => setSupport(e.target.value)}
+                                value={product.support}
+                                onChange={(e) => setProduct({...product, support: e.target.value})}
                             />
                         </div>
                         <div className="mb-3">
@@ -544,8 +458,8 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={wifi}
-                                onChange={(e) => setWifi(e.target.value)}
+                                value={product.wifi}
+                                onChange={(e) => setProduct({...product, wifi: e.target.value})}
                             />
                         </div>
                         <div className="mb-3">
@@ -553,8 +467,8 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={bluetooth}
-                                onChange={(e) => setBluetooth(e.target.value)}
+                                value={product.bluetooth}
+                                onChange={(e) => setProduct({...product, bluetooth: e.target.value})}
                             />
                         </div>
                         <div className="mb-3">
@@ -562,30 +476,21 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={gps}
-                                onChange={(e) => setGPS(e.target.value)}
+                                value={product.gps}
+                                onChange={(e) => setProduct({...product, gps: e.target.value})}
                             />
                         </div>
                     </fieldset>
 
-                    <fieldset className='product-form__design mb-4'>
+                    <fieldset>
                         <legend className='text-muted'>DESIGN</legend>
-                        <div className="mb-3">
-                            <label className="form-label">Size</label>
-                            <input 
-                                type="text" 
-                                className="form-control"
-                                value={deviceSize}
-                                onChange={(e) => setDeviceSize(e.target.value)}
-                            />
-                        </div>
                         <div className="mb-3">
                             <label className="form-label">Weight</label>
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={weight}
-                                onChange={(e) => setWeight(e.target.value)}
+                                value={product.weight}
+                                onChange={(e) => setProduct({...product, weight: e.target.value})}
                             />
                         </div>
                         <div className="mb-3">
@@ -593,8 +498,8 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={material}
-                                onChange={(e) => setMaterial(e.target.value)}
+                                value={product.material}
+                                onChange={(e) => setProduct({...product, material: e.target.value})}
                             />
                         </div>
                         <div className="mb-3">
@@ -602,21 +507,283 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={sideMaterial}
-                                onChange={(e) => setSideMaterial(e.target.value)}
+                                value={product.border}
+                                onChange={(e) => setProduct({...product, border: e.target.value})}
                             />
                         </div>
                     </fieldset>
-                </div>
-                    
-                <button 
-                    type="submit" 
-                    className="btn button__submit"
-                    onClick={() => handleCreateProduct()}
+                </fieldset>
+
+                <fieldset 
+                    className={clsx('product-form__laptop', {
+                        'disappear': createStep !== 2 || (product.type !== '' && product.type !== 'laptop')
+                    })}
                 >
-                    Submit
-                </button>
-            </form>
+                    <legend className='text-muted'>LAPTOP</legend>
+
+                    <fieldset>
+                        <legend className='text-muted'>SCREEN</legend>
+                        <div>
+                            <div className="mb-3">
+                                <label className="form-label">Size</label>
+                                <input 
+                                    type="text" 
+                                    className="form-control"
+                                    value={product.screenSize}
+                                    onChange={(e) => setProduct({...product, screenSize: e.target.value})}
+                                />
+                            </div>
+                            <div className="mb-3">
+                                <label className="form-label">Resolution</label>
+                                <input 
+                                    type="text"
+                                    className="form-control"
+                                    value={product.resolution}
+                                    onChange={(e) => setProduct({...product, resolution: e.target.value})}
+                                />
+                            </div>
+                        </div>
+                        <div className="mb-3">
+                            <label className="form-label">Screen Tech</label>
+                            <textarea 
+                                className="form-control"
+                                value={product.refreshRate}
+                                onChange={(e) => setProduct({...product, refreshRate: e.target.value})}
+                            />
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend className='text-muted'>TECH</legend>
+                        <div className="mb-3">
+                            <label className="form-label">CPU</label>
+                            <input 
+                                type="text" 
+                                className="form-control"
+                                value={product.cpu}
+                                onChange={(e) => setProduct({...product, cpu: e.target.value})}
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label className="form-label">GPU</label>
+                            <input 
+                                type="text" 
+                                className="form-control"
+                                value={product.gpu}
+                                onChange={(e) => setProduct({...product, gpu: e.target.value})}
+                            />
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend className='text-muted'>RAM & ROM</legend>
+                        <div className="mb-3">
+                            <label className="form-label">Ram capacity</label>
+                            <input 
+                                className="form-control" 
+                                list="ramListOption" 
+                                placeholder="Type to search"
+                                value={product.ram}
+                                onChange={(e) => setProduct({...product, ram: e.target.value})}
+                            />
+                            <datalist id="ramListOption">
+                                <option value="4"/>
+                                <option value="8"/>
+                                <option value="16"/>
+                                <option value="32"/>
+                            </datalist>
+                        </div>
+                        <div className="mb-3">
+                            <label className="form-label">Rom capacity</label>
+                            <input 
+                                className="form-control" 
+                                list="romListOption" 
+                                placeholder='Type to search'
+                                value={product.rom}
+                                onChange={(e) => setProduct({...product, rom: e.target.value})}
+                            />
+                            <datalist id="romListOption">
+                                <option value="128"/>
+                                <option value="256"/>
+                                <option value="500"/>
+                                <option value="1024"/>
+                            </datalist>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend className='text-muted'>CONNECTION</legend>
+                        <div className="mb-3">
+                            <label className="form-label">OS</label>
+                            <input 
+                                type="text" 
+                                className="form-control"
+                                value={product.os}
+                                onChange={(e) => setProduct({...product, os: e.target.value})}
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label className="form-label">Wifi</label>
+                            <input 
+                                type="text" 
+                                className="form-control"
+                                value={product.wifi}
+                                onChange={(e) => setProduct({...product, wifi: e.target.value})}
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label className="form-label">Bluetooth</label>
+                            <input 
+                                type="text" 
+                                className="form-control"
+                                value={product.bluetooth}
+                                onChange={(e) => setProduct({...product, bluetooth: e.target.value})}
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label className="form-label">Webcam</label>
+                            <input 
+                                type="text" 
+                                className="form-control"
+                                value={product.webcam}
+                                onChange={(e) => setProduct({...product, webcam: e.target.value})}
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label className="form-label">Port</label>
+                            <input 
+                                type="text" 
+                                className="form-control"
+                                value={product.port}
+                                onChange={(e) => setProduct({...product, port: e.target.value})}
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label className="form-label">Battery</label>
+                            <input 
+                                type="text" 
+                                className="form-control"
+                                value={product.battery}
+                                onChange={(e) => setProduct({...product, battery: e.target.value})}
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label className="form-label">Audio</label>
+                            <input 
+                                type="text" 
+                                className="form-control"
+                                value={product.audio}
+                                onChange={(e) => setProduct({...product, audio: e.target.value})}
+                            />
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend className='text-muted'>DESIGN</legend>
+                        <div className="mb-3">
+                            <label className="form-label">Size</label>
+                            <input 
+                                type="text" 
+                                className="form-control"
+                                value={product.size}
+                                onChange={(e) => setProduct({...product, size: e.target.value})}
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label className="form-label">Weight</label>
+                            <input 
+                                type="text" 
+                                className="form-control"
+                                value={product.weight}
+                                onChange={(e) => setProduct({...product, weight: e.target.value})}
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label className="form-label">Material</label>
+                            <input 
+                                type="text" 
+                                className="form-control"
+                                value={product.material}
+                                onChange={(e) => setProduct({...product, material: e.target.value})}
+                            />
+                        </div>
+                    </fieldset>
+                </fieldset>
+
+                {/* image field */}
+                <fieldset 
+                    className={clsx('product-form__image', {
+                        'disappear': createStep !== 3
+                    })}
+                >
+                    <legend className='text-muted'>IMAGE</legend>
+                    <form 
+                        className="mb-3"
+                        // onSubmit={handleSubmit(onSubmitImage)}
+                    >
+                        <label className="form-label">Upload images</label>
+                        <input 
+                            type='file'
+                            // ref={register}
+                            className="form-control"
+                            name='imgs'
+                        />
+                    </form>
+
+                    <button
+                        className='btn btn-success'
+                    >
+                        Upload
+                    </button>
+                </fieldset>
+                
+                {/* button */}
+                <div className='mt-3'>
+                    { createStep > 1 && <button 
+                        type="submit" 
+                        className='btn btn-light me-1'
+                        onClick={() => {
+                            if (createStep === 2)
+                                setProduct({
+                                    name: product.name,
+                                    price: product.price,
+                                    star: product.star,
+                                    type: product.type,
+                                    brand: product.brand,
+                                    hf1: product.hf1,
+                                    hf2: product.hf2,
+                                    hf3: product.hf3,
+                                    hf4: product.hf4,
+                                    description: product.description,
+                                })
+                            setCreateStep(createStep - 1)
+                        }}
+                    >
+                        Previous
+                    </button> }
+                    { createStep === 3 ? 
+                        <button 
+                            type="submit" 
+                            className="btn btn-primary"
+                        >
+                            Submit
+                        </button> :
+                        <button 
+                            type="submit" 
+                            className={clsx('btn btn-primary ms-1', {
+                                'disabled': product.type === ''
+                            })}
+                            onClick={() => {
+                                if (createStep === 2)
+                                    handleCreateProduct()
+                                setCreateStep(createStep + 1)
+                            }}
+                        >
+                            Next
+                        </button>
+                    }
+                </div>
+            </div>
         </div>
     )
 }
