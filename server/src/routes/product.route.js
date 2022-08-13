@@ -6,6 +6,7 @@ const verifyJWT = require('../app/middleware/verifyJWT')
 const verifyRole = require('../app/middleware/verifyRole')
 const productController = require('../app/controllers/product.controller')
 
+router.get('/getByBrand/:brand', productController.getByBrand)
 router.get('/:id', productController.detail)
 router.post(
     '/create',

@@ -7,14 +7,6 @@ import UserContext from '../../../contexts/UserContext'
 import ToastMessage from '../../ToastMessage/ToastMessage'
 
 const Comment = ({ review }) => {
-    const { data } = useFetchData(`http://localhost/php/ass_backend/User/read/${review.user_id}`)
-    const [username, setUsername] = React.useState('unknown')
-
-    React.useEffect(() => {
-        if (data && data?.username)
-            setUsername(data.username)
-    }, [data])
-
     const handleStarPoint = (point) => {
         let pointStar = []
         for (let i=0; i < 5; i++) {
@@ -38,15 +30,18 @@ const Comment = ({ review }) => {
         ))
     }
 
+    let date = new Date(review?.modifiedAt)
+
     return (
         <div className="review__element">
-            <h5 className="mb-2">{username}</h5>
+            <h5 className="mb-2">{review?.userId?.username}</h5>
+            <p className='text-muted mb-2'>{date.toDateString()}</p>
             <div className="mb-2">
                 <div>
-                    {handleStarPoint(review.star_rating)}
+                    {handleStarPoint(review.rating)}
                 </div>
             </div>
-            <p>{review?.data || review?.content}</p>
+            <p>{review?.body}</p>
             <hr/>
         </div>
     )
@@ -54,38 +49,30 @@ const Comment = ({ review }) => {
 
 
 const ReviewTab = ({ id,selectedTab }) => {
-    const {login, token, handleAddComment} = React.useContext(UserContext)
-    const { data:userData } = useFetchData(`http://localhost/php/ass_backend/User/getUser`, token)
-    const { data:productData } = useFetchData(`http://localhost/php/ass_backend/Review/read/${id}`)
+    const {login, handleAddComment} = React.useContext(UserContext)
+    const { data } = useFetchData(`http://localhost:3500/review/${id}`)
     const [reviews, setReviews] = React.useState([])
-    const [user, setUser] = React.useState()
     const [showedReviews, setShowedReviews] = React.useState([])
     const [commentInput, setCommentInput] = React.useState('')
     const [rateInput, setRateInput] = React.useState(0)
     const [addCommentErr, setAddCommentErr] = React.useState('')
 
     React.useEffect(() => {
-        setReviews(productData)
+        setReviews(data?.reviews)
         setShowedReviews([])
-    }, [productData])
-
-    React.useEffect(() => {
-        if (userData && userData?.success && userData.success === 1)
-            setUser(userData.user)
-    }, [userData])
+    }, [data])
 
     React.useEffect(() => {
         let temp = [...showedReviews]
-        for (let i=0; i < Math.min(5, reviews.length); i++) {
+        for (let i=0; i < Math.min(5, reviews?.length); i++) {
             temp.push(reviews[i])
         }
         setShowedReviews(temp)
     }, [reviews])
 
-
     const handleLoadMore = () => {
         let temp = [...showedReviews]
-        for (let i=showedReviews.length; i < Math.min(showedReviews.length+5, reviews.length); i++) {
+        for (let i=showedReviews?.length; i < Math.min(showedReviews?.length+5, reviews?.length); i++) {
             temp.push(reviews[i])
         }
         setShowedReviews(temp)
@@ -109,13 +96,13 @@ const ReviewTab = ({ id,selectedTab }) => {
                     'disappear': selectedTab !== 'Reviews'
                 })}
             >
-                {showedReviews.length !== 0 &&  showedReviews.map((review, i) => (
+                {showedReviews?.length !== 0 &&  showedReviews.map((review, i) => (
                     <Comment 
                         key={i}
                         review={review}
                     />
                 ))}
-                {showedReviews.length === 0 && <p className='fs-5 px-2 mb-3'>No reviews found</p>}
+                {showedReviews?.length === 0 && <p className='fs-5 px-2 mb-3'>No reviews found</p>}
 
                 <div className='review__add mb-3'>
                     <label>Rate</label>
@@ -141,12 +128,11 @@ const ReviewTab = ({ id,selectedTab }) => {
                         })}
                         onClick={() => {
                             const newComment = {
-                                product_id: id,
-                                user_id: user.id,
-                                star_rating: rateInput,
-                                content: commentInput
+                                productId: id,
+                                rating: rateInput,
+                                body: commentInput
                             }
-                            handleAddComment(id, user.id, commentInput, rateInput)
+                            handleAddComment(newComment)
                                 .then(res => {
                                     if (res)
                                         handleLoadNewComment(newComment)
@@ -161,7 +147,7 @@ const ReviewTab = ({ id,selectedTab }) => {
                     </div>
                 </div>
 
-                {showedReviews.length !== reviews.length &&
+                {showedReviews?.length !== reviews?.length &&
                     <div 
                         className="load-more"
                         onClick={handleLoadMore}

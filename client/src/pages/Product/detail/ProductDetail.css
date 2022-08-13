@@ -10,6 +10,7 @@
     box-sizing: border-box;
 }
 .product-img__list {
+    height: 85px;
     margin-top: 2rem;
     display: flex;
     flex-flow: row nowrap;
@@ -29,7 +30,7 @@
     border-radius: 0.5rem;
 }
 .product-img__main>img {
-    width: 100%;
+    width: 100%;    
 }
 
 .product-highlight {

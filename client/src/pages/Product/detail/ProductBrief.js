@@ -8,37 +8,32 @@ import ToastMessage from '../../../components/Card/Card'
 
 const ProductBrief = ({ id }) => {
     const {login, handleAddToCart, addToCartMessage, setAddToCartMessage} = React.useContext(UserContext)
-    const {data} = useFetchData(`http://localhost/php/ass_backend/Product/read/${id}`)
-    const [selectedImg, setSeletedImg] = React.useState(0)
+    const {data} = useFetchData(`http://localhost:3500/product/${id}`)
+    const [selectedImg, setSelectedImg] = React.useState(0)
     const [product, setProduct] = React.useState(null)
     const [imgs, setImgs] = React.useState([])
     const [pointStar, setPointStar] = React.useState([])
-    const [trimName, setTrimName] = React.useState('')
     const [quantity, setQuantity] = React.useState(1)
     const imgListRef = React.useRef(null)
 
+    // handle get data
     React.useEffect(() => {
-        const newlist = data?.image ? data.image.split(',') : []
-        if (newlist)
-            setImgs(newlist)
-        if (data)
-            setProduct(data)
-        setSeletedImg(0)
+        setProduct(data.product)
     }, [data])
 
     // handle preview star
     React.useEffect(() => {
         let temp = []
-        if (product && product?.star_review && product?.product_name) {
+        if (product && product?.star && product?.name) {
             for (let i=0; i < 5; i++) {
-                if (i < product.star_review)
+                if (i < product.star)
                     temp.push(true)
                 else
                     temp.push(false)
             }
-            setTrimName(product.product_name.replaceAll(' ', ''))
         }
         setPointStar(temp)
+        setImgs(product?.imgs)
     }, [product])
 
 
@@ -82,8 +77,8 @@ const ProductBrief = ({ id }) => {
                         {imgs && imgs.map((img, i) => (
                             <img 
                                 key={i}
-                                src={product?.brand && trimName && img ? `http://localhost/php/ass_backend/imgs/products/${product.brand}/${trimName}/${img}` : ''} 
-                                alt={`${trimName}`}
+                                src={product?.brand?.name  ? `http://localhost:3500/imgs/product/${img}` : ''} 
+                                alt={`${img}`}
                                 className={clsx({
                                     'disappear': selectedImg === i ? false : true
                                 })}
@@ -97,20 +92,20 @@ const ProductBrief = ({ id }) => {
                         {imgs && imgs.map((img, i) => (
                             <img 
                                 key={i}
-                                src={product?.brand && trimName && img ? `http://localhost/php/ass_backend/imgs/products/${product.brand}/${trimName}/${img}` : ''} 
-                                alt={`${trimName}`}
+                                src={product?.brand?.name ? `http://localhost:3500/imgs/product/${img}` : ''} 
+                                alt={`${img}`}
                                 className={clsx({
                                     'img--selected': selectedImg === i ? true : false
                                 })}
                                 onClick={() => {
-                                    setSeletedImg(i)
+                                    setSelectedImg(i)
                                 }}
                             />
                         ))}
                     </div>
                 </div>
                 <div className="product-highlight">
-                    <h4 className="mb-3">{product?.product_name ? product.product_name : ''}</h4>
+                    <h3 className="mb-3 fw-bold">{product?.name ? product.name : ''}</h3>
                     <div className="product-highlight__review mb-4">
                         <div>
                             {pointStar.map((item, i) => (
@@ -128,10 +123,10 @@ const ProductBrief = ({ id }) => {
                     <div className="product-highlight__feature mb-4">
                         <p className="lead fw-normal">Highlight feature</p>
                         <ul>
-                            <li>{product?.hf_1 ? product.hf_1 : ''}</li>
-                            <li>{product?.hf_2 ? product.hf_2 : ''}</li>
-                            <li>{product?.hf_3 ? product.hf_3 : ''}</li>
-                            <li>{product?.hf_4 ? product.hf_4 : ''}</li>
+                            <li>{product?.hf1 ? product.hf1 : ''}</li>
+                            <li>{product?.hf2 ? product.hf2 : ''}</li>
+                            <li>{product?.hf3 ? product.hf3 : ''}</li>
+                            <li>{product?.hf4 ? product.hf4 : ''}</li>
                         </ul>
                         <p className="fs-4">
                             Price: 
@@ -165,7 +160,7 @@ const ProductBrief = ({ id }) => {
                                 className="btn button__addcart"
                                 onClick={() => {
                                     if (login)
-                                        handleAddToCart(id, product?.product_name, product?.brand, trimName, imgs, product?.price, quantity)
+                                        handleAddToCart(id, product?.product_name, product?.brand, product?.price, quantity)
                                 }}
                             >
                                 Add to cart

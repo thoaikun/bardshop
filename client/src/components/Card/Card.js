@@ -9,8 +9,6 @@ import './Card.css'
 
 const ProductCard = ({ id, name, price, reviewPoint, images, brand }) => {
     const {login, handleAddToCart, addToCartMessage, setAddToCartMessage} = React.useContext(UserContext)
-    const [trimName, setTrimName] = React.useState('')
-    const [imgs, setImgs] = React.useState([])
     let pointStar = []
 
     for (let i=0; i < 5; i++) {
@@ -21,13 +19,6 @@ const ProductCard = ({ id, name, price, reviewPoint, images, brand }) => {
             pointStar.push(false)
         }
     }
-
-    React.useEffect(() => {
-        if (images && typeof images === 'string')
-            setImgs(images.split(','))
-        if (name)
-            setTrimName(name.replaceAll(' ', ''))
-    }, [name, images])
 
     React.useEffect(() => {
         let tid = setTimeout(() => setAddToCartMessage(null), 1500)
@@ -49,14 +40,14 @@ const ProductCard = ({ id, name, price, reviewPoint, images, brand }) => {
                 <div 
                     className="card-element__img" 
                     style={{
-                        backgroundImage: brand && trimName && imgs ? `url(http://localhost/php/ass_backend/imgs/products/${brand}/${trimName}/${imgs[0]})` : ''
+                        backgroundImage: brand ? `url(http://localhost:3500/imgs/product/${images[images.length - 1]})` : ''
                     }}
                 >
                     <div
                         className="card-element__buybtn"
                         onClick={() => {
                             if (login)
-                                handleAddToCart(id, name, brand, trimName, imgs, price, 1)
+                                handleAddToCart(id, name, brand, price, 1)
                         }}
                     >
                         Add to cart
