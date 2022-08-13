@@ -33,7 +33,6 @@ legend {
 
 .product-form__general,
 .product-form__laptop,
-.product-form__image,
 .product-form__mobile {
     display: flex;
     flex-flow: row wrap;

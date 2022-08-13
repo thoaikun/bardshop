@@ -10,7 +10,7 @@ const LaptopTech = new Schema({
     resolution:     {type: String, default: null},
     screenTech:     {type: String, default: null},
     port:           {type: String, default: null},
-    battery:         {type: String, default: null},
+    battery:        {type: String, default: null},
     os:             {type: String, default: null},
     webcam:         {type: String, default: null},
     wifi:           {type: String, default: null},

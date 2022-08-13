@@ -9,6 +9,16 @@ class ProductView {
             })
     }
 
+    getByBrand(res, products) {
+        res
+            .status(200)
+            .json({
+                result: 'success',
+                size:  products.length,
+                products
+            })
+    }
+
     detail(res, product) {
         res
             .status(200)

@@ -7,7 +7,7 @@ const verifyRole = require('../app/middleware/verifyRole')
 const reviewController = require('../app/controllers/review.controller')
 
 router.get('/:productId', reviewController.getByProductId)
-// router.use(verifyJWT)
+router.use(verifyJWT)
 router.post(
     '/create',
     validateReview, 

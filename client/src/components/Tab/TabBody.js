@@ -12,11 +12,11 @@ import UserContext from '../../contexts/UserContext'
 import useFetchData from '../../hooks/useFetchData'
 
 const ProductTabBody = ({id, selectedTab}) => {
-    const { data } = useFetchData(`http://localhost/php/ass_backend/Product/read/${id}`)
+    const { data } = useFetchData(`http://localhost:3500/product/${id}`)
     const [product, setProduct] = React.useState(null)
 
     React.useEffect(() => {
-        setProduct(data)
+        setProduct(data.product)
     }, [data])
 
     return (
@@ -27,7 +27,8 @@ const ProductTabBody = ({id, selectedTab}) => {
             />
 
             <TechTab
-                product={product}
+                model={product?.techModel}
+                tech={product?.tech}
                 selectedTab={selectedTab}
             />
 

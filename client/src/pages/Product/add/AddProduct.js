@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router'
-import { useForm } from 'react-hook-form'
+import Form from 'react-bootstrap/Form'
 import UserContext from '../../../contexts/UserContext'
 import ToastMessage from '../../../components/ToastMessage/ToastMessage'
 import './AddProduct.css'
@@ -10,18 +10,16 @@ import clsx from 'clsx'
 const initalGeneralInfo = {
     name: '',
     price: '',
-    star: '',
     type: '',
-    brand: '',
-    hf1: '',
-    hf2: '',
-    hf3: '',
-    hf4: '',
-    description: '',
+    brand: ''
+}
+
+const validateProduct = (product) => {
+    const productValues = Object.values(product)
+    return productValues.every(value => value !== '')
 }
 
 const AddProduct = () => {
-    const { register, handleSubmit} = useForm();
     const { login, accessToken } = React.useContext(UserContext)
     let navigate = useNavigate()
 
@@ -33,11 +31,10 @@ const AddProduct = () => {
     const [createMessage, setCreateMessage] = React.useState('')
     const [product, setProduct] = React.useState(initalGeneralInfo)
     const [createStep, setCreateStep] = React.useState(1)
-    const [createdId, setCreatedId] = React.useState(null)
+    const [imageFiles, setImageFiles] = React.useState(null)
     
 
     const handleCreateProduct = () => {
-        const data = JSON.stringify(product)
         const config = {
             method: 'post',
             url: 'http://localhost:3500/product/create',
@@ -45,32 +42,34 @@ const AddProduct = () => {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${accessToken}`
             },
-            data : data
+            data: JSON.stringify(product)
         }
         axios(config)
+            .then(response => handleUploadImage(response.data.id))
             .then(response => {
-                setCreatedId(response.data.id)
+                setCreateMessage(response.data.result)
+                setProduct(initalGeneralInfo)
+                setCreateStep(1)
+                setImageFiles(null)
             })
-            .catch(error => console.log(error.response.data))
+            .catch(error => {
+                console.log(error)
+            })
     }
 
-    const onSubmitImage = (data) => {
+    const handleUploadImage = (createdId) => {
         const formData = new FormData()
-        data.file?.forEach(file => {
-            formData.append('file', file)
-        })
-
+        for (let i =0; i < imageFiles.length; i++)
+            formData.append('imgs', imageFiles[i])
         const config = {
             method: 'post',
             url: `http://localhost:3500/product/upload/${createdId}`,
             headers: {
-                ...formData.getHeaders()
+                'Authorization': `Bearer ${accessToken}`
             },
             data: formData
         }
-        axios(config)
-            .then(response => console.log(response.data))
-            .catch(error => console.log(error.response.data))
+        return axios(config)
     }
 
   // handle remove toast message
@@ -81,6 +80,7 @@ const AddProduct = () => {
             clearTimeout(tid)
         }
     }, [createMessage])
+
 
     return (
         <div className='content'>
@@ -102,31 +102,31 @@ const AddProduct = () => {
                     <fieldset>
                         <legend className='text-muted'>INFO</legend>
                         <div className="mb-3">
-                            <label className="form-label">Product Name</label>
+                            <label className="form-label">Product Name (require)</label>
                             <input 
                                 type="text" 
                                 className="form-control" 
-                                value={product.name}
+                                value={product?.name ? product.name : ''}
                                 onChange={(e) => setProduct({...product, name: e.target.value})}
                                 required
                             />
                         </div>
                         <div className="mb-3">
-                            <label className="form-label">Price</label>
+                            <label className="form-label">Price (require)</label>
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={product.price}
+                                value={product?.price ? product.price : ''}
                                 onChange={(e) => setProduct({...product, price: e.target.value})}
                                 required
                             />
-                        </div>
+                        </div> 
                         <div className="mb-3">
                             <label className="form-label">Review Point</label>
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={product.star}
+                                value={product?.star ? product.star : ''}
                                 onChange={(e) => setProduct({...product, star: e.target.value})}
                             />
                         </div>
@@ -134,18 +134,18 @@ const AddProduct = () => {
                             <label className="form-label">Description</label>
                             <textarea 
                                 className="form-control"
-                                value={product.description}
+                                value={product?.description ? product.description : ''}
                                 onChange={(e) => setProduct({...product, description: e.target.value})}
                             />
                         </div>
                         <div className='general-info__type-brand'>
                             <div className="mb-3">
-                                <label className="form-label">Type</label>
+                                <label className="form-label">Type (require)</label>
                                 <input
                                     type="text" 
                                     className="form-control"
                                     list='typeListOption'
-                                    value={product.type}
+                                    value={product?.type ? product?.type : ''}
                                     onChange={(e) => setProduct({...product, type: e.target.value})}
                                     required
                                 />
@@ -155,10 +155,10 @@ const AddProduct = () => {
                                 </datalist>
                             </div>
                             <div className="mb-3">
-                                <label className="form-label">Brand</label>
+                                <label className="form-label">Brand (require)</label>
                                 <input
                                     className="form-control"
-                                    value={product.brand}
+                                    value={product?.brand ? product.brand : ''}
                                     onChange={(e) => setProduct({...product, brand: e.target.value})}
                                     required
                                 />
@@ -173,7 +173,7 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={product.hf1}
+                                value={product?.hf1 ? product.hf1 : ''}
                                 onChange={(e) => setProduct({...product, hf1: e.target.value})}    
                             />
                         </div>
@@ -182,7 +182,7 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={product.hf2}
+                                value={product?.hf2 ? product.hf2 : ''}
                                 onChange={(e) => setProduct({...product, hf2: e.target.value})}
                             />
                         </div>
@@ -191,7 +191,7 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={product.hf3}
+                                value={product?.hf3 ? product.hf3 : ''}
                                 onChange={(e) => setProduct({...product, hf3: e.target.value})}
                             />
                         </div>
@@ -200,7 +200,7 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={product.hf4}
+                                value={product?.hf4 ? product.hf4 : ''}
                                 onChange={(e) => setProduct({...product, hf4: e.target.value})}
                             />
                         </div>
@@ -221,7 +221,7 @@ const AddProduct = () => {
                                 <input 
                                     type="text" 
                                     className="form-control"
-                                    value={product.screenSize}
+                                    value={product?.screenSize ? product.screenSize : ''}
                                     onChange={(e) => setProduct({...product, screenSize: e.target.value})}
                                 />
                             </div>
@@ -230,7 +230,7 @@ const AddProduct = () => {
                                 <input 
                                     type="text"
                                     className="form-control"
-                                    value={product.resolution}
+                                    value={product?.resolution ? product.resolution : ''}
                                     onChange={(e) => setProduct({...product, resolution: e.target.value})}
                                 />
                             </div>
@@ -240,13 +240,13 @@ const AddProduct = () => {
                                     className="form-control" 
                                     list="refreshRateListOption" 
                                     placeholder='Type to search'
-                                    value={product.refreshRate}
+                                    value={product?.refreshRate ? product.refreshRate : ''}
                                     onChange={(e) => setProduct({...product, refreshRate: e.target.value})}
                                 />
                                 <datalist id="refreshRateListOption">
-                                    <option value="60Hz"/>
-                                    <option value="90Hz"/>
-                                    <option value="120Hz"/>
+                                    <option value="60"/>
+                                    <option value="90"/>
+                                    <option value="120"/>
                                 </datalist>
                             </div>
                         </div>
@@ -258,7 +258,7 @@ const AddProduct = () => {
                             <label className="form-label">Tech</label>
                             <textarea 
                                 className="form-control"
-                                value={product.backcam}
+                                value={product?.backcam ? product.backcam : ''}
                                 onChange={(e) => setProduct({...product, backcam: e.target.value})}
                             />
                         </div>
@@ -267,7 +267,7 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={product.backcamVideo}
+                                value={product?.backcamVideo ? product.backcamVideo : ''}
                                 onChange={(e) => setProduct({...product, backcamVideo: e.target.value})}
                             />
                         </div>
@@ -275,7 +275,7 @@ const AddProduct = () => {
                             <label className="form-label">Feature</label>
                             <textarea 
                                 className="form-control"
-                                value={product.backcamFeature}
+                                value={product?.backcamFeature ? product.backcamFeature : ''}
                                 onChange={(e) => setProduct({...product, backcamFeature: e.target.value})}
                             />
                         </div>
@@ -288,7 +288,7 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={product.frontcam}
+                                value={product?.frontcam ? product.frontcam : ''}
                                 onChange={(e) => setProduct({...product, frontcam: e.target.value})}
                             />
                         </div>
@@ -297,7 +297,7 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={product.frontcamVideo}
+                                value={product?.frontcamVideo ? product.frontcamVideo : ''}
                                 onChange={(e) => setProduct({...product, frontcamVideo: e.target.value})}
                             />
                         </div>
@@ -310,7 +310,7 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={product.cpuChipset}
+                                value={product?.cpuChipset ? product.cpuChipset : ''}
                                 onChange={(e) => setProduct({...product, cpuChipset: e.target.value})}
                             />
                         </div>
@@ -319,7 +319,7 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={product.cpuTech}
+                                value={product?.cpuTech ? product.cpuTech : ''}
                                 onChange={(e) => setProduct({...product, cpuTech: e.target.value})}
                             />
                         </div>
@@ -328,7 +328,7 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={product.gpu}
+                                value={product?.gpu ? product.gpu : ''}
                                 onChange={(e) => setProduct({...product, gpu: e.target.value})}
                             />
                         </div>
@@ -342,7 +342,7 @@ const AddProduct = () => {
                                 className="form-control" 
                                 list="ramListOption" 
                                 placeholder="Type to search"
-                                value={product.ram}
+                                value={product?.ram ? product.ram : ''}
                                 onChange={(e) => setProduct({...product, ram: e.target.value})}
                             />
                             <datalist id="ramListOption">
@@ -359,7 +359,7 @@ const AddProduct = () => {
                                 className="form-control" 
                                 list="romListOption" 
                                 placeholder='Type to search'
-                                value={product.rom}
+                                value={product?.rom ? product.rom : ''}
                                 onChange={(e) => setProduct({...product, rom: e.target.value})}
                             />
                             <datalist id="romListOption">
@@ -380,7 +380,7 @@ const AddProduct = () => {
                                 className="form-control" 
                                 list="batteryListOption" 
                                 placeholder='Type to search'
-                                value={product.batteryCap}
+                                value={product?.batteryCap ? product.batteryCap : ''}
                                 onChange={(e) => setProduct({...product, batteryCap: e.target.value})}
                             />
                             <datalist id='batteryListOption'>
@@ -395,7 +395,7 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={product.batteryCharge}
+                                value={product?.batteryCharge ? product.batteryCharge : ''}
                                 onChange={(e) => setProduct({...product, batteryCharge: e.target.value})}
                             />
                         </div>
@@ -404,7 +404,7 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={product.batteryPort}
+                                value={product?.batteryPort ? product.batteryPort : ''}
                                 onChange={(e) => setProduct({...product, batteryPort: e.target.value})}
                             />
                         </div>
@@ -417,7 +417,7 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={product.sim}
+                                value={product?.sim ? product.sim : ''}
                                 onChange={(e) => setProduct({...product, sim: e.target.value})}
                             />
                         </div>
@@ -426,7 +426,7 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={product.os}
+                                value={product?.os ? product.os : ''}
                                 onChange={(e) => setProduct({...product, os: e.target.value})}
                             />
                         </div>
@@ -436,7 +436,7 @@ const AddProduct = () => {
                                 className="form-control" 
                                 list="nfcListOption" 
                                 placeholder='Type to search'
-                                value={product.nfc}
+                                value={product?.nfc ? product.nfc : ''}
                                 onChange={(e) => setProduct({...product, nfc: e.target.value})}
                             />
                             <datalist id='nfcListOption'>
@@ -449,7 +449,7 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={product.support}
+                                value={product?.support ? product.support : ''}
                                 onChange={(e) => setProduct({...product, support: e.target.value})}
                             />
                         </div>
@@ -458,7 +458,7 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={product.wifi}
+                                value={product?.wifi ? product.wifi : ''}
                                 onChange={(e) => setProduct({...product, wifi: e.target.value})}
                             />
                         </div>
@@ -467,7 +467,7 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={product.bluetooth}
+                                value={product?.bluetooth ? product.bluetooth : ''}
                                 onChange={(e) => setProduct({...product, bluetooth: e.target.value})}
                             />
                         </div>
@@ -476,7 +476,7 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={product.gps}
+                                value={product?.gps ? product.gps : ''}
                                 onChange={(e) => setProduct({...product, gps: e.target.value})}
                             />
                         </div>
@@ -489,7 +489,7 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={product.weight}
+                                value={product?.weight ? product.weight : ''}
                                 onChange={(e) => setProduct({...product, weight: e.target.value})}
                             />
                         </div>
@@ -498,7 +498,7 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={product.material}
+                                value={product?.material ? product.material : ''}
                                 onChange={(e) => setProduct({...product, material: e.target.value})}
                             />
                         </div>
@@ -507,7 +507,7 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={product.border}
+                                value={product?.border ? product.border : ''}
                                 onChange={(e) => setProduct({...product, border: e.target.value})}
                             />
                         </div>
@@ -529,7 +529,7 @@ const AddProduct = () => {
                                 <input 
                                     type="text" 
                                     className="form-control"
-                                    value={product.screenSize}
+                                    value={product?.screenSize ? product.screenSize : ''}
                                     onChange={(e) => setProduct({...product, screenSize: e.target.value})}
                                 />
                             </div>
@@ -538,7 +538,7 @@ const AddProduct = () => {
                                 <input 
                                     type="text"
                                     className="form-control"
-                                    value={product.resolution}
+                                    value={product?.resolution ? product.resolution : ''}
                                     onChange={(e) => setProduct({...product, resolution: e.target.value})}
                                 />
                             </div>
@@ -547,8 +547,8 @@ const AddProduct = () => {
                             <label className="form-label">Screen Tech</label>
                             <textarea 
                                 className="form-control"
-                                value={product.refreshRate}
-                                onChange={(e) => setProduct({...product, refreshRate: e.target.value})}
+                                value={product?.screenTech ? product.screenTech : ''}
+                                onChange={(e) => setProduct({...product, screenTech: e.target.value})}
                             />
                         </div>
                     </fieldset>
@@ -560,7 +560,7 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={product.cpu}
+                                value={product?.cpu ? product.cpu : ''}
                                 onChange={(e) => setProduct({...product, cpu: e.target.value})}
                             />
                         </div>
@@ -569,7 +569,7 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={product.gpu}
+                                value={product?.gpu ? product.gpu : ''}
                                 onChange={(e) => setProduct({...product, gpu: e.target.value})}
                             />
                         </div>
@@ -583,7 +583,7 @@ const AddProduct = () => {
                                 className="form-control" 
                                 list="ramListOption" 
                                 placeholder="Type to search"
-                                value={product.ram}
+                                value={product?.ram ? product.ram : ''}
                                 onChange={(e) => setProduct({...product, ram: e.target.value})}
                             />
                             <datalist id="ramListOption">
@@ -599,7 +599,7 @@ const AddProduct = () => {
                                 className="form-control" 
                                 list="romListOption" 
                                 placeholder='Type to search'
-                                value={product.rom}
+                                value={product?.rom ? product.rom : ''}
                                 onChange={(e) => setProduct({...product, rom: e.target.value})}
                             />
                             <datalist id="romListOption">
@@ -618,7 +618,7 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={product.os}
+                                value={product?.os ? product.os : ''}
                                 onChange={(e) => setProduct({...product, os: e.target.value})}
                             />
                         </div>
@@ -627,7 +627,7 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={product.wifi}
+                                value={product?.wifi ? product.wifi : ''}
                                 onChange={(e) => setProduct({...product, wifi: e.target.value})}
                             />
                         </div>
@@ -636,7 +636,7 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={product.bluetooth}
+                                value={product?.bluetooth ? product.bluetooth : ''}
                                 onChange={(e) => setProduct({...product, bluetooth: e.target.value})}
                             />
                         </div>
@@ -645,7 +645,7 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={product.webcam}
+                                value={product?.webcam ? product.webcam : ''}
                                 onChange={(e) => setProduct({...product, webcam: e.target.value})}
                             />
                         </div>
@@ -654,7 +654,7 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={product.port}
+                                value={product?.port ? product.port : ''}
                                 onChange={(e) => setProduct({...product, port: e.target.value})}
                             />
                         </div>
@@ -663,7 +663,7 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={product.battery}
+                                value={product?.battery ? product.battery : ''}
                                 onChange={(e) => setProduct({...product, battery: e.target.value})}
                             />
                         </div>
@@ -672,7 +672,7 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={product.audio}
+                                value={product?.audio ? product.audio : ''}
                                 onChange={(e) => setProduct({...product, audio: e.target.value})}
                             />
                         </div>
@@ -685,7 +685,7 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={product.size}
+                                value={product?.size ? product.size : ''}
                                 onChange={(e) => setProduct({...product, size: e.target.value})}
                             />
                         </div>
@@ -694,7 +694,7 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={product.weight}
+                                value={product?.weight ? product.weight : ''}
                                 onChange={(e) => setProduct({...product, weight: e.target.value})}
                             />
                         </div>
@@ -703,7 +703,7 @@ const AddProduct = () => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={product.material}
+                                value={product?.material ? product.material : ''}
                                 onChange={(e) => setProduct({...product, material: e.target.value})}
                             />
                         </div>
@@ -717,24 +717,15 @@ const AddProduct = () => {
                     })}
                 >
                     <legend className='text-muted'>IMAGE</legend>
-                    <form 
-                        className="mb-3"
-                        // onSubmit={handleSubmit(onSubmitImage)}
-                    >
-                        <label className="form-label">Upload images</label>
-                        <input 
-                            type='file'
-                            // ref={register}
-                            className="form-control"
-                            name='imgs'
+                    
+                    <Form.Group controlId="formFileMultiple" className="mb-3">
+                        <Form.Label>Add product images</Form.Label>
+                        <Form.Control 
+                            type="file" 
+                            multiple 
+                            onChange={(e) => setImageFiles(e.target.files)}
                         />
-                    </form>
-
-                    <button
-                        className='btn btn-success'
-                    >
-                        Upload
-                    </button>
+                    </Form.Group>
                 </fieldset>
                 
                 {/* button */}
@@ -765,19 +756,16 @@ const AddProduct = () => {
                         <button 
                             type="submit" 
                             className="btn btn-primary"
+                            onClick={() => handleCreateProduct()}
                         >
                             Submit
                         </button> :
                         <button 
                             type="submit" 
                             className={clsx('btn btn-primary ms-1', {
-                                'disabled': product.type === ''
+                                'disabled': !validateProduct(product)
                             })}
-                            onClick={() => {
-                                if (createStep === 2)
-                                    handleCreateProduct()
-                                setCreateStep(createStep + 1)
-                            }}
+                            onClick={() => setCreateStep(createStep + 1)}
                         >
                             Next
                         </button>

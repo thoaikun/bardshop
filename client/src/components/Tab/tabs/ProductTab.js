@@ -6,39 +6,27 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons'
 import ToastMessage from '../../ToastMessage/ToastMessage'
 import useFetchData from '../../../hooks/useFetchData'
+import UserContext from '../../../contexts/UserContext'
 
 const ProductTableElement = ({id, name, images, brand, createdDate, modifiedDate, handleDelete}) => {
-    const [trimName, setTrimName] = React.useState('')
-    const [imgs, setImgs] = React.useState([])
-
-    React.useEffect(() => {
-        if (images && typeof images === 'string')
-            setImgs(images.split(','))
-        if (name)
-            setTrimName(name.replaceAll(' ', ''))
-    }, [name, images])
-
     return (
         <tr>
-            <td>{id ? id : ''}</td>
             <td>{name ? name : ''}</td>
             <td>
-                <img src={`http://localhost/php/ass_backend/imgs/products/${brand}/${trimName}/${imgs[0]}`} alt={trimName} style={{width: '200px'}}/>
+                <img src={`http://localhost:3500/imgs/product/${images[images?.length - 1]}`} alt={name} style={{width: '200px'}}/>
             </td>
-            <td>{createdDate}</td>
-            <td>{modifiedDate}</td>
+            <td>{new Date(createdDate).toDateString()}</td>
+            <td>{new Date(modifiedDate).toDateString()}</td>
             <td>
-                <form 
-                    style={{marginBottom: '1rem'}}
-                    onSubmit={e => e.preventDefault()}
+                <div 
+                    className="btn btn-danger mb-2"
+                    onClick={() => {
+                        if (window.confirm('Are you sure want to delete this item ?'))
+                            handleDelete(id)
+                    }}
                 >
-                    <div 
-                        className="btn btn-danger"
-                        onClick={() => handleDelete(id)}
-                    >
-                        <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
-                    </div>
-                </form>
+                    <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
+                </div>
                 <Link 
                     to={`/products/edit/${id}`}
                     className="btn btn-primary"
@@ -51,13 +39,13 @@ const ProductTableElement = ({id, name, images, brand, createdDate, modifiedDate
 }
 
 const ProductTab = ({selectedTab}) => {
-    const {data} = useFetchData('http://localhost/php/ass_backend/Product/read')
+    const {accessToken} = React.useContext(UserContext)
+    const {data} = useFetchData('http://localhost:3500/product')
     const [products, setProducts] = React.useState([])
     const [deleteMessage, setDeleteMessage] = React.useState('')
 
-
     React.useEffect(() => {
-        setProducts(data)
+        setProducts(data.products)
     }, [data])
 
     // handle remove toast message
@@ -70,13 +58,22 @@ const ProductTab = ({selectedTab}) => {
     }, [deleteMessage])
 
     const handleDelete = async (id) => {
-        if (id !== undefined) {
-            const res = await axios.get(`http://localhost/php/ass_backend/Product/delete/${id}`)
-            if (res.data.message === 'success') {
-                let newList = products.filter((product) => product.id !== id)
-                setProducts(newList)
+        if (id) {
+            const config = {
+                method: 'delete',
+                url: `http://localhost:3500/product/delete/${id}`,
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${accessToken}`
+                },
             }
-            setDeleteMessage(res.data.message)
+            axios(config)
+                .then(response => {
+                    let newList = products.filter((product) => product._id !== id)
+                    setProducts(newList)
+                    setDeleteMessage(response.data.result)
+                })
+                .catch(error => setDeleteMessage(error.response.data.result))
         }
     }
 
@@ -100,7 +97,6 @@ const ProductTab = ({selectedTab}) => {
                 <table className="item-table">
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Product name</th>
                             <th>Picture</th>
                             <th>Created</th>
@@ -110,21 +106,21 @@ const ProductTab = ({selectedTab}) => {
                     </thead>
 
                     <tbody>
-                        {products.length !== 0 && products.map((product, i) => (
+                        {products?.length !== 0 && products?.map((product, i) => (
                             <ProductTableElement  
                                 key={i}
-                                id={product?.id ? product.id : ''}
-                                name={product?.product_name ? product.product_name : ''}
-                                images={product?.image ? product.image : ''}
-                                brand={product?.brand ? product.brand : ''}
-                                createdDate={product?.time_create ? product.time_create : ''}
-                                modifiedDate={product?.time_modified ? product.time_modified : ''}
+                                id={product?._id ? product._id : ''}
+                                name={product?.name ? product.name : ''}
+                                images={product?.imgs ? product.imgs : ''}
+                                brand={product?.brand?.name ? product.brand?.name : ''}
+                                createdDate={product?.createdAt ? product.createdAt : ''}
+                                modifiedDate={product?.modifiedAt ? product.modifiedAt : ''}
                                 handleDelete={handleDelete}
                             />
                         ))}
                     </tbody>
                 </table>
-                {products && products.length === 0 && <p className='text-muted fs-4 pt-2'>No products found</p>}
+                {products && products?.length === 0 && <p className='text-muted fs-4 pt-2'>No products found</p>}
             </div>
         </>
     )

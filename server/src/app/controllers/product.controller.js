@@ -22,10 +22,26 @@ class ProductController {
             })
     }
 
+    //[GET] /product/getByBrand/:brand
+    getByBrand(req, res) {
+        let brand = req.params.brand
+        if (brand) {
+            Brand.findOne({name: brand})
+                .then(brand => Product.find({brand}).populate('type tech brand'))                    
+                .then(products => productView.getByBrand(res, products))
+                .catch(err => {
+                    writeLog(err.message, 'Product')
+                    productView.error(res, 1)
+                })
+        }
+    }
+
+    //[GET] /product/search/
+
     //[GET] /product/:id
     detail(req, res) {
         let _id = req.params.id
-        Product.find({_id}).populate('type brand tech')
+        Product.findOne({_id}).populate('type brand tech')
             .then(product => productView.detail(res, product))
             .catch((err) => {
                 writeLog(err.message, 'Product')
@@ -101,6 +117,7 @@ class ProductController {
                 productView.error(res, 9)
             }
             else {
+                console.log(files)
                 let imgNames = []
                 files?.imgs?.forEach(file => {
                     imgNames.push(file.newFilename)
@@ -108,7 +125,10 @@ class ProductController {
 
                 Product.findOneAndUpdate({_id}, {imgs: imgNames})
                     .then(() => productView.upload(res))
-                    .catch(() => productView.error(res, 9))
+                    .catch((err) => {
+                        writeLog(err.message, 'Product')
+                        productView.error(res, 9)
+                    })
             }
         })
     }
@@ -130,17 +150,6 @@ class ProductController {
                     }
                     else 
                         req.product.brand = brand._id
-                    return Type.findOne({name: req.type})
-                })
-                .then(type => {
-                    if (req.type === 'smartphone' || req.type === 'tablet') {
-                        req.product.tech = tech._id
-                        req.product.techModel = 'MoblieTech'
-                    }
-                    else if (req.type === 'laptop') {
-                        req.product.tech = tech._id
-                        req.product.techModel = 'LaptopTech'
-                    }
                     return Product.findOne({_id})
                 })
                 .then(oldProduct => {

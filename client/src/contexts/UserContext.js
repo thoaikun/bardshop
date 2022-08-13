@@ -213,20 +213,15 @@ export const UserProvider = ({ children }) => {
         setOrderMessage(response.data.message)
     }
 
-    const handleAddComment = async (productId, userId, comment, rate) => {
-        const data = JSON.stringify({
-            product_id: productId,
-            user_id: userId,
-            star_rating: rate,
-            content: comment
-        })
+    const handleAddComment = async (comment) => {
         const config = {
             method: 'post',
-            url: 'http://localhost/php/ass_backend/Review/create',
+            url: 'http://localhost:3500/review/create',
             headers: { 
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${accessToken}`
             },
-            data : data
+            data : JSON.stringify(comment)
         }
         const response = await axios(config)
         if (response.data.message === 'error')
