@@ -478,3 +478,8 @@
 ::1 - - [05/Aug/2022:13:03:46 +0000] "GET /user HTTP/1.1" 200 203 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36"
 ::1 - - [05/Aug/2022:13:03:47 +0000] "GET /user HTTP/1.1" - - "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36"
 ::1 - - [05/Aug/2022:13:03:47 +0000] "GET /user HTTP/1.1" 200 203 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36"
+::1 - - [13/Aug/2022:08:01:57 +0000] "GET /user HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36"
+::1 - - [13/Aug/2022:08:01:57 +0000] "GET /user HTTP/1.1" 200 265 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36"
+::1 - - [13/Aug/2022:08:01:57 +0000] "GET /user HTTP/1.1" 200 265 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36"
+::1 - - [13/Aug/2022:08:01:57 +0000] "GET /user HTTP/1.1" - - "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36"
+::1 - - [13/Aug/2022:08:01:57 +0000] "GET /user HTTP/1.1" 200 265 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36"
