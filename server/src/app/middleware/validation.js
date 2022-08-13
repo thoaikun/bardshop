@@ -139,37 +139,60 @@ const validateProduct = (req, res, next) => {
                 hf4:            req.body?.hf4           ? req.body.hf4           : null,
                 description:    req.body?.description   ? req.body.description   : null
             }
-            req.tech = {
-                screenSize:     req.body?.screenSize    ? req.body.screenSize    : null,
-                screenTech:     req.body?.screenTech    ? req.body.screenTech    : null,
-                resolution:     req.body?.resolution    ? req.body.resolution    : null,
-                refeshRate:     req.body?.refeshRate    ? req.body.refeshRate    : null,
-                backcam:        req.body?.backcam       ? req.body.backcam       : null,
-                backcamVideo:   req.body?.backcamVideo  ? req.body.backcamVideo  : null,
-                backcamFeature: req.body?.backcamFeature? req.body.backcamFeature: null,
-                frontcam:       req.body?.frontcam      ? req.body.frontcam      : null,
-                frontcamVideo:  req.body?.frontcamVideo ? req.body.frontcamVideo : null,
-                cpuChipset:     req.body?.cpuChipset    ? req.body.cpuChipset    : null,
-                cpuTech:        req.body?.cpuTech       ? req.body.cpuTech       : null,        
-                gpu:            req.body?.gpu           ? req.body.gpu           : null,
-                ram:            req.body?.ram           ? req.body.ram           : null,
-                rom:            req.body?.rom           ? req.body.ram           : null,
-                bateryCap:      req.body?.bateryCap     ? req.body.bateryCap     : null,
-                bateryCharge:   req.body?.bateryCharge  ? req.body.bateryCharge  : null,
-                bateryPort:     req.body?.bateryPort    ? req.body.bateryPort    : null,
-                sim:            req.body?.sim           ? req.body.sim           : null,
-                os:             req.body?.os            ? req.body.os            : null,
-                nfc:            req.body?.nfc           ? req.body.nfc           : null,
-                support:        req.body.support        ? req.body.support       : null,
-                wifi:           req.body.wifi           ? req.body.wifi          : null,
-                bluetooth:      req.body.bluetooth      ? req.body.bluetooth     : null,
-                gps:            req.body.gps            ? req.body.gps           : null,
-                weight:         req.body.weight         ? req.body.weight        : null,
-                material:       req.body.material       ? req.body.material      : null,
-                border:         req.body.border         ? req.body.material      : null
+            req.type = req.body.type
+            req.brand = req.body.brand
+            if (req.type === 'smartphone' || req.type === 'tablet') {
+
+                req.tech = {
+                    screenSize:     req.body?.screenSize    ? req.body.screenSize    : null,
+                    screenTech:     req.body?.screenTech    ? req.body.screenTech    : null,
+                    resolution:     req.body?.resolution    ? req.body.resolution    : null,
+                    refreshRate:    req.body?.refreshRate   ? req.body.refreshRate   : null,
+                    backcam:        req.body?.backcam       ? req.body.backcam       : null,
+                    backcamVideo:   req.body?.backcamVideo  ? req.body.backcamVideo  : null,
+                    backcamFeature: req.body?.backcamFeature? req.body.backcamFeature: null,
+                    frontcam:       req.body?.frontcam      ? req.body.frontcam      : null,
+                    frontcamVideo:  req.body?.frontcamVideo ? req.body.frontcamVideo : null,
+                    cpuChipset:     req.body?.cpuChipset    ? req.body.cpuChipset    : null,
+                    cpuTech:        req.body?.cpuTech       ? req.body.cpuTech       : null,        
+                    gpu:            req.body?.gpu           ? req.body.gpu           : null,
+                    ram:            req.body?.ram           ? req.body.ram           : null,
+                    rom:            req.body?.rom           ? req.body.rom           : null,
+                    batteryCap:     req.body?.batteryCap   ? req.body.batteryCap    : null,
+                    batteryCharge:  req.body?.batteryCharge? req.body.batteryCharge : null,
+                    batteryPort:    req.body?.batteryPort  ? req.body.batteryPort   : null,
+                    sim:            req.body?.sim           ? req.body.sim           : null,
+                    os:             req.body?.os            ? req.body.os            : null,
+                    nfc:            req.body?.nfc           ? req.body.nfc           : null,
+                    support:        req.body?.support       ? req.body.support       : null,
+                    wifi:           req.body?.wifi          ? req.body.wifi          : null,
+                    bluetooth:      req.body?.bluetooth     ? req.body.bluetooth     : null,
+                    gps:            req.body?.gps           ? req.body.gps           : null,
+                    weight:         req.body?.weight        ? req.body.weight        : null,
+                    material:       req.body?.material      ? req.body.material      : null,
+                    border:         req.body?.border        ? req.body.material      : null
+                }
             }
-            req.type = req.body?.type ? req.body.type : null
-            req.brand = req.body?.brand ? req.body.brand : null
+            else if (req.type === 'laptop')
+                req.tech = {
+                    screenSize:     req.body?.screenSize    ? req.body.screenSize    : null,
+                    screenTech:     req.body?.screenTech    ? req.body.screenTech    : null,
+                    resolution:     req.body?.resolution    ? req.body.resolution    : null,
+                    webcam:         req.body?.webcam        ? req.body.webcam        : null,
+                    cpu:            req.body?.cpu           ? req.body.cpu           : null,        
+                    gpu:            req.body?.gpu           ? req.body.gpu           : null,
+                    ram:            req.body?.ram           ? req.body.ram           : null,
+                    rom:            req.body?.rom           ? req.body.rom           : null,
+                    battery:        req.body?.battery       ? req.body.battery        : null,
+                    os:             req.body?.os            ? req.body.os            : null,
+                    wifi:           req.body?.wifi          ? req.body.wifi          : null,
+                    bluetooth:      req.body?.bluetooth     ? req.body.bluetooth     : null,
+                    audio:          req.body?.audio         ? req.body.audio         : null,
+                    port:           req.body?.port          ? req.body.port          : null,
+                    size:           req.body?.size          ? req.body.size          : null,
+                    weight:         req.body?.weight        ? req.body.weight        : null,
+                    material:       req.body?.material      ? req.body.material      : null,
+                }
             return next()
         }
     }
@@ -201,7 +224,7 @@ const validateReview = (req, res, next) => {
         else {
             req.review = {
                 productId: req.body.productId,
-                userId: req.body.userId,
+                userId: req.id,
                 rating: req.body.rating,
                 body: req.body.body
             }

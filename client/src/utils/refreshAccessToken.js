@@ -1,7 +1,6 @@
 import axios from "axios"
 
 const refreshAccessToken = (refreshToken) => {
-    let result = ''
     const data = JSON.stringify({
         refreshToken
     })

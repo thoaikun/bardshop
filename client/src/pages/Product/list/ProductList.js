@@ -7,9 +7,9 @@ import useFetchData from '../../../hooks/useFetchData'
 import './ProductList.css'
 
 const BrandProduct = ({brand, setCurrentPage, setAllProducts, showProducts, showFilter, setShowFilter}) => {
-    const {data} = useFetchData(`http://localhost/php/ass_backend/Product/readByBrand/${brand}`)
+    const {data} = useFetchData(`http://localhost:3500/product/getByBrand/${brand}`)
     React.useEffect(() => {
-        setAllProducts(data)
+        setAllProducts(data.products)
         setCurrentPage(0)
     }, [data])
 
@@ -32,14 +32,14 @@ const BrandProduct = ({brand, setCurrentPage, setAllProducts, showProducts, show
                     <div className="cardlist">
                         {Array.isArray(showProducts) && showProducts.map((product) => (
                             <Card 
-                                key={product.id}
-                                id={product.id}
-                                name={product.product_name}
+                                key={product._id}
+                                id={product._id}
+                                name={product.name}
                                 price={product.price}
-                                reviewPoint={product.star_review}
-                                images={product.image}
-                                type={product.type}
-                                brand={product.brand}
+                                reviewPoint={product.star}
+                                images={product.imgs}
+                                type={product.type.name}
+                                brand={product.brand.name}
                             />
                         ))}
                     </div>
@@ -53,9 +53,9 @@ const BrandProduct = ({brand, setCurrentPage, setAllProducts, showProducts, show
 }
 
 const AllProduct = ({setAllProducts, showProducts, showFilter, setShowFilter}) => {
-    const {data, fetchErr} = useFetchData('http://localhost/php/ass_backend/Product/read')
+    const {data, fetchErr} = useFetchData('http://localhost:3500/product')
     React.useEffect(() => {
-        setAllProducts(data)
+        setAllProducts(data?.products)
     }, [data])
 
     return (
@@ -76,14 +76,14 @@ const AllProduct = ({setAllProducts, showProducts, showFilter, setShowFilter}) =
                         <div className="cardlist">
                             {showProducts && !fetchErr && showProducts.map((product) => (
                                 <Card 
-                                    key={product.id}
-                                    id={product.id}
-                                    name={product.product_name}
+                                    key={product._id}
+                                    id={product._id}
+                                    name={product.name}
                                     price={product.price}
-                                    reviewPoint={product.star_review}
-                                    images={product.image}
-                                    type={product.type}
-                                    brand={product.brand}
+                                    reviewPoint={product.star}
+                                    images={product.imgs}
+                                    type={product.type.name}
+                                    brand={product.brand.name}
                                 />
                             ))}
                         </div>
@@ -111,13 +111,13 @@ const ProductList = () => {
     }, [currentPage])
 
     React.useEffect(()  => {
-        let len = allProducts.length
+        let len = allProducts?.length
         setTotalPage(Math.ceil(len / 10))
-        setShowProducts(allProducts.slice(currentPage*10, currentPage*10+10))
+        setShowProducts(allProducts?.slice(currentPage*10, currentPage*10+10))
     }, [allProducts])
     
     React.useEffect(() => {
-        setShowProducts(allProducts.slice(currentPage*10, currentPage*10+10))
+        setShowProducts(allProducts?.slice(currentPage*10, currentPage*10+10))
     }, [currentPage])
 
     const handleForwardPage = () => {
@@ -147,11 +147,11 @@ const ProductList = () => {
                     setShowFilter={setShowFilter}
                 />}
             </div>
-            {showFilter && <ProductFilter 
+            {/* {showFilter && <ProductFilter 
                 showFilter={showFilter} 
                 setShowFilter={setShowFilter}
                 setAllProducts={setAllProducts}
-            />}
+            />} */}
             <div className="list-direction">
                 <div
                     className={clsx({

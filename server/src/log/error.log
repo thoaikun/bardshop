@@ -1,1 +1,200 @@
-[Fri Aug 05 2022 19:10:10 GMT+0700 (Indochina Time)] Auth.controller Cannot read properties of null (reading 'username')
+[Thu Aug 11 2022 11:03:13 GMT+0700 (Indochina Time)] Product.controller E11000 duplicate key error collection: bardshop.products index: name_1 dup key: { name: "iPhone 14" }
+[Thu Aug 11 2022 11:06:13 GMT+0700 (Indochina Time)] Product.controller E11000 duplicate key error collection: bardshop.products index: name_1 dup key: { name: "iPhone 14" }
+[Thu Aug 11 2022 15:04:16 GMT+0700 (Indochina Time)] Auth.controller Cannot read properties of null (reading 'username')
+[Thu Aug 11 2022 15:04:16 GMT+0700 (Indochina Time)] Auth.controller Cannot read properties of null (reading 'username')
+[Thu Aug 11 2022 15:04:16 GMT+0700 (Indochina Time)] Auth.controller Cannot read properties of null (reading 'username')
+[Thu Aug 11 2022 15:13:16 GMT+0700 (Indochina Time)] Auth.controller Cannot read properties of null (reading 'username')
+[Thu Aug 11 2022 15:13:16 GMT+0700 (Indochina Time)] Auth.controller Cannot read properties of null (reading 'username')
+[Thu Aug 11 2022 15:13:16 GMT+0700 (Indochina Time)] Auth.controller Cannot read properties of null (reading 'username')
+[Thu Aug 11 2022 15:28:00 GMT+0700 (Indochina Time)] Auth.controller Cannot read properties of null (reading 'username')
+[Thu Aug 11 2022 15:37:01 GMT+0700 (Indochina Time)] Auth.controller Cannot read properties of null (reading 'username')
+[Thu Aug 11 2022 15:46:00 GMT+0700 (Indochina Time)] Auth.controller Cannot read properties of null (reading 'username')
+[Thu Aug 11 2022 16:10:54 GMT+0700 (Indochina Time)] Auth.controller Cannot read properties of null (reading 'username')
+[Thu Aug 11 2022 16:14:44 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "Xiaomi" (type string) at path "_id" for model "Product"
+[Thu Aug 11 2022 16:16:51 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "Xiaomi" (type string) at path "_id" for model "Product"
+[Thu Aug 11 2022 16:16:59 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "xiaomi" (type string) at path "_id" for model "Product"
+[Thu Aug 11 2022 16:19:54 GMT+0700 (Indochina Time)] Auth.controller Cannot read properties of null (reading 'username')
+[Sat Aug 13 2022 08:08:31 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 08:08:31 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 08:15:11 GMT+0700 (Indochina Time)] Product.controller LaptopTech validation failed: weight: Cast to Number failed for value "2.2 kg" (type string) at path "weight"
+[Sat Aug 13 2022 08:15:22 GMT+0700 (Indochina Time)] Product.controller LaptopTech validation failed: weight: Cast to Number failed for value "2.2 kg" (type string) at path "weight"
+[Sat Aug 13 2022 08:42:15 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 08:42:15 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 08:43:56 GMT+0700 (Indochina Time)] Auth.controller Cannot read properties of null (reading 'username')
+[Sat Aug 13 2022 08:43:56 GMT+0700 (Indochina Time)] Auth.controller Cannot read properties of null (reading 'username')
+[Sat Aug 13 2022 08:43:57 GMT+0700 (Indochina Time)] Auth.controller Cannot read properties of null (reading 'username')
+[Sat Aug 13 2022 08:43:57 GMT+0700 (Indochina Time)] Auth.controller Cannot read properties of null (reading 'username')
+[Sat Aug 13 2022 08:43:58 GMT+0700 (Indochina Time)] Auth.controller Cannot read properties of null (reading 'username')
+[Sat Aug 13 2022 08:48:14 GMT+0700 (Indochina Time)] Auth.controller Cannot read properties of null (reading 'username')
+[Sat Aug 13 2022 08:48:43 GMT+0700 (Indochina Time)] Auth.controller Cannot read properties of null (reading 'username')
+[Sat Aug 13 2022 08:51:45 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 08:51:45 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 09:05:50 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 09:05:50 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 09:05:50 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 09:05:50 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 09:06:48 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 09:06:48 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 09:06:48 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 09:06:48 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 09:06:50 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 09:06:50 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 09:06:50 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 09:06:50 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 09:07:16 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 09:07:16 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 09:07:16 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 09:07:16 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 09:08:28 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 09:08:28 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 09:08:28 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 09:08:28 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 09:08:47 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 09:08:47 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 09:08:47 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 09:08:47 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 09:09:08 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 09:09:08 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 09:09:08 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 09:09:08 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 09:09:41 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 09:09:41 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 09:09:41 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 09:09:41 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 09:09:43 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 09:09:43 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 09:09:43 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 09:09:43 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 09:16:16 GMT+0700 (Indochina Time)] Auth.controller Cannot read properties of null (reading 'username')
+[Sat Aug 13 2022 09:16:16 GMT+0700 (Indochina Time)] Auth.controller Cannot read properties of null (reading 'username')
+[Sat Aug 13 2022 09:16:16 GMT+0700 (Indochina Time)] Auth.controller Cannot read properties of null (reading 'username')
+[Sat Aug 13 2022 09:16:16 GMT+0700 (Indochina Time)] Auth.controller Cannot read properties of null (reading 'username')
+[Sat Aug 13 2022 09:17:28 GMT+0700 (Indochina Time)] Auth.controller Cannot read properties of null (reading 'username')
+[Sat Aug 13 2022 09:17:28 GMT+0700 (Indochina Time)] Auth.controller Cannot read properties of null (reading 'username')
+[Sat Aug 13 2022 09:36:17 GMT+0700 (Indochina Time)] Auth.controller Cannot read properties of null (reading 'username')
+[Sat Aug 13 2022 09:36:17 GMT+0700 (Indochina Time)] Auth.controller Cannot read properties of null (reading 'username')
+[Sat Aug 13 2022 09:36:17 GMT+0700 (Indochina Time)] Auth.controller Cannot read properties of null (reading 'username')
+[Sat Aug 13 2022 09:36:17 GMT+0700 (Indochina Time)] Auth.controller Cannot read properties of null (reading 'username')
+[Sat Aug 13 2022 09:36:18 GMT+0700 (Indochina Time)] Auth.controller Cannot read properties of null (reading 'username')
+[Sat Aug 13 2022 09:52:41 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 09:52:41 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 09:52:41 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 09:52:41 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 09:56:21 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 09:56:21 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 09:56:21 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 09:56:21 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 09:57:42 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 09:57:42 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 09:57:42 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 09:57:42 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 09:59:18 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 09:59:18 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 09:59:18 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 09:59:18 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 09:59:43 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 09:59:43 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 09:59:43 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 09:59:43 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 09:59:57 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 09:59:57 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 09:59:57 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 09:59:57 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 10:00:03 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 10:00:03 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 10:00:03 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 10:00:03 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 10:00:06 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 10:00:06 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 10:00:06 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 10:00:06 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 10:00:25 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 10:00:25 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 10:00:25 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 10:00:25 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 10:00:30 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 10:00:30 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 10:00:30 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 10:00:30 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 10:00:39 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 10:00:39 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 10:00:39 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 10:00:39 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 10:00:42 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 10:00:42 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 10:00:42 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 10:00:42 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 10:07:24 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 10:07:24 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 10:07:24 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 10:07:24 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 10:07:54 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 10:07:54 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 10:07:54 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 10:07:54 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 10:09:42 GMT+0700 (Indochina Time)] Auth.controller Cannot read properties of null (reading 'username')
+[Sat Aug 13 2022 10:09:42 GMT+0700 (Indochina Time)] Auth.controller Cannot read properties of null (reading 'username')
+[Sat Aug 13 2022 10:14:07 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 10:14:07 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 10:14:07 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 10:14:07 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 10:15:59 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 10:15:59 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 10:15:59 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 10:15:59 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 10:16:59 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 10:16:59 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 10:16:59 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 10:16:59 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 10:22:59 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 10:22:59 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 10:22:59 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 10:22:59 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 10:23:10 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 10:23:10 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 10:23:10 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 10:23:10 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 10:23:35 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 10:23:35 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 10:23:35 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 10:23:35 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 10:23:52 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 10:23:52 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 10:23:52 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 10:23:52 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 11:17:58 GMT+0700 (Indochina Time)] Product.controller tech is not defined
+[Sat Aug 13 2022 11:20:59 GMT+0700 (Indochina Time)] Product.controller tech is not defined
+[Sat Aug 13 2022 11:22:52 GMT+0700 (Indochina Time)] Product.controller tech is not defined
+[Sat Aug 13 2022 14:31:10 GMT+0700 (Indochina Time)] Product.controller tech is not defined
+[Sat Aug 13 2022 14:32:01 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 14:32:01 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 14:32:01 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 14:32:01 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 14:33:43 GMT+0700 (Indochina Time)] Product.controller tech is not defined
+[Sat Aug 13 2022 14:35:31 GMT+0700 (Indochina Time)] Auth.controller Cannot read properties of null (reading 'username')
+[Sat Aug 13 2022 14:35:31 GMT+0700 (Indochina Time)] Auth.controller Cannot read properties of null (reading 'username')
+[Sat Aug 13 2022 14:35:31 GMT+0700 (Indochina Time)] Auth.controller Cannot read properties of null (reading 'username')
+[Sat Aug 13 2022 14:35:31 GMT+0700 (Indochina Time)] Auth.controller Cannot read properties of null (reading 'username')
+[Sat Aug 13 2022 14:35:31 GMT+0700 (Indochina Time)] Auth.controller Cannot read properties of null (reading 'username')
+[Sat Aug 13 2022 14:35:31 GMT+0700 (Indochina Time)] Auth.controller Cannot read properties of null (reading 'username')
+[Sat Aug 13 2022 14:41:37 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 14:41:37 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 14:41:37 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 14:41:37 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 14:43:48 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 14:43:48 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 14:43:48 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 14:43:48 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 14:45:57 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 14:45:57 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 14:45:57 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 14:45:57 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 14:46:29 GMT+0700 (Indochina Time)] Product.controller Cast to Number failed for value "90Hz" (type string) at path "refreshRate"
+[Sat Aug 13 2022 14:50:16 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 14:50:16 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 14:50:16 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 14:50:16 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 14:51:21 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 14:51:21 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
+[Sat Aug 13 2022 14:51:21 GMT+0700 (Indochina Time)] Review.controller Cast to ObjectId failed for value "undefined" (type string) at path "productId" for model "Review"
+[Sat Aug 13 2022 14:51:21 GMT+0700 (Indochina Time)] Product.controller Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Product"
