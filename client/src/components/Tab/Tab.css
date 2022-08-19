@@ -15,6 +15,7 @@
 .tab-option>div {
     display: flex;
     flex-flow: row wrap;
+    overflow-x: auto;
 }
 
 .tab-option>div>div {

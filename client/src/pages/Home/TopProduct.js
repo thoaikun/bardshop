@@ -9,12 +9,12 @@ const TopProduct = () => {
     const [hotProducts, setHotProducts] = React.useState([])
     const cardListRef = React.useRef(null)
     const hotTabRef = React.useRef(null)
-    const {data} = useFetchData('http://localhost/php/ass_backend/Product/read')
+    const {data} = useFetchData('http://localhost:3500/product')
 
     React.useEffect(() => {
-        if (data.length !== 0) {
-            let random = Math.floor((Math.random() * 1000) % data.length)
-            setHotProducts(data.slice(random, random + 6))
+        if (data.size !== 0) {
+            let random = Math.floor((Math.random() * 1000) % data?.size)
+            setHotProducts(data?.products?.slice(random, random + 6))
         }
     }, [data])
 
@@ -63,19 +63,19 @@ const TopProduct = () => {
                     ref={cardListRef} 
                     className="cardlist"
                 >
-                    {hotProducts && hotProducts.length !== 0 && hotProducts.map((product) => (
+                    {hotProducts && hotProducts?.length !== 0 && hotProducts?.map((product) => (
                         <Card 
-                            key={product.id}
-                            id={product.id}
-                            name={product.product_name}
+                            key={product._id}
+                            id={product._id}
+                            name={product.name}
                             price={product.price}
-                            reviewPoint={product.star_review}
-                            images={product.image}
-                            type={product.type}
-                            brand={product.brand}
+                            reviewPoint={product.star}
+                            images={product.imgs}
+                            type={product.type.name}
+                            brand={product.brand.name}
                         />
                     ))}
-                    {hotProducts && hotProducts.length === 0 && <p>No product found</p>}
+                    {hotProducts && hotProducts?.length === 0 && <p>No product found</p>}
                 </div>
             </div>
         </div>

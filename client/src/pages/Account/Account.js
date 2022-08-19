@@ -30,7 +30,7 @@ const Account = () => {
     return (
         <div className='content'>
             <Tab
-                tabNames={role === 'admin'  ? ['Profile', 'Products', 'Post', 'Users'] : 
+                tabNames={role === 'admin'  ? ['Profile', 'Products', 'Post', 'Users', 'Order'] : 
                           role === 'editor' ? ['Profile', 'Post'] : ['Profile', 'Order']
                         }
                 role={role}

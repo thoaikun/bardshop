@@ -27,7 +27,7 @@ root.render(
                 <Routes>
                     <Route path='/' element={<App />}>
                         <Route index element={<Home />}></Route>
-                        <Route path="account/:id" element={<Account/>}></Route>
+                        <Route path="account" element={<Account/>}></Route>
                         <Route path="products">
                             <Route index element={<ProductList/>}></Route>
                             <Route path=":brand" element={<ProductList/>}></Route>
@@ -37,8 +37,8 @@ root.render(
                         </Route>
                         <Route path="news">
                             <Route index element={<News/>}></Route>
-                            <Route path=":id" element={<NewDetail/>}></Route>
-                            <Route path="add/:userid" element={<AddNew/>}></Route>
+                            <Route path="detail/:id" element={<NewDetail/>}></Route>
+                            <Route path="add" element={<AddNew/>}></Route>
                             <Route path="edit/:id" element={<EditNew/>}></Route>
                         </Route>
                         <Route path="cart" element={<Cart />}></Route>

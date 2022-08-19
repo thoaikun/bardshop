@@ -9,11 +9,14 @@
   font-style: italic;
   text-align: center;
 }
-.new-detail .cdx-simple-image__picture {
-  text-align: center;
+.new-detail .image-tool__image-picture {
+  margin: auto;
 }
-.new-detail .cdx-simple-image__picture > img {
-  width: 80%;
+.new-detail .image-tool__caption {
+  width: fit-content;
+  border: none;
+  margin: auto;
+  box-shadow: none;
 }
 .new-detail .codex-editor__redactor {
   padding-bottom: 0 !important;
@@ -31,6 +34,7 @@
 
 .ce-paragraph {
   font-size: 1.2rem;
+  text-indent: 1.5rem;
 }
 
 @media (max-width: 576px) {

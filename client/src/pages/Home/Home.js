@@ -1,6 +1,6 @@
 import React from 'react'
 import AdSlider from './AdSlider'
-import NewArrvial from './NewArrvial'
+import NewArrival from './NewArrival'
 import TopProduct from './TopProduct'
 import NewestNews from './NewestNews'
 import Banner from './Banner'
@@ -15,7 +15,7 @@ const Home = () => {
     return (
         <div className='content'>
             <AdSlider />
-            <NewArrvial />
+            <NewArrival />
             <Banner />
             <TopProduct />
             <NewestNews />

@@ -77,6 +77,25 @@
     position: relative;
 }
 
+
+.user__cart {
+    position: relative;
+}
+.user__cart--has-product::before {
+    content: attr(number);
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    border-radius: 50%;
+    color: white;
+    background-color: rgb(224, 48, 16);
+    font-size: 0.8rem;
+
+    position: absolute;
+    top: -10px;
+    right: -5px;
+}
+
 .offcanvas-start {
     background-color: whitesmoke;
     width: 500px;

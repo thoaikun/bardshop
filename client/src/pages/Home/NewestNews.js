@@ -5,31 +5,22 @@ import { faCircleArrowRight } from '@fortawesome/free-solid-svg-icons'
 import useFetchData from '../../hooks/useFetchData'
 
 const PostElement = ({item}) => {
-    const [newTitle, setNewTitle] = React.useState('')
-
-    React.useEffect(() => {
-        if (item && item?.blocks) {
-            if (item.blocks[0]?.data?.text)
-                setNewTitle(item.blocks[0].data.text)
-        }
-    }, [item])
-
     return (
         <div className="card-element border border-1">
             <div 
                 className="card-element__img" 
                 style={{
-                    backgroundImage: 'url(./imgs/news.jpg)'
+                    backgroundImage: `url(${item?.thumnail})`
                 }}
             >        
             </div>
             <div className="card-element__detail p-3">
                 <p className="text-muted pb-1">News</p>
                 <Link 
-                    to={item && item?.id ? `news/${item.id}` : ''}
+                    to={item && item?._id ? `news/${item._id}` : ''}
                     className='fw-bold py-1'
                 >
-                    {newTitle}
+                    {item?.title}
                 </Link>
             </div>
         </div>
@@ -38,11 +29,11 @@ const PostElement = ({item}) => {
 
 const NewestNews = () => {
     const [news, setNews] = React.useState([])
-    const {data} = useFetchData('http://localhost/php/ass_backend/Post/read')
+    const {data} = useFetchData('http://localhost:3500/post')
 
     React.useEffect(() => {
-        if (data && data.length !== 0)
-            setNews(data.slice(0, 3))
+        if (data && data?.size !== 0)
+            setNews(data?.posts?.slice(0, 3))
     }, [data])
 
     return (
@@ -58,7 +49,7 @@ const NewestNews = () => {
                 </Link>
             </div>
             <div className="cardlist">
-                {news && news.length !== 0 && news.map((item, i) => (
+                {news && news?.length !== 0 && news?.map((item, i) => (
                     <PostElement 
                         key={i}
                         item={item}

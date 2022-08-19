@@ -88,6 +88,7 @@ const AdminHeader = ({ tabNames, selectedTab, setSelectedTab }) => {
     const productRef = React.useRef()
     const postRef = React.useRef()
     const userRef = React.useRef()
+    const customerOrderRef = React.useRef()
 
 
     const handleClickTab = (index) => {
@@ -105,9 +106,13 @@ const AdminHeader = ({ tabNames, selectedTab, setSelectedTab }) => {
                 tabLineRef.current.style.width = postRef.current.offsetWidth + 'px'
                 tabLineRef.current.style.left = postRef.current.offsetLeft + 'px'
             }
-            else {
+            else if (index === 3) {
                 tabLineRef.current.style.width = userRef.current.offsetWidth + 'px'
                 tabLineRef.current.style.left = userRef.current.offsetLeft + 'px'
+            }
+            else if (index === 4) {
+                tabLineRef.current.style.width = customerOrderRef.current.offsetWidth + 'px'
+                tabLineRef.current.style.left = customerOrderRef.current.offsetLeft + 'px'
             }
         }
     }
@@ -127,9 +132,13 @@ const AdminHeader = ({ tabNames, selectedTab, setSelectedTab }) => {
                     tabLineRef.current.style.width = postRef.current.offsetWidth + 'px'
                     tabLineRef.current.style.left = postRef.current.offsetLeft + 'px'
                 }
-                else {
+                else if (selectedTab === 'Users') {
                     tabLineRef.current.style.width = userRef.current.offsetWidth + 'px'
                     tabLineRef.current.style.left = userRef.current.offsetLeft + 'px'
+                }
+                else {
+                    tabLineRef.current.style.width = customerOrderRef.current.offsetWidth + 'px'
+                    tabLineRef.current.style.left = customerOrderRef.current.offsetLeft + 'px'
                 }
             }
         })
@@ -152,7 +161,8 @@ const AdminHeader = ({ tabNames, selectedTab, setSelectedTab }) => {
                         ref={
                             tab === 'Profile' ? profileRef :
                             tab === 'Products' ? productRef :
-                            tab === 'Post' ? postRef : userRef
+                            tab === 'Post' ? postRef : 
+                            tab === 'Users' ? userRef : customerOrderRef
                         }
                     >
                         <img 
@@ -256,7 +266,7 @@ const TabHeader = ({tabNames, selectedTab, setSelectedTab}) => {
                     setSelectedTab={setSelectedTab}
                 />
             }
-            {tabNames.length === 4 && 
+            {tabNames.length === 5 && 
                 <AdminHeader 
                     tabNames={tabNames}
                     selectedTab={selectedTab}

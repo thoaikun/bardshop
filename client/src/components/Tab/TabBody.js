@@ -8,6 +8,7 @@ import ProductTab from './tabs/ProductTab'
 import BriefTab from './tabs/BriefTab'
 import UsersTab from './tabs/UsersTab'
 import NewsTab from './tabs/NewsTab'
+import CustomerOrderTab from './tabs/CustomerOrderTab'
 import UserContext from '../../contexts/UserContext'
 import useFetchData from '../../hooks/useFetchData'
 
@@ -90,9 +91,11 @@ const AdminView = ({selectedTab }) => {
             />
             <NewsTab 
                 selectedTab={selectedTab}
-                user={user}
             />
             <UsersTab
+                selectedTab={selectedTab}
+            />
+            <CustomerOrderTab
                 selectedTab={selectedTab}
             />
         </>

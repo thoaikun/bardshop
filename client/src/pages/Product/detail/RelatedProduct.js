@@ -3,7 +3,7 @@ import useFetchData from '../../../hooks/useFetchData'
 import Card from '../../../components/Card/Card'
 
 const RelatedProduct = ({ brand,id }) => {
-    const { data, fetchErr } = useFetchData(`http://localhost/php/ass_backend/Product/readByBrand/${brand}`)
+    const { data, fetchErr } = useFetchData(`http://localhost:3500/product/getByBrand/${brand}`)
     const [relatedList, setRelatedList] = React.useState([])
     const cardListRef = React.useRef(null)
     const relatedProductRef = React.useRef(null)
@@ -13,11 +13,11 @@ const RelatedProduct = ({ brand,id }) => {
     }, [])
 
     React.useEffect(() => {
-        const newList = data.filter(p => p.id != id)
-        if (newList.length < 4)
+        const newList = data?.products?.filter(p => p.id != id)
+        if (newList?.length < 4)
             setRelatedList(newList)
         else 
-            setRelatedList(newList.slice(Math.floor(Math.random() * (newList.length - 0 + 1) + 0)))
+            setRelatedList(newList?.slice(Math.floor(Math.random() * (newList?.length - 0 + 1) + 0)))
     }, [data, id])
 
     React.useEffect(() => {
@@ -43,19 +43,19 @@ const RelatedProduct = ({ brand,id }) => {
             </div>
     
             <div className="related-product__list cardlist" ref={cardListRef}>
-                {relatedList.length != 0 && !fetchErr && relatedList.map((product) => (
+                {relatedList?.length !== 0 && !fetchErr && relatedList?.map((product) => (
                     <Card 
-                        key={product.id}
-                        id={product.id}
-                        name={product.product_name}
+                        key={product._id}
+                        id={product._id}
+                        name={product.name}
                         price={product.price}
-                        reviewPoint={product.star_review}
-                        images={product.image}
-                        type={product.type}
-                        brand={product.brand}
+                        reviewPoint={product.star}
+                        images={product.imgs}
+                        type={product.type.name}
+                        brand={product.brand.name}
                     />
                  ) )}
-                {relatedList.length == 0 && <p>No related product found</p>}
+                {relatedList?.length == 0 && <p>No related product found</p>}
             </div>
         </div>
     )

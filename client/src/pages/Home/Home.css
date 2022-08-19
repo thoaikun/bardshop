@@ -67,7 +67,7 @@
 
 .post .card-element {
     flex-basis: 32%;
-    height: 400px;
+    height: fit-content;
 }   
 
 .post__header {

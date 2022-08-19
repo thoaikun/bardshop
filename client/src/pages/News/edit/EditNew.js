@@ -5,7 +5,7 @@ import swal from 'sweetalert'
 import EditorJS from '@editorjs/editorjs'
 import List from '@editorjs/list'
 import Embed from '@editorjs/embed'
-import SimpleImage from '@editorjs/simple-image'
+import ImageTool from '@editorjs/image'
 import Header from '@editorjs/header'
 import UserContext from '../../../contexts/UserContext'
 import useFetchData from '../../../hooks/useFetchData'
@@ -13,8 +13,8 @@ import './EditNew.css'
 
 const EditNew = () => {
     const { id } = useParams()
-    const { login } = React.useContext(UserContext)
-    const {data} = useFetchData(`http://localhost/php/ass_backend/Post/read/${id}`)
+    const { login, accessToken } = React.useContext(UserContext)
+    const {data} = useFetchData(`http://localhost:3500/post/${id}`)
     const [postExist, setPostExist] = React.useState(false)
     const [editor, setEditor] = React.useState(null)
     let navigate = useNavigate()
@@ -26,62 +26,70 @@ const EditNew = () => {
     }, [])
 
     React.useEffect(() => {
-        let date = new Date(data.time)
-            const content = {
-                time: date.getTime(),
-                version: data.version,
-                blocks: data.blocks
-            }
-            setEditor(new EditorJS({
-                holder: 'postEditorjs',
-                tools: {
-                    header: Header,
-                    list: {
-                        class: List,
-                        inlineToolbar: true,
-                        config: {
-                            defaultStyle: 'unordered'
-                        }
-                    },
-                    embed: Embed,
-                    image: SimpleImage,
+        let date = new Date(data?.post?.time)
+        const content = {
+            time: date.getTime(),
+            version: data?.post?.version,
+            blocks: data?.post?.blocks
+        }
+        setEditor(new EditorJS({
+            holder: 'postEditorjs',
+            tools: {
+                header: Header,
+                list: {
+                    class: List,
+                    inlineToolbar: true,
+                    config: {
+                        defaultStyle: 'unordered'
+                    }
                 },
-                placeholder: 'Write you post here!',
-                data: content
-            }))
-            setPostExist(true)
+                image: {
+                    class: ImageTool,
+                    config: {
+                        endpoints: {
+                            byFile: 'http://localhost:3500/post/upload', // Your backend file uploader endpoint
+                            byUrl: 'http://localhost:3500/post/upload', // Your endpoint that provides uploading by Url
+                        }
+                    }
+                },
+                embed: Embed,
+            },
+            placeholder: 'Write you post here!',
+            data: content
+        }))
+        setPostExist(true)
     }, [data])
 
-    const handleUpdatePost = async (outputData, id) => {
+    const handleUpdatePost = (outputData, id) => {
         let data = JSON.stringify({ 
-            post_id: id,
+            id: id,
             version: outputData?.version,
             blocks: outputData?.blocks
         })
         const config = {
-            method: 'post',
-            url: `http://localhost/php/ass_backend/Post/update/${id}`,
+            method: 'put',
+            url: `http://localhost:3500/post/edit`,
             headers: { 
-              'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
             },
             data : data
         }
-        const respone = await axios(config)
-        console.log(respone.data)
-        if (respone.data.message === 'success') {
-            swal({
-                title: "Congratulations",
-                text: "A new post has been create",
-                icon: "success",
+        axios(config)
+            .then(() => {
+                swal({
+                    title: "Congratulations",
+                    text: "A new post has been updated",
+                    icon: "success",
+                })
             })
-        }
-        else {
-            swal({
-                title: "Error",
-                text: "Something wrong happened",
-                icon: "error",
+            .catch(() => {
+                swal({
+                    title: "Error",
+                    text: "Something wrong happened",
+                    icon: "error",
+                })
             })
-        }
     }
 
     const handleSubmitPost = () => {
@@ -95,7 +103,7 @@ const EditNew = () => {
     }
 
     return (
-        <div className='content'>
+        <div className='content edit-news'>
             <div id='postEditorjs'></div>
             {!postExist && <p className='text-muted fs-4 d-flex justify-content-center pt-4'>No news founded</p>}
             <div className="d-flex justify-content-center">

@@ -37,10 +37,9 @@ a {
   text-decoration: none !important;
 }
 
-li {
-  list-style-type: none;
+td {
+  padding: 0.5rem !important;
 }
-
 /* ***** BASE HTML SETTING ******* */
 
 .grid {
@@ -194,17 +193,15 @@ li {
 
 /* ******* RESPONSIVE ******* */
 @media (max-width: 992px) {
-
   .tab {
       flex-flow: column nowrap;
       row-gap: 1rem;
   }
-  .tab-option {
-      flex-direction: row;
-      justify-content: center;
+  .tab-option > div {
+      flex-flow: row nowrap;
   }
   .tab-option>div>div {
-      flex-basis: 25%;
+      flex-basis: 150px;
   }
   .tab-option-detail {
       padding: 0 1rem 1rem 1rem;
@@ -226,9 +223,6 @@ li {
 
   .tab-option {
       height: 55px;
-  }
-  .tab-option>div>div {
-      flex-basis: 25%;
   }
   .tab-option>div>div>img {
       display: none;

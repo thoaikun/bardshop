@@ -31,7 +31,7 @@ export const UserProvider = ({ children }) => {
                     .then(response => response.data?.accessToken ? setAccessToken(response.data.accessToken) : null)
                     .catch((error) => console.log(error))
                 
-            }, 9*60*1000))
+            }, 7*60*1000))
         }
         else {
             removeUserCookies('accessToken')
@@ -156,12 +156,11 @@ export const UserProvider = ({ children }) => {
             })
     }
 
-    const handleAddToCart = (id, name, brand, trimName, imgs, price, quantity) => {
+    const handleAddToCart = (id, name, brand, imgs, price, quantity) => {
         const newItem = {
             id, 
             name,
             brand,
-            trimName, 
             imgs, 
             price,
             quantity
@@ -191,26 +190,27 @@ export const UserProvider = ({ children }) => {
 
     const handleOrder = async (userId, cartList) => {
         const data = {
-            user_id: userId,
-            product_list: []
+            orderList: []
         }
         cartList.forEach(product => {
-            data.product_list.push({
-                product_id: product.id,
+            data.orderList.push({
+                productId: product.id,
                 quantity: product.quantity
             })
         })
         console.log(data)
         const config = {
             method: 'post',
-            url: 'http://localhost/php/ass_backend/Order/create',
+            url: 'http://localhost:3500/order/create',
             headers: { 
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${accessToken}`
             },
             data : JSON.stringify(data)
         }
-        const response = await axios(config)
-        setOrderMessage(response.data.message)
+        axios(config)
+            .then(response => setOrderMessage(response.data.result))
+            .catch(error => setOrderMessage(error?.response?.data?.result))
     }
 
     const handleAddComment = async (comment) => {

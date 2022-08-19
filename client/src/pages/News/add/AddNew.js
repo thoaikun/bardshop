@@ -1,27 +1,18 @@
 import React from 'react'
 import axios from 'axios'
-import { useNavigate, useParams } from 'react-router'
+import { useNavigate } from 'react-router'
 import swal from 'sweetalert'
 import EditorJS from '@editorjs/editorjs'
+import Header from '@editorjs/header'
 import List from '@editorjs/list'
 import Embed from '@editorjs/embed'
-import SimpleImage from '@editorjs/simple-image'
-import Header from '@editorjs/header'
+import ImageTool from '@editorjs/image'
 import UserContext from '../../../contexts/UserContext'
 import './AddNew.css'
 
 const AddNew = () => {
-    const { userid } = useParams()
-    const { login } = React.useContext(UserContext)
-    let navigate = useNavigate()
-
-    React.useEffect(() => {
-        if (!login || !userid) {
-            navigate('/')
-        }
-    }, [])
-
-    const editor = new EditorJS({
+    const { login, accessToken } = React.useContext(UserContext)
+    const [editor, setEditor] = React.useState(new EditorJS({
         holder: 'postEditorjs',
         tools: {
             header: Header,
@@ -32,41 +23,53 @@ const AddNew = () => {
                     defaultStyle: 'unordered'
                 }
             },
+            image: {
+                class: ImageTool,
+                config: {
+                    endpoints: {
+                        byFile: 'http://localhost:3500/post/upload', // Your backend file uploader endpoint
+                        byUrl: 'http://localhost:3500/post/upload', // Your endpoint that provides uploading by Url
+                    }
+                }
+            },
             embed: Embed,
-            image: SimpleImage,
         },
         placeholder: 'Write you post here!',
-    })
+    }))
+    let navigate = useNavigate()
 
-    const handleAddNew = async (outputData) => {
-        let data = JSON.stringify({
-            user_id: userid, 
-            version: outputData?.version,
-            blocks: outputData?.blocks
-        })
+    React.useEffect(() => {
+        if (!login) {
+            navigate('/')
+        }
+    }, [])
+
+    const handleAddNew = (outputData) => {
+        let data = JSON.stringify(outputData)
         const config = {
             method: 'post',
-            url: 'http://localhost/php/ass_backend/Post/create',
+            url: 'http://localhost:3500/post/create',
             headers: { 
-              'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
             },
             data : data
         }
-        const respone = await axios(config)
-        if (respone.data.message === 'success') {
-            swal({
-                title: "Congratulations",
-                text: "A new post has been create",
-                icon: "success",
+        axios(config)
+            .then(() => {
+                swal({
+                    title: "Congratulations",
+                    text: "A new post has been create",
+                    icon: "success",
+                })
             })
-        }
-        else {
-            swal({
-                title: "Error",
-                text: "Something wrong happened",
-                icon: "error",
+            .catch(() => {
+                swal({
+                    title: "Error",
+                    text: "Something wrong happened",
+                    icon: "error",
+                })
             })
-        }
     }
 
     const handleSubmitPost = () => {

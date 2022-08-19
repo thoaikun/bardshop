@@ -1,19 +1,19 @@
 import clsx from 'clsx'
 import React from 'react'
-import UserContext from '../../hooks/useFetchData'
-import useFetchData from '../../contexts/UserContext'
+import UserContext from '../../contexts/UserContext'
+import useFetchData from '../../hooks/useFetchData'
 import ToastMessage from '../../components/ToastMessage/ToastMessage'
 
 const Bill = () => {
-    const {token, cart, setCart, handleOrder, orderMessage, setOrderMessage} = React.useContext(UserContext)
-    const {data} = useFetchData('http://localhost/php/ass_backend/User/getUser', token)
+    const {accessToken, cart, setCart, handleOrder, orderMessage, setOrderMessage} = React.useContext(UserContext)
+    const {data} = useFetchData('http://localhost:3500/user', accessToken)
     const [user, setUser] = React.useState(null)
     const [totalBill, setTotalBill] = React.useState(0)
     const [shippingFee, setShippingFee] = React.useState(0)
 
     React.useEffect(() => {
-        if (data && data?.success && data.success === 1) {
-            setUser(data?.user)
+        if (data && data?.user) {
+            setUser(data.user)
         }
     }, [data])
 
@@ -41,15 +41,15 @@ const Bill = () => {
         <>
             {orderMessage && orderMessage !== '' && 
                 <ToastMessage
-                    header={orderMessage === "Add order successful" ? "Success" : "Fail"}
-                    body={orderMessage}
+                    header={orderMessage === "success" ? "Success" : "Fail"}
+                    body={orderMessage === "success" ? 'Your order has been created' : 'Create order failed'}
                 />
             }
             <div className='cart-content__bill'>
                 <div className="bill__address mb-2">
                     <h4>Address</h4>
                     <p className='mt-2'>
-                        {user && user?.address && user.address !== '' ? 
+                        {user && user?.address !== '' && user?.district !== '' && user?.city !== '' ? 
                         `${user.address},${user.district}, ${user.city}` : 
                         'Please update your address'}
                     </p>
@@ -74,7 +74,7 @@ const Bill = () => {
                 </div>
                 <button
                     className={clsx('btn', 'button__submit', {
-                        'disabled': cart.length === 0
+                        'disabled': cart.length === 0 || user?.address === '' || user?.district === '' || user?.city === ''
                     })}
                     onClick={() => {
                         if (cart.length !== 0) {

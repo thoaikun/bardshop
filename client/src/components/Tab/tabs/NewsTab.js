@@ -6,78 +6,67 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPen } from '@fortawesome/free-solid-svg-icons'
 import ToastMessage from '../../ToastMessage/ToastMessage'
 import useFetchData from '../../../hooks/useFetchData'
+import UserContext from '../../../contexts/UserContext'
 
 const NewsTableElement = ({item, handleDeletePost}) => {
-    const [content, setContent] = React.useState(null)
-    const [postTitle, setPostTitle] = React.useState('')
-    const [createTime, setCreateTime] = React.useState('')
-
-    React.useEffect(() => {
-        if (item && item?.blocks)
-            setContent(item.blocks)
-        if (item && item?.time)
-            setCreateTime(item.time)
-    }, [item])
-
-    React.useEffect(() => {
-        if (content && content.length !== 0) {
-            if (content[0]?.data?.text)
-                setPostTitle(content[0].data.text)
-        }
-    }, [content])
-
     return (
         <tr>
-            <td>{item.id}</td>
-            <td>{postTitle ? postTitle : ''}</td>
-            <td>{createTime}</td>
+            <td>{item?.title ? item.title : 'Unknown'}</td>
             <td>
-                <form 
-                    style={{marginBottom: '1rem'}}
-                    onSubmit={(e) => e.preventDefault()}
-                >
+                <img src={item?.thumnail ? item.thumnail : ''} alt={item?.title} style={{width: '200px'}} />
+            </td>
+            <td>{item?.time ? new Date(item.time).toDateString() : ''}</td>
+            <td>{item?.userId?.username ? item.userId.username : 'Unknown'}</td>
+            <td>
+                <div className='d-flex flex-column gap-2'>
                     <div 
                         className="btn btn-danger"
-                        onClick={() => handleDeletePost(item.id)}
+                        onClick={() => {
+                            if(window.confirm('Are you sure want to delete this item ?'))
+                                handleDeletePost(item._id)
+                        }}
                     >
                         <FontAwesomeIcon icon={faTrash}/>
                     </div>
-                </form>
-                <Link 
-                    to={`/news/edit/${item.id}`}
-                    className="btn btn-primary"
-                >
-                    <FontAwesomeIcon icon={faPen}/>
-                </Link>
+                    <Link 
+                        to={`/news/edit/${item._id}`}
+                        className="btn btn-primary"
+                    >
+                        <FontAwesomeIcon icon={faPen}/>
+                    </Link>
+                </div>
             </td>
         </tr>
     )
 }
 
-const NewsTab = ({selectedTab, user}) => {
-    const { data } = useFetchData('http://localhost/php/ass_backend/Post/read')
+const NewsTab = ({selectedTab}) => {
+    const {accessToken} = React.useContext(UserContext)
+    const { data } = useFetchData('http://localhost:3500/post')
     const [news, setNews] = React.useState([])
     const [deleteMessage, setDeleteMessage] = React.useState('')
-    const [userId, setUserId] = React.useState(1)
 
     React.useEffect(() => {
-        if (data && data.length !== 0)
-            setNews(data)
+        if (data && data?.size !== 0)
+            setNews(data.posts)
     }, [data])
 
-    React.useEffect(() => {
-        if (user && user?.id)
-            setUserId(user.id)
-    }, [user])
-
     const handleDeletePost = async (id) => {
-        if (id !== undefined) {
-            const res = await axios.get(`http://localhost/php/ass_backend/Post/delete/${id}`)
-            if (res.data.message === 'success') {
-                let newList = news.filter((item) => item.id !== id)
-                setNews(newList)
+        if (id) {
+            const config = {
+                method: 'delete',
+                url: `http://localhost:3500/post/delete/${id}`,
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${accessToken}`
+                },
             }
-            setDeleteMessage(res.data.message)
+            axios(config)
+                .then(() => {
+                    let newList = news.filter(item => item._id !== id)
+                    setNews(newList)
+                })
+                .catch(error => setDeleteMessage(error.response.data.result))
         }
     }
 
@@ -90,34 +79,39 @@ const NewsTab = ({selectedTab, user}) => {
                 />
             }
             <div 
-                className={clsx("posts p-2", {
+                className={clsx("posts", {
                     'disappear': selectedTab !== "Post"
                 })}
             >
                 <div className="add-btn">
-                    <Link to={`/news/add/${userId}`}>Add news</Link>
+                    <Link to={`/news/add`}>Add news</Link>
                 </div>
 
-                <table className="item-table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Post title</th>
-                            <th>Created</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {news && news.length !== 0 && news.map((item, i) => (
-                            <NewsTableElement
-                                key={i}
-                                item={item}
-                                handleDeletePost={handleDeletePost}
-                            />
-                        ))}
-                    </tbody>
-                </table>
-                {news && news.length === 0 && <p className='text-muted fs-4 pt-2'>No news found</p>}
+                {news && news?.length !== 0 ? 
+                    <table className="item-table" style={{width: '1200px'}}>
+                        <thead>
+                            <tr>
+                                <th>Post title</th>
+                                <th>Post thumbnail</th>
+                                <th>Created</th>
+                                <th>By</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {news && news.length !== 0 && news.map((item, i) => (
+                                <NewsTableElement
+                                    key={i}
+                                    item={item}
+                                    handleDeletePost={handleDeletePost}
+                                />
+                            ))}
+                        </tbody>
+                    </table>
+                    :
+                    <p className='text-muted fs-4 pt-2'>No news found</p>
+                }
             </div>
         </>
     )

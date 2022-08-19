@@ -3,26 +3,26 @@ import { useParams } from 'react-router'
 import EditorJS from '@editorjs/editorjs'
 import List from '@editorjs/list'
 import Embed from '@editorjs/embed'
-import SimpleImage from '@editorjs/simple-image'
+import ImageTool from '@editorjs/image'
 import Header from '@editorjs/header'
 import useFetchData from '../../../hooks/useFetchData'
 import './NewDetail.css'
 
 const NewDetail = () => {
     const { id } = useParams()
-    const { data } = useFetchData(`http://localhost/php/ass_backend/Post/read/${id}`)
+    const { data } = useFetchData(`http://localhost:3500/post/${id}`)
     const [postExist, setPostExist] = React.useState()
 
     React.useEffect(() => {
-        if (data && data?.message) {
+        if (data && data?.result === 'failed') {
             setPostExist(false)
         }
         else if (data) {
-            let date = new Date(data.time)
+            let date = new Date(data?.post?.time)
             const content = {
                 time: date.getTime(),
-                version: data.version,
-                blocks: data.blocks
+                version: data?.post?.version,
+                blocks: data?.post?.blocks
             }
             const editor = new EditorJS({
                 holder: 'postEditorjs',
@@ -36,9 +36,16 @@ const NewDetail = () => {
                         }
                     },
                     embed: Embed,
-                    image: SimpleImage,
+                    image: {
+                        class: ImageTool,
+                        config: {
+                            endpoints: {
+                                byFile: 'http://localhost:3500/post/upload', // Your backend file uploader endpoint
+                                byUrl: 'http://localhost:3500/post/upload', // Your endpoint that provides uploading by Url
+                            }
+                        }
+                    },
                 },
-                placeholder: 'Write you post here!',
                 data: content,
                 readOnly: true
             })

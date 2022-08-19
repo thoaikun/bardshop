@@ -1,4 +1,5 @@
 import React from 'react'
+import clsx from 'clsx'
 import { Link, useNavigate } from 'react-router-dom'
 import NavDropdown from 'react-bootstrap/NavDropdown'
 import Navbar from 'react-bootstrap/Navbar'
@@ -99,6 +100,7 @@ const Logo = () => {
 }
 
 const User = ({ login, user, disappear, setDisappear, handleLogout }) => {
+    const {cart} = React.useContext(UserContext)
     const [username, setUsername] = React.useState()
     const [userId, setUserId] = React.useState()
     const navigate = useNavigate()
@@ -131,12 +133,20 @@ const User = ({ login, user, disappear, setDisappear, handleLogout }) => {
                             setDisappear={setDisappear}
                         />
                     </div>
-                    <Link to='/cart' className="user__cart">
-                        <FontAwesomeIcon 
-                            icon={faShoppingCart}
-                            className="btn button__nav"
-                        ></FontAwesomeIcon>
-                    </Link>
+                    {user?.role === 0 && 
+                        <Link 
+                            to='/cart' 
+                            className={clsx('user__cart', {
+                                'user__cart--has-product': cart.length !== 0
+                            })}
+                            number={cart?.length && cart.length !== 0 ? cart.length : ''}
+                        >
+                            <FontAwesomeIcon 
+                                icon={faShoppingCart}
+                                className="btn button__nav"
+                            ></FontAwesomeIcon>
+                        </Link>
+                    }
                     <NavDropdown
                         id='dropdown-basic'
                         title={
@@ -144,7 +154,7 @@ const User = ({ login, user, disappear, setDisappear, handleLogout }) => {
                         }
                         className='user__icon'
                     >
-                        <Link to={`/account/${userId}`} className='dropdown-item'>Profile</Link>
+                        <Link to={`/account`} className='dropdown-item'>Profile</Link>
                         <hr/>
                         <Link 
                             to='/'
@@ -159,16 +169,25 @@ const User = ({ login, user, disappear, setDisappear, handleLogout }) => {
                 </>
                 :
                 <>
+                    <div 
+                        className="user__search" 
+                        onClick={() => {
+                            setDisappear(!disappear)
+                        }}
+                    >
+                        <FontAwesomeIcon
+                            icon={faSearch}
+                            className="btn button__nav"
+                        ></FontAwesomeIcon>
+                        <Search
+                            disappear={disappear}
+                            setDisappear={setDisappear}
+                        />
+                    </div>
                     <div className="user__sign">
                         <span><Link to='/signin'>Sign in</Link></span>
                         <span><Link to='/signup'>Sign up</Link> </span>
                     </div>
-                    <div className="user__search">
-                        <i className="fas fa-search btn button__nav"></i>
-                    </div>
-                    <a href="./cart.html" className="user__cart">
-                        <i className="fas fa-shopping-cart btn button__nav"></i>
-                    </a>
                 </>
             }
         </div>

@@ -95,6 +95,8 @@
     border: 1px solid rgba(0, 0, 0, 0.200);
 
     background-color: white;
+    display: flex;
+    flex-flow: column wrap;
 }
 .order-card__product {
     width: 100%;
@@ -103,6 +105,12 @@
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
+
+    position: relative;
+}
+.cancel-btn {
+    width: fit-content;
+    align-self: flex-end;
 }
 .order-card__product img {
     width: 100px;
@@ -126,11 +134,22 @@
     width: 150px;
     padding: 1rem;
     margin: 1rem 0;
+    border: 1px solid rgba(0, 0, 0, 0.2);
     background-color: var(--color-focus);
     border-radius: 1rem;
 
+    color: white;
     text-decoration: none;
     text-align: center;
+}
+
+.active {
+    background-color: #5eb95e;
+}
+
+.deactive {
+    background-color: white;
+    color: black;
 }
 
 .item-table td, 
@@ -160,7 +179,10 @@
     padding: 1.1rem;
     background-color: rgb(40, 218, 143);
 }
-
+.mod--editor {
+    padding: 1.1rem;
+    background-color: rgb(154, 71, 209);
+}
 
 
 /********************** RESPONSIVE ********************* */
@@ -191,5 +213,4 @@
     .order-card__product img {
         width: 70px;
     }
-
 }

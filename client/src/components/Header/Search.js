@@ -3,21 +3,10 @@ import clsx from 'clsx'
 import useFetchData from '../../hooks/useFetchData'
 import { Link } from 'react-router-dom'
 
-const SearchElement = ({id, name, brand, images, setDisappear}) => {
-    const [trimName, setTrimName] = React.useState('')
-    const [imgs, setImgs] = React.useState([])
-
-    React.useEffect(() => {
-        if (images && typeof images === 'string')
-            setImgs(images.split(','))
-        if (name)
-            setTrimName(name.replaceAll(' ', ''))
-    }, [images, name])
-
-
+const SearchElement = ({id, name, images, setDisappear}) => {
     return (
         <div className="search-card my-2">
-            <img src={`http://localhost/php/ass_backend/imgs/products/${brand}/${trimName}/${imgs[0]}`} alt=""/>
+            <img src={`http://localhost:3500/imgs/product/${images[images?.length ? images?.length - 1 : 0]}`} alt={name}/>
             <Link 
                 to={`/products/Smartphone/${id}`}
             >
@@ -27,27 +16,27 @@ const SearchElement = ({id, name, brand, images, setDisappear}) => {
     )
 }
 
-const SeachList = ({ name, setDisappear }) => {
+const SearchList = ({ name, setDisappear }) => {
     const [searchedList, setSearchedList] = React.useState([])
-    const { data } = useFetchData(`http://localhost/php/ass_backend/Product/searchProduct/${name}`)
+    const { data } = useFetchData(`http://localhost:3500/product/search/${name}`)
 
     React.useEffect(() => {
-        setSearchedList(data)
+        if (data)
+            setSearchedList(data?.products)
     }, [data])
 
     return (
         <div className="search-bar__result">
-            {searchedList.length !== 0 && searchedList.map((item, i) =>(
+            {searchedList?.length !== 0 && searchedList?.map((item, i) =>(
                 <SearchElement
                     key={i}
-                    id = {item.id}
-                    name={item.product_name}
-                    brand={item.brand}
-                    images={item.image}
+                    id = {item._id}
+                    name={item.name}
+                    images={item.imgs}
                 />
             ))
             }
-            {searchedList.length === 0 && name && <p>No product found</p>}
+            {searchedList?.length === 0 && name && <p>No product found</p>}
         </div>
     )
 }
@@ -73,7 +62,7 @@ const Search = ({disappear, setDisappear}) => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
             />
-            <SeachList 
+            <SearchList 
                 name={name}
                 setDisappear={setDisappear}
             />

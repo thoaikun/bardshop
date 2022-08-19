@@ -21,7 +21,7 @@ const CartElement = ({ product, handleRemoveFromCart }) => {
         <>
             <div className="cart-element mb-3">
                 <img 
-                    src={`http://localhost/php/ass_backend/imgs/products/${product.brand}/${product.trimName}/${product.imgs[0]}`} 
+                    src={`http://localhost:3500/imgs/product/${product.imgs[product.imgs.length - 1]}`} 
                     alt={product.name}
                 />
                 <h5>{product?.name ? product.name : ''}</h5>
