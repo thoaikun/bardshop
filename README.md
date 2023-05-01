@@ -2,9 +2,9 @@
 
 This project is an ecommerce website for selling technology devices such as phones and laptops. It allows customers to browse through the list of available products, view the product details, and purchase the products. Additionally, it provides an administrative interface to add new products, manage customers, and handle orders.
 
-<div style="text-align:center">
-    <img src="./client/public/imgs/logo.png" style="margin: 10px">
-</div>
+<p align="center" style="padding: 20px">
+    <img src="./client/public/imgs/logo.png">
+</p>
 
 ## Features
 
